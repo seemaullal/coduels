@@ -13,4 +13,3 @@
 ###Added Features ###
  - Pause challenge
  - Add circles/groups of people (can challenge people in your groups)
- - 
