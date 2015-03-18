@@ -8,7 +8,6 @@
  - Can pick any challenge (grouped by easy, medium, hard)
  - Leader board on challenge page of "top scores" (?) from users who have done the challenge
  - Let users comment/rate other peoples code (maybe)
- - 
  
 
 ###Added Features ###
