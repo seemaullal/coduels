@@ -7,11 +7,42 @@
   }
 
 .header {
-	color: #fbe395;
+	margin-top: 100px;
+	color: #7b7992;
+	font-weight: bold;
+
 }
+span.co {
+	color: #ff8b8c;
+}
+
 
 .description {
 	color: #fff;
 }
 
+.mt {
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
 
+.pt {
+	padding-top: 50px;
+	padding-bottom: 50px;
+}
+
+#footer {
+	background-color: #1e1e1e;
+	padding-top: 50px;
+	padding-bottom: 50px; 
+}
+
+#footer p {
+	color: white;
+}
+
+#footer h4 {
+	color: white;
+	text-transform: uppercase;
+	padding-bottom: 20px;
+}
