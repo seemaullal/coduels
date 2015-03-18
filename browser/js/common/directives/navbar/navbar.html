@@ -1,17 +1,29 @@
-<nav class="navbar navbar-static-top">
-    <div class="container">
+<!DOCTYPE html>
+<html lang="en">
+
+  <body>
+
+    <!-- Static navbar -->
+    <div class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
         <div class="navbar-header">
-            <fullstack-logo></fullstack-logo>
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" ui-sref="home">CO{DUELS}</a>
         </div>
-        <ul class="nav navbar-nav">
-            <li ng-repeat="item in items" ng-show="!item.auth || isLoggedIn()">
-                <a ui-sref-active="active" ui-sref="{{ item.state }}">{{ item.label }}</a>
-            </li>
-        <a ng-show="!user" ui-sref="login">Login</a>
-        <div ng-show="user" class="welcome">
-            <span>Welcome, {{ user.email }}!</span>
-            <a ng-click="logout()">Logout</a>
-        </div>
-        </ul>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a ui-sref="challenges">CHALLENGES</a></li>
+            <li><a ui-sref="challenges">ABOUT</a></li>
+            <li><a ui-sref="login">LOGIN</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
     </div>
-</nav>
+
+    <!-- +++++ Welcome Section +++++ -->
+  </body>
+</html>

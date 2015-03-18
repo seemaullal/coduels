@@ -1,50 +1,38 @@
-navbar {
 
-  display: block;
-  background: #fff;
+.navbar {
+  text-transform: uppercase;
+  margin-bottom: 0px;
+}
+
+.navbar-inverse {
+  padding-bottom: 20px;
   padding-top: 20px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid black;
+}
 
-  fullstack-logo {
-    padding-top: 10px;
-    margin-right: 20px;
-    width: 30px;
-  }
+.navbar-inverse {
+  background-color: #fff;
+  border-color: #16a085;
+}
 
-  a {
-    color: white;
-    &:hover {
-      color: white;
-    }
-  }
+.navbar-inverse .navbar-nav > li > a {
+  color: #000c18;
+}
 
-  .nav > li > a {
-    cursor: pointer;
-    color: #000c18;
+.navbar-inverse .navbar-nav > li > a:hover {
+  color: #000c18;
+}
 
-    &.active {
-      color: #000c18;
-    }
-    &:hover {
-      color: rbga(0, 12, 24, 0.5);
-    }
-    &:focus {
-      color: #f30046;
-      background: transparent;
-    }
-  }
 
-  .welcome {
-    float: right;
-    margin-top: 12px;
-    span {
-      color: white;
-    }
-    a {
-      color: #f30046;
-      cursor: pointer;
-    }
-  }
+.navbar-brand {
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: 2px;
+}
 
+.navbar-inverse .navbar-brand {
+  color:#000c18;
+}
+
+.navbar-inverse .navbar-toggle {
+  border-color: transparent;
 }
