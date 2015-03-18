@@ -8,8 +8,15 @@
  - Can pick any challenge (grouped by easy, medium, hard)
  - Leader board on challenge page of "top scores" (?) from users who have done the challenge
  - Let users comment/rate other peoples code (maybe)
+ - 
  
 
 ###Added Features ###
  - Pause challenge
  - Add circles/groups of people (can challenge people in your groups)
+ 
+###Office Hours ###
+ - Runner iframe- reporting data to server
+ - Room setup 
+ - Code editor on change
+ - Use Firebase for chat, room setup
