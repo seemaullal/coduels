@@ -2,14 +2,27 @@
 
   padding-bottom: 50px;
 
-  p {
-    width: 400px;
-    margin: 0 auto;
-    margin-top: 50px;
-    text-align: justify;
+ .v-center {
+  min-height: 470px;
+  h1,p {
+  height: 40px;
+  vertical-align: middle;
+  }
+ }
+ h4 {
+    margin-top: 23px;
+
+    height: 40px;
+    vertical-align: middle;
     font-size: 25px;
     font-weight: 300;
-  }
+}
+    // margin: 0 auto;
+ //    margin-top: 50px;
+ //    text-align: justify;
+ //    font-size: 25px;
+ //    font-weight: 300;
+ //  }
 
   img {
     display: block;
