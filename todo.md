@@ -14,7 +14,7 @@
  - Pause challenge
  - Add circles/groups of people (can challenge people in your groups)
  
-####Additional stuf from 3/18 Office Hours ####
+####Additional stuff from 3/18 Office Hours ####
  - Runner iframe- reporting data to server
  - Room setup 
  - Code editor on change
