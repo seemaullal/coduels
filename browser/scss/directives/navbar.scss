@@ -40,6 +40,13 @@
     color: #7b7992;
   }
 
+.navbar-inverse .navbar-nav > li > a:hover{
+  color: #FE5D2E;
+}
+
+.navbar-inverse .navbar-nav > li > a:focus {
+  color: #000c18;
+}
 .navbar-inverse .navbar-toggle {
   border-color: transparent;
 }
