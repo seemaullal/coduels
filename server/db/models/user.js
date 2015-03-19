@@ -3,6 +3,9 @@ var crypto = require('crypto');
 var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
+    name: {
+        type: String, 
+    },
     email: {
         type: String
     },
@@ -12,18 +15,29 @@ var schema = new mongoose.Schema({
     salt: {
         type: String
     },
-    twitter: {
-        id: String,
-        username: String,
-        token: String,
-        tokenSecret: String
-    },
-    facebook: {
-        id: String
-    },
+    // twitter: {
+    //     id: String,
+    //     username: String,
+    //     token: String,
+    //     tokenSecret: String
+    // },
+    // facebook: {
+    //     id: String
+    // },
     google: {
         id: String
-    }
+    },
+    github: {
+        id: String
+    },
+    exercises: [ {
+        exerciseID : {type: mongoose.Schema.Types.ObjectId, ref: "Exercise" },
+        code: String,
+        score: Number,
+        challenge: Boolean
+    } ]
+    //totalScores, completedExercises, completedChallenges can be virtuals because it's an artificial value since it's a sum of all the exercise scores
+
 });
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations

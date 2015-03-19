@@ -4,7 +4,7 @@
   "description": "Have fun learning to code!",
   "main": "server/start.js",
   "scripts": {
-    "start": "node server/start.js",
+    "start": "nodemon server/start.js",
     "postinstall": "./node_modules/bower/bin/bower install && gulp build"
   },
   "dependencies": {
@@ -40,6 +40,7 @@
     "mongoose": "^3.8.23",
     "passport": "^0.2.1",
     "passport-facebook": "^1.0.3",
+    "passport-github": "^0.1.5",
     "passport-google-oauth": "^0.1.5",
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.2",

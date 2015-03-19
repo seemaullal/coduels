@@ -21,3 +21,28 @@
  - Room setup 
  - Code editor on change
  - Use Firebase for chat, room setup
+ 
+ #### Models ####
+ - User:
+    -completed exercises: [ exercise refs ]
+   -challenge [ ref to challenges ]
+   - (+ generator user schema)
+
+ - Exercise
+   -Description: {long: string, short: lil' string}
+   -Editor prompt: string (code?)
+   -Input/Output or Test or something (String or object)
+ - Categories: [String]
+ - Difficulty: String
+ - Completed users [ user refs ] 
+ 
+ - (Active?)Challenges
+   -Players [User refs ]
+   -Exercise: exercise ref
+
+ - Leaderboard/Score
+   -User ref
+
+
+ 
+ 
