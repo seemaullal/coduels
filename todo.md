@@ -8,6 +8,8 @@
  - Can pick any challenge (grouped by easy, medium, hard)
  - Leader board on challenge page of "top scores" (?) from users who have done the challenge
  - Let users comment/rate other peoples code (maybe)
+ - Admin page for adding and labeling challenges
+ - Base of tests (that they can see) + other base of non visible tests (so they can't hard code results)
  
 
 ###Added Features ###
