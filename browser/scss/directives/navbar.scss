@@ -32,6 +32,15 @@
   color:#7b7992;
 }
 
+.navbar-inverse .navbar-brand:hover {
+    color: #FE5D2E;
+  }
+
+.navbar-inverse .navbar-brand:focus {
+    color: #7b7992;
+  }
+
 .navbar-inverse .navbar-toggle {
   border-color: transparent;
 }
+
