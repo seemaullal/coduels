@@ -1,50 +1,53 @@
-navbar {
 
-  display: block;
-  background: #a1a1a1;
-
-  fullstack-logo {
-    padding-top: 10px;
-    margin-right: 20px;
-    width: 30px;
-  }
-
-  a {
-    color: white;
-    &:hover {
-      color: white;
-    }
-  }
-
-  .nav > li > a {
-    cursor: pointer;
-    &.active {
-      color: #f30046;
-    }
-    &:hover {
-      transition: color 0.2s;
-    }
-    &:focus {
-      color: #f30046;
-      background: transparent;
-    }
-  }
-
-  .login-button {
-    float: right;
-    margin-top: 8px;
-  }
-
-  .welcome {
-    float: right;
-    margin-top: 12px;
-    span {
-      color: white;
-    }
-    a {
-      color: #f30046;
-      cursor: pointer;
-    }
-  }
-
+.navbar {
+  text-transform: uppercase;
+  margin-bottom: 0px;
 }
+
+.navbar-inverse {
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+.navbar-inverse {
+  background-color: #fff;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+  color: #000c18;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover {
+  color: #000c18;
+}
+
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: 2px;
+}
+
+.navbar-inverse .navbar-brand {
+  color:#7b7992;
+}
+
+.navbar-inverse .navbar-brand:hover {
+    color: #FE5D2E;
+  }
+
+.navbar-inverse .navbar-brand:focus {
+    color: #7b7992;
+  }
+
+.navbar-inverse .navbar-nav > li > a:hover{
+  color: #FE5D2E;
+}
+
+.navbar-inverse .navbar-nav > li > a:focus {
+  color: #000c18;
+}
+.navbar-inverse .navbar-toggle {
+  border-color: transparent;
+}
+

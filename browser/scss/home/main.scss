@@ -1,12 +1,55 @@
 #home {
-  fullstack-logo {
-    padding-top: 30px;
-    width: 150px;
-    margin: 0 auto;
+	
+	padding-top: 70px;
+	padding-bottom: 70px;
+	background-color: #1e1e1e;
+
   }
-  h1 {
-    margin-top: 40px;
-    text-align: center;
-  }
+
+.header {
+	margin-top: 100px;
+	color: #7b7992;
+	font-weight: bold;
+
+}
+span.co {
+	color: #FF0000;
 }
 
+
+.description {
+	color: #fff;
+}
+
+.mt {
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
+
+.pt {
+	padding-top: 50px;
+	padding-bottom: 50px;
+}
+
+#footer {
+	background-color: #1e1e1e;
+	padding-top: 50px;
+	padding-bottom: 50px; 
+}
+
+#footer p {
+	color: white;
+}
+
+#footer h4 {
+	color: white;
+	text-transform: uppercase;
+	padding-bottom: 20px;
+}
+
+img.landing-image {
+	height: 226px;
+	width: 350px;
+	vertical-align: middle;
+	// margin-right: 100px;
+}

@@ -1,9 +1,36 @@
 <section id="about">
-    <p>
-        This website--the very one at which you currently gaze--was created by a basic scaffolding
-        concocted at Fullstack Academy. If you want to know more about how this scaffolding works,
-        check out the <a ui-sref="tutorial">tutorial</a> section. Here are some of the people who make
-        it all very real:
-    </p>
-    <img ng-repeat="image in images" ng-src="{{ image }}" />
+	<div class="container pt">
+		<h1>Hello, person!!</h1>
+		<div class="row mt">
+			<div class="col-lg-6">
+				<h4>Challenges you have completed</h4>
+				<p>This should include some useful information about the current user</p>
+			</div><!-- /colg-lg-6 -->
+			
+			<div class="col-lg-6">
+				<h4>Overall progress</h4>
+				Easy Challenges
+				<div class="progress">
+					<div class="progress-bar easy role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+						<span class="sr-only">60% Complete</span>
+					</div>
+				</div>
+
+				Medium Challenges
+				<div class="progress">
+					<div class="progress-bar med" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+						<span class="sr-only">80% Complete</span>
+					</div>
+				</div>
+				
+				Hard Challenges
+				<div class="progress">
+					<div class="progress-bar hard" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+						<span class="sr-only">95% Complete</span>
+					</div>
+				</div>
+
+			</div><!-- /col-lg-6 -->
+		</div><!-- /row -->
+	</div><!-- /container -->
 </section>
