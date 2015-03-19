@@ -2,6 +2,7 @@
 var path = require('path');
 var express = require('express');
 var app = express();
+var passport = require('passport');
 module.exports = app;
 
 require('./configure')(app);
