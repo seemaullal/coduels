@@ -25,8 +25,8 @@ app.controller('createTestCtrl', function($scope, TestFactory){
 		exercise.testCode = $scope.aceSession1.getDocument().getValue();
 		exercise.editorPrompt = $scope.aceSession2.getDocument().getValue();
 		console.log(exercise);
-		// TestFactory.sumbitTest().then(function (response){
-		// 	console.log(response);
-		// })
+		TestFactory.submitTest(exercise).then(function (response){
+			console.log(response);
+		})
 	};
 });
