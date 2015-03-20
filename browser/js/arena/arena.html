@@ -39,8 +39,8 @@ function add(one, two) {
         editor.setTheme("ace/theme/monokai");
         editor.getSession().setMode("ace/mode/javascript");
         $('#editor').keyup(function(e) {
-            var keyCodes = [13,32,186,8,46]
-            if (keyCodes.indexOf(e.keyCode) > -1) {
+            var keyCodeEvents = [13,32,186,8,46]
+            if (keyCodeEvents.indexOf(e.keyCode) > -1) {
                 userPad.set(editor.getValue(), function(data) {
                 });
                 document.getElementById('mocha-runner').src = document.getElementById('mocha-runner').src;
