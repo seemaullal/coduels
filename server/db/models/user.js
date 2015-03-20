@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
     name: {
-        type: String, 
+        type: String,
     },
     email: {
         type: String
@@ -31,7 +31,7 @@ var schema = new mongoose.Schema({
         id: String
     },
     exercises: [ {
-        exerciseID : {type: mongoose.Schema.Types.ObjectId, ref: "Exercise" },
+        exerciseID: {type: mongoose.Schema.Types.ObjectId, ref: "Exercise" },
         code: String,
         score: Number,
         challenge: Boolean
