@@ -22,7 +22,8 @@
     "socket.io-client": "~1.3.5",
     "chai": "~2.1.2",
     "mocha": "~2.2.1",
-    "ace-builds": "~1.1.8"
+    "ace-builds": "~1.1.8",
+    "angular-ui-ace": "bower"
   },
   "devDependencies": {
     "angular-mocks": "~1.3.14"
