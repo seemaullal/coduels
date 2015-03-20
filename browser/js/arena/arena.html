@@ -4,44 +4,50 @@
 <head>
     <meta charset="utf-8">
     <title>HTML</title>
-    <style>
+    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+
+    <style> /* SHOULD BE MOVED TO A SCSS FILE */
     #editor {
-        display: block;
+        display: inline-block;
         margin: auto;
-        width: 50%;
-        height: 502px;
+        width: 45%;
+        height: 500px;
         border: 1px solid #888;
     }
     </style>
-    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
 
 </head>
 
 <body>
-    <div id="editor" style="display: inline-block">
-    var add = function(one, two) {
 
-    }
+    <div id="editor"> <!-- div where the editor lives, code is displayed as formatted below / EDITOR NOT DISPLAYED PROPERLY-->
+function add(one, two) {
+
+}
     </div>
-    <iframe id="mocha-runner" src="/api/arena/iframe" style="display: inline-block; width: 45%; height: 500px;"></iframe>
-    <script src="http://cdn.jsdelivr.net/ace/1.1.8/min/ace.js" type="text/javascript" charset="utf-8"></script>
+
+    <iframe id="mocha-runner" src='/api/arena/iframe' style="display: inline-block; width: 40%; height: 500px;">
+        <!-- the iframe makes a request to the api route on page load, then subsequently on each return keypress -->
+    </iframe>
+
     <script>
-    var testing = new Firebase('https://dazzling-torch-169.firebaseio.com/code')
+    $(document).ready(function() {
+        var userPad = new Firebase('https://dazzling-torch-169.firebaseio.com/code');
 
-    var editor = ace.edit("editor");
-    editor.setTheme("ace/theme/monokai");
-    editor.getSession().setMode("ace/mode/javascript");
-    $('#editor').keypress(function(e) {
-        if ( e.keyCode === 13 ) {
-        testing.set(editor.getValue(), function(data) {
-
-        })
-        document.getElementById('mocha-runner').src = document.getElementById('mocha-runner').src
-        }
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.getSession().setMode("ace/mode/javascript");
+        $('#editor').keypress(function(e) {
+            if (e.keyCode === 13) {
+                userPad.set(editor.getValue(), function(data) {
+                });
+                document.getElementById('mocha-runner').src = document.getElementById('mocha-runner').src;
+            }
+        });
     });
-
     </script>
+
 </body>
 
 </html>
