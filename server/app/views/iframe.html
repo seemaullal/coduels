@@ -10,6 +10,7 @@
     <!-- sets the Behavior Driven Development interface to show on mocha.run() -->
     <script>
     mocha.setup('bdd');
+    // mocha.reporter('json');
     </script>
 
     <!-- mocha error-handling & variable defintions -->
@@ -43,6 +44,9 @@
         // left the code for all to admire
         s.parentNode.insertBefore(g, s);
         mocha.run();
+        // mocha.run(function(failures) {
+        //     console.log("here", mocha._reporter.testResults, mocha.testResults);
+        // });
     })
     </script>
 

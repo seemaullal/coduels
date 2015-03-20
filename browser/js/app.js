@@ -46,3 +46,9 @@ app.run(function ($rootScope, AuthService, $state) {
     });
 
 });
+
+app.controller('MainController', function($scope, AuthService) {
+    AuthService.getLoggedInUser().then(function(user) {
+        $scope.user = user;
+    });
+});
