@@ -10,7 +10,6 @@ app.config(function ($stateProvider) {
 app.controller('ArenaController', function($scope, RoomFactory, AuthService) {
   AuthService.getLoggedInUser().then(function (user) {
     $scope.user = user;
-    console.log('this is the controller: ', $scope.user)
     $scope.test = RoomFactory.createRoom('exercise', $scope.user);
   });
 

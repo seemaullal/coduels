@@ -1,16 +1,27 @@
 @import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
-
 * {
-  box-sizing: border-box;
-  font-family: 'Montserrat', sans-serif;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: 'Montserrat', sans-serif;
 }
 
 @mixin clearfix {
-  &:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+#editor {
+    font-family: monospace;
+    display: inline-block;
+    margin: auto;
+    width: 45%;
+    height: 500px;
+    border: 1px solid #888;
 }
 
 @import 'directives/main';

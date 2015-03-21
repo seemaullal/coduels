@@ -4,18 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>HTML</title>
-    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
-
-    <style> /* SHOULD BE MOVED TO A SCSS FILE */
-    #editor {
-        display: inline-block;
-        margin: auto;
-        width: 45%;
-        height: 500px;
-        border: 1px solid #888;
-    }
-    </style>
-
+    <script src='http://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
 
 </head>
 
@@ -23,7 +12,7 @@
 
     <div>{{test}}</div>
 
-    <div id="editor"> <!-- div where the editor lives, code is displayed as formatted below / EDITOR NOT DISPLAYED PROPERLY-->
+    <div id="editor" style="font-family: monospace;"> <!-- div where the editor lives, code is displayed as formatted below / EDITOR NOT DISPLAYED PROPERLY-->
 function add(one, two) {
 
 }
@@ -35,16 +24,16 @@ function add(one, two) {
 
     <script>
     $(document).ready(function() {
-        var userPad = new Firebase('https://dazzling-torch-169.firebaseio.com/code');
+        var userPad = new Firebase('http://dazzling-torch-169.firebaseio.com/code');
 
         var editor = ace.edit("editor");
         editor.setTheme("ace/theme/monokai");
         editor.getSession().setMode("ace/mode/javascript");
         $('#editor').keyup(function(e) {
-            var keyCodeEvents = [13,32,186,8,46]
+            // var keyCodeEvents = [13,32,186,8,46];
+            var keyCodeEvents = [13];
             if (keyCodeEvents.indexOf(e.keyCode) > -1) {
-                userPad.set(editor.getValue(), function(data) {
-                });
+                userPad.set(editor.getValue());
                 document.getElementById('mocha-runner').src = document.getElementById('mocha-runner').src;
             }
         });

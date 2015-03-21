@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="/mocha/mocha.css">
     <script src="/mocha/mocha.js"></script>
     <script src="/chai/chai.js"></script>
+    <script src="/jquery/dist/jquery.js"></script>
+
 
     <!-- sets the Behavior Driven Development interface to show on mocha.run() -->
     <script>
@@ -21,33 +23,32 @@
     var expect = chai.expect;
     </script>
 
-    <!-- firebase dependency / POSSIBLY REPLACE CDN WITH ACTUAL FILE -->
-    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
-    <!--  <script src="/jasmine/lib/jasmine-core/jasmine.js"></script>
-          <script src="/jasmine/lib/jasmine-core/jasmine-html.js"></script>
-          <script src="/jasmine/lib/jasmine-core/boot.js"></script> -->
-
+    <!-- firebase dependency -->
+    <script src='http://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
 
     <!-- Source file -->
     <script type="text/javascript">
+
     // sets a variable to the firebase reference the editor is sending data to
-    var fromUserPad = new Firebase('https://dazzling-torch-169.firebaseio.com/code');
+    var fromUserPad = new Firebase('http://dazzling-torch-169.firebaseio.com/code');
 
     // listens for changes on the firebase reference and dynamically creates
     // a script tag with the user's inputted code as the text inside
     fromUserPad.on('value', function(snapshot) {
+    fromUserPad.set('');
         var g = document.createElement('script');
         var s = document.getElementsByTagName('script')[0];
         g.text = snapshot.val();
+        console.log('this is snapshot:', snapshot.val())
         // g.text += ";(function() { \n jasmine.getEnv().execute(); })()"
         // ^ David's brilliant workaround to get jasmine to execute
         // left the code for all to admire
         s.parentNode.insertBefore(g, s);
-        mocha.run();
-        // mocha.run(function(failures) {
-        //     console.log("here", mocha._reporter.testResults, mocha.testResults);
-        // });
+        mocha.run(function(failures){
+            console.log("# of failures: ", failures);
+        });
     })
+
     </script>
 
     <!-- Test file -->
