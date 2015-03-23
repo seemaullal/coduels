@@ -10,17 +10,22 @@
 
 <body>
 
-    <div>{{test}}</div>
+    <!-- the id of the created room,
+    variable name should be changed to something more explicit -->
+    <div>{{ test }}</div>
 
+    <!-- setting a ng-model seems to remove the ability to set a default value
+    in-between the two divs, not sure how to get that to work with ng-model -->
     <div ui-ace = "{
             useWrapMode : true,
             showGutter: true,
             theme: 'monokai',
             mode: 'javascript',
-            onLoad: aceLoaded3,
+            onLoad: userInputSession,
             onChange: getUserInput
     }" id="userInput">
 function add(one, two) {
+
 }
 </div>
 
