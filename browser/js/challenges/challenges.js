@@ -9,6 +9,15 @@ app.config(function($stateProvider){
 });
 
 
-app.controller('challengesCtrl', function($scope){
+app.controller('challengesCtrl', function($scope, $state, RoomFactory, AuthService){
+  AuthService.getLoggedInUser().then(function(user) {
+    $scope.user = user;
+  });
+
+  $scope.makeNewRoom = function() {
+      $scope.roomKey = RoomFactory.createRoom('exercise', $scope.user);
+      // $state.go('arena')
+      console.log($scope.roomKey);
+  };
 
 });

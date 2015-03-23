@@ -1,7 +1,7 @@
 'use strict';
 app.config(function($stateProvider) {
   $stateProvider.state('arena', {
-    url: '/arena',
+    url: '/arena/:roomKey',
     controller: 'ArenaController',
     templateUrl: 'js/arena/arena.html'
   });
@@ -11,10 +11,10 @@ app.controller('ArenaController', function($scope, RoomFactory, AuthService) {
 
   // sets the logged-in user on the scope and creates a new room with that user
   // in the newly created room
-  AuthService.getLoggedInUser().then(function(user) {
-    $scope.user = user;
-    $scope.roomKey = RoomFactory.createRoom('exercise', $scope.user);
-  });
+  // AuthService.getLoggedInUser().then(function(user) {
+  //   $scope.user = user;
+  //   $scope.roomKey = RoomFactory.createRoom('exercise', $scope.user);
+  // });
 
   // defines and sets the onLoad callback function on the scope
   $scope.userInputSession = function(_editor) {
