@@ -4,41 +4,35 @@
 <head>
     <meta charset="utf-8">
     <title>HTML</title>
-    <script src='http://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+<!--     <script src='http://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
 
-</head>
+ --></head>
 
 <body>
 
-    <div>{{test}}</div>
+    <!-- the id of the created room,
+    variable name should be changed to something more explicit -->
+    <div>{{ roomKey }}</div>
 
-    <div id="editor" style="font-family: monospace;"> <!-- div where the editor lives, code is displayed as formatted below / EDITOR NOT DISPLAYED PROPERLY-->
-function add(one, two) {
-
-}
+    <!-- setting a ng-model seems to remove the ability to set a default value
+    in-between the two divs, not sure how to get that to work with ng-model
+    UPDATE: it seems setting ng-model on the scope and injecting as seen below
+    will do what we want it to do
+    -->
+    <div ui-ace = "{
+            useWrapMode : true,
+            showGutter: true,
+            theme: 'monokai',
+            mode: 'javascript',
+            onLoad: userInputSession,
+            onChange: getUserInput
+    }" ng-model='userInputCode' id="userInput">
+    {{ userInputCode }}
     </div>
 
     <iframe id="mocha-runner" src='/api/arena/iframe' style="display: inline-block; width: 40%; height: 500px;">
         <!-- the iframe makes a request to the api route on page load, then subsequently on each return keypress -->
     </iframe>
-
-    <script>
-    $(document).ready(function() {
-        var userPad = new Firebase('http://dazzling-torch-169.firebaseio.com/code');
-
-        var editor = ace.edit("editor");
-        editor.setTheme("ace/theme/monokai");
-        editor.getSession().setMode("ace/mode/javascript");
-        $('#editor').keyup(function(e) {
-            // var keyCodeEvents = [13,32,186,8,46];
-            var keyCodeEvents = [13];
-            if (keyCodeEvents.indexOf(e.keyCode) > -1) {
-                userPad.set(editor.getValue());
-                document.getElementById('mocha-runner').src = document.getElementById('mocha-runner').src;
-            }
-        });
-    });
-    </script>
 
 </body>
 
