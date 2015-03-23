@@ -1,6 +1,10 @@
 <section id="Exercises">
 	<div class="container pt">
 		<h2> Exercises </h2>
-		<h5 ng-repeat="exercise in exercises">{{ exercise.name }}</h5>
+    <h5 ng-repeat="exercise in exercises">
+      {{ exercise.name }}
+       <a href="/arena/{{ roomKey }}" ng-click="makeNewRoom(exercise)">Create Room</a>
+    </h5>
+
 	</div>
 </section>
