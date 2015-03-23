@@ -5,10 +5,17 @@ app.factory('RoomFactory', function ($firebaseObject) {
         var activeRooms = [];
 
         var createRoom = function(exercise, user) {
-            console.log('these are the rooms:', rooms);
             // console.log('this is the user: ', user);
             var roomData = {
-                users: user
+                users: user,
+                exerciseId: exercise._id,
+                exerciseName: exercise.name,
+                shortDescription: exercise.shortDescription,
+                longDescription: exercise.longDescription,
+                editorPrompt: exercise.editorPrompt,
+                testCode: exercise.testCode,
+                category: exercise.category,
+                difficulty: exercise.difficulty
             };
             var roomKey = rooms.push(roomData).key();
             activeRooms.push(roomKey);

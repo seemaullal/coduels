@@ -7,7 +7,7 @@ app.config(function($stateProvider) {
   });
 });
 
-app.controller('ArenaController', function($scope, RoomFactory, AuthService) {
+app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFactory, AuthService) {
 
   // sets the logged-in user on the scope and creates a new room with that user
   // in the newly created room
@@ -19,7 +19,7 @@ app.controller('ArenaController', function($scope, RoomFactory, AuthService) {
   // defines and sets the onLoad callback function on the scope
   $scope.userInputSession = function(_editor) {
     $scope.aceEditor = _editor.getSession();
-    console.log($scope.aceEditor);
+    // console.log($scope.aceEditor);
   };
 
   // defines and sets the onChange callback function on the scope
@@ -28,7 +28,6 @@ app.controller('ArenaController', function($scope, RoomFactory, AuthService) {
 
       // userPad is a reference to the JSON object at the url
       var userPad = new Firebase('http://dazzling-torch-169.firebaseio.com/codes');
-
       // we access the editor using jQuery and on each 'keyup', we check whether
       // a particular keycode was pressed, in this case, the enter key (13)
       $('#userInput').keyup(function(e) {
@@ -52,5 +51,10 @@ app.controller('ArenaController', function($scope, RoomFactory, AuthService) {
     }); // closes document.ready
   }; // closes getUserInput
 
-  $scope.userInputCode = 'function add(one, two) {\n\n}';
+  var fromFirebase = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey + '/exerciseId')
+  fromFirebase.once('value', function(snapshot) {
+      $scope.exerciseId = snapshot.val()});
+      $scope.srcUrl = $sce.trustAsResourceUrl('/api/arena/iframe/' + $scope.exerciseId).toString();
+      $scope.userInputCode = 'function add(one, two) {\n\n}';
+
 }); // closes controller

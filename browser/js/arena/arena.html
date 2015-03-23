@@ -30,7 +30,7 @@
     {{ userInputCode }}
     </div>
 
-    <iframe id="mocha-runner" src='/api/arena/iframe' style="display: inline-block; width: 40%; height: 500px;">
+    <iframe id="mocha-runner" ng-src="{{srcUrl}}" style="display: inline-block; width: 40%; height: 500px;">
         <!-- the iframe makes a request to the api route on page load, then subsequently on each return keypress -->
     </iframe>
 
