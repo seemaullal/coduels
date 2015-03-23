@@ -1,4 +1,5 @@
 module.exports = {
+  // "DATABASE_URI": "mongodb://coduels:javascript15@ds031641.mongolab.com:31641/coduels",
   "DATABASE_URI": "mongodb://localhost:27017/coduels",
   "SESSION_SECRET": "Optimus Prime is my real dad",
   "TWITTER": {

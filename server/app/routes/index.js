@@ -5,7 +5,7 @@ var Exercise = mongoose.model('Exercise');
 module.exports = router;
 
 // iframe route that serves up test specs from the database / NEED TO LINK UP TO DATABASE
-router.get('/arena/iframe', function(req, res) {
+router.get('/arena/iframe', function (req, res) {
     var testText = "describe('add', function() {it(\"adds two numbers\", function() { var result = add(2, 3); expect(result).to.equal(5); }); it(\"adds two numbers\", function() { var result = add(3, 3); expect(result).to.equal(6); }); });";
     res.render('iframe', {
         test: testText
@@ -13,14 +13,21 @@ router.get('/arena/iframe', function(req, res) {
 });
 
 //post tests created on browser
-router.post('/tests', function(req, res) {
+router.post('/tests', function (req, res) {
 	Exercise.create(req.body, function(err, content) {
 		if(err) res.send(err);
 		else res.json(content);
 		console.log('content;lakjds;f', content);
-	})
-})
+	});
+});
 
+router.get('/exercises', function (req, res){
+	Exercise.find({}, function (err, exercises) {
+		console.log(exercises);
+		if (!err) res.json(exercises);
+		else res.send(err);
+	});
+});
 
 // Make sure this is after all of
 // the registered routes!
