@@ -15,6 +15,28 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
   //   $scope.user = user;
   //   $scope.roomKey = RoomFactory.createRoom('exercise', $scope.user);
   // });
+ var startTimeFromFb = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey + '/gameStartTime');
+  startTimeFromFb.once('value', function(snapshot) {
+      var startTime = new Date(snapshot.val());
+      console.log('start time: ',startTime);
+      var timeout = setInterval(countDown, 1000);
+      function countDown() {
+        setTime(Math.max(0, startTime - Date.now()));
+        if (startTime <= Date.now() ) { 
+          $state.go('exercises');
+          clearInterval(timeout); 
+        }
+      }
+
+      function setTime(remaining) {
+      //   var minutes = Math.floor(remaining/60000);
+      //   var secs = Math.round(remaining/1000);
+        $scope.timeLeft = remaining
+        // minutes + ':' + secs;
+        $scope.$digest();
+      }
+
+  });
 
   // defines and sets the onLoad callback function on the scope
   $scope.userInputSession = function(_editor) {
@@ -24,7 +46,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
 
   // defines and sets the onChange callback function on the scope
   $scope.getUserInput = function(_editor) {
-    $(document).ready(function() {
+    // $(document).ready(function() {
 
       // userPad is a reference to the JSON object at the url
       var userPad = new Firebase('http://dazzling-torch-169.firebaseio.com/codes');
@@ -47,7 +69,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
           document.getElementById('mocha-runner').src = document.getElementById('mocha-runner').src;
         } // closes if statement
       }); // closes keyup function
-    }); // closes document.ready
+    // }); // closes document.ready
   }; // closes getUserInput
 
   var exerciseIdFromFb = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey + '/exerciseId');
@@ -61,4 +83,5 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
     console.log("editor prompt",snapshot.val());
     $scope.editorPrompt = snapshot.val();
   });
+
 }); // closes controller

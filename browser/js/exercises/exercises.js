@@ -22,12 +22,11 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactor
 		$scope.activeRoomData = activeRooms;
 	});
 
-	$scope.makeNewRoom = function (exercise) {
-		$scope.roomKey = RoomFactory.createRoom(exercise, $scope.user);
-		// $scope.activeRoomData = RoomFactory.updateActiveRoomData();
-	};
-
 	$scope.joinRoom = function (roomId) {
 		RoomFactory.addUserToRoom($scope.user, roomId);
+	};
+
+	$scope.makeNewRoom = function(exercise) {
+		 $scope.roomKey = RoomFactory.createRoom(exercise, $scope.user);
 	};
 });
