@@ -4,7 +4,6 @@ app.directive('aceEditor', function () {
         restrict: 'E',
         templateUrl: 'js/common/directives/ace-editor/ace-editor.html',
         link: function(scope) {
-        	console.log('scopeaisofnaoisdfn', scope);
         }
     };
 });
