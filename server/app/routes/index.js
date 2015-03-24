@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var Exercise = mongoose.model('Exercise');
 module.exports = router;
 
+router.use(require('./exercises.js'));
 
 // iframe route that serves up test specs from the database
 router.get('/arena/iframe/:exerciseId', function(req, res) {
@@ -17,23 +18,6 @@ router.get('/arena/iframe/:exerciseId', function(req, res) {
                 exercise: testText
             });
         }
-    });
-});
-
-//post tests created on browser
-router.post('/tests', function(req, res) {
-    Exercise.create(req.body, function(err, content) {
-        if (err) res.send(err);
-        else res.json(content);
-        console.log('content;lakjds;f', content);
-    });
-});
-
-router.get('/exercises', function(req, res) {
-    Exercise.find({}, function(err, exercises) {
-        console.log(exercises);
-        if (!err) res.json(exercises);
-        else res.send(err);
     });
 });
 
