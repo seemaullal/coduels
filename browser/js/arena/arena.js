@@ -24,9 +24,9 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
       var timeout = setInterval(countDown, 1000);
       function countDown() {
         setTime(Math.max(0, startTime - Date.now()));
-        if (startTime <= Date.now() ) { 
+        if (startTime <= Date.now() ) {
           // $state.go('exercises');
-          clearInterval(timeout); 
+          clearInterval(timeout);
         }
       }
 
@@ -43,7 +43,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
   // defines and sets the onLoad callback function on the scope
   $scope.userInputSession = function(_editor) {
     $scope.aceEditor = _editor.getSession();
-    $scope.getUserInput(_editor);
+    // $scope.getUserInput(_editor);
     // console.log($scope.aceEditor);
   };
 
