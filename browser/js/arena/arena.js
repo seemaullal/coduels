@@ -23,7 +23,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
       function countDown() {
         setTime(Math.max(0, startTime - Date.now()));
         if (startTime <= Date.now() ) { 
-          $state.go('exercises');
+          // $state.go('exercises');
           clearInterval(timeout); 
         }
       }
