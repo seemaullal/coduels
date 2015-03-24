@@ -58,6 +58,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
 
   var editorPromptFromFb = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey + '/editorPrompt');
   editorPromptFromFb.once('value', function(snapshot) {
-      $scope.editorPrompt = snapshot.val();
+    console.log("editor prompt",snapshot.val());
+    $scope.editorPrompt = snapshot.val();
   });
 }); // closes controller
