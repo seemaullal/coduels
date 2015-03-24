@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/mocha/mocha.css">
     <script src="/mocha/mocha.js"></script>
     <script src="/chai/chai.js"></script>
+    <script src="/socket.io-client/socket.io.js"></script>
 
     <!-- sets the Behavior Driven Development interface to show on mocha.run() -->
     <script>
@@ -26,43 +27,28 @@
     <!-- Source file -->
     <script type="text/javascript">
 
-    // sets a variable, fromUserPad, to the firebase reference the editor is sending data to
-    var fromUserPad = new Firebase('http://dazzling-torch-169.firebaseio.com/codes');
+    // var socket = io.connect('http://localhost:1337');
+    var socket = io();
+    socket.on('userCode', function (userCode){
+        console.log(userCode);
+    });
 
-    // listens for changes on the firebase reference, in this case the JSON object on /codes
-    // the snapshot is the object at the time the user hits the enter key
-    fromUserPad.on('value', function(snapshot) {
-        // sets the data to an empty string so that upon a page refresh, the previous snapshot
-        // doesn't persist or else the test will show that it passed even if there's no code
-        // fromUserPad.set('');
+    // var fromUserPad = new Firebase('http://dazzling-torch-169.firebaseio.com/codes');
 
-        // dynamically creates a script tag and sets it on variable g
-        var g = document.createElement('script');
-        // gets an array of all the script tags and sets the first one on variable s
-        var s = document.getElementsByTagName('script')[0];
+    // fromUserPad.on('value', function(snapshot) {
 
-        // sets the text between the newly created script tag to the snapshot.val()
-        // which is the user-inputted code
-        g.text = snapshot.val();
-        console.log('this is the snapshot value:', snapshot.val())
+    //     var g = document.createElement('script');
+        
+    //     var s = document.getElementsByTagName('script')[0];
 
-        // g.text += ";(function() { \n jasmine.getEnv().execute(); })()"
-        // ^ David's brilliant workaround to get jasmine to execute
-        // left the code for all to admire / CAN BE DELETED ANYTIME
+    //     g.text = snapshot.val();
+    //     console.log('this is the snapshot value:', snapshot.val())
+    //     s.parentNode.insertBefore(g, s);
 
-        // selects the parentNode of s, which is <head>, and insertBefore takes
-        // the element you want to add as the first parameter and the element
-        // you want to place the new element before as the second parameter
-        // this should create a script tag with the user-input from the editor
-        // in between the first <link> and <script> tags at the top.
-        s.parentNode.insertBefore(g, s);
-
-        // runs mocha, the callback returns the number of failures, which should
-        // always be the total number of tests at the beginning of each challenge
-        mocha.run(function(failures){
-            console.log("# of failures: ", failures);
-        });
-    })
+    //     mocha.run(function(failures){
+    //         console.log("# of failures: ", failures);
+    //     });
+    // });
 
     </script>
 
@@ -79,5 +65,6 @@
 <body>
     <div id="mocha"></div> <!-- mocha runner div -->
 </body>
+
 
 </html>
