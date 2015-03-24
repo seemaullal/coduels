@@ -22,7 +22,7 @@ var schema = new mongoose.Schema({
 		type: [String]
 	},
 	difficulty: {
-		type: String
+		type: String //should be Easy, Medium, or Hard
 	}
 
 });
