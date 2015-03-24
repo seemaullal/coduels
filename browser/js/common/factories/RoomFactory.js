@@ -10,7 +10,7 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
         var gameStartTime = new Date();
         gameStartTime = gameStartTime.setMinutes(gameStartTime.getMinutes() + 2);
         var roomData = {
-            users: user,
+            users: [user],
             exerciseId: exercise._id,
             exerciseName: exercise.name,
             shortDescription: exercise.shortDescription,
@@ -42,10 +42,22 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
             var ref = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/');
             ref.once('value', function (firebaseSnapshot){
                 for (var key in firebaseSnapshot.val()){
-                    activeRoomData.push(firebaseSnapshot.val()[key]);
+                    var roomData = firebaseSnapshot.val()[key];
+                    roomData.roomId = key;
+                    activeRoomData.push(roomData);
                 };
                 resolve(activeRoomData);
             });
+        });
+    };
+
+    factory.addUserToRoom = function (userObj, roomId) {
+        var ref = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/'+roomId);
+        var list = [];
+        ref.once('value', function (snap){
+            list = snap.val().users;
+            list.push(userObj);
+            ref.child('users').set(list);
         });
     };
 
