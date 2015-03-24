@@ -27,12 +27,14 @@
     <!-- Source file -->
     <script type="text/javascript">
 
+    var socket = io();
     var g = document.createElement('script');
     var s = document.getElementsByTagName('script')[0];
-    var socket = io();
+
     socket.on('theCode', function (userCode){
-        g.text = userCode;
+
         console.log('this is the value from the socket:', userCode)
+        g.text = userCode;
         s.parentNode.insertBefore(g, s);
 
         mocha.run(function(failures){
@@ -61,9 +63,6 @@
 
     <!-- Test file -->
     <script type="text/javascript">
-
-    // ejs 'raw unescaped output' tag
-    // test from our database
     <%- exercise %>
     </script>
 
