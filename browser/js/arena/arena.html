@@ -18,16 +18,10 @@
     UPDATE: it seems setting ng-model on the scope and injecting as seen below
     will do what we want it to do
     -->
-    <!-- <div ui-ace="{
-            useWrapMode : true,
-            showGutter: true,
-            theme: 'monokai',
-            mode: 'javascript',
-            onLoad: userInputSession,
-            onChange: getUserInput
-    }" ng-model="editorPrompt"  id="userInput"> -->
+
     <ace-editor></ace-editor>
     <!-- </div> -->
+
 
     <iframe id="mocha-runner" ng-src="{{srcUrl}}" style="display: inline-block; width: 40%; height: 500px;">
         <!-- the iframe makes a request to the api route on page load, then subsequently on each return keypress -->
