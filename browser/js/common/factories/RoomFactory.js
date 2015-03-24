@@ -3,7 +3,8 @@ app.factory('RoomFactory', function($firebaseObject) {
     var rooms = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms');
 
     var activeRooms = [];
-
+    var gameStartTime = new Date();
+    gameStartTime = gameStartTime.setMinutes(gameStartTime.getMinutes() + 2);
     var createRoom = function(exercise, user) {
         var roomData = {
             users: user,
@@ -14,7 +15,8 @@ app.factory('RoomFactory', function($firebaseObject) {
             editorPrompt: exercise.editorPrompt,
             testCode: exercise.testCode,
             category: exercise.category,
-            difficulty: exercise.difficulty
+            difficulty: exercise.difficulty,
+            gameStartTime: gameStartTime
 
         };
         var roomKey = rooms.push(roomData).key();
