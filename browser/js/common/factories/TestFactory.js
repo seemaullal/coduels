@@ -15,4 +15,4 @@ app.factory('TestFactory', function ($http){
 	};
 
 	return factory;
-}) 
+});
