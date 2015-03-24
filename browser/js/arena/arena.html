@@ -11,6 +11,7 @@
     variable name should be changed to something more explicit -->
     <div>{{ roomKey }}</div>
     <div>{{ timeLeft | date:'mm:ss' }}</div>
+    <div>{{ exerciseName }}</div>
 <!--     | date : 'HH:mm' date formatting angular filter -->    
 <!-- setting a ng-model seems to remove the ability to set a default value
     in-between the two divs, not sure how to get that to work with ng-model
@@ -25,9 +26,7 @@
             onLoad: userInputSession,
             onChange: getUserInput
     }" ng-model="editorPrompt"  id="userInput"> -->
-    <ace-editor ng-model="editorPrompt">
-        <!-- <div>{{ editorPrompt }}</div> -->
-    </ace-editor>
+    <ace-editor></ace-editor>
     <!-- </div> -->
 
     <iframe id="mocha-runner" ng-src="{{srcUrl}}" style="display: inline-block; width: 40%; height: 500px;">

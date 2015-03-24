@@ -2,4 +2,4 @@
             showGutter: true,
             theme: 'monokai',
             mode: 'javascript',
-            onLoad: userInputSession}" ng-model="editorPrompt" id="userInput"></div>
+            onLoad: userInputSession}" ng-keyup="onKeyPress($event)" ng-model="editorPrompt" id="userInput"></div>

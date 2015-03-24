@@ -15,6 +15,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
   //   $scope.user = user;
   //   $scope.roomKey = RoomFactory.createRoom('exercise', $scope.user);
   // });
+  RoomFactory.
  var startTimeFromFb = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey + '/gameStartTime');
   startTimeFromFb.once('value', function(snapshot) {
       var startTime = new Date(snapshot.val());
@@ -52,6 +53,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
       var userPad = new Firebase('http://dazzling-torch-169.firebaseio.com/codes');
       // we access the editor using jQuery and on each 'keyup', we check whether
       // a particular keycode was pressed, in this case, the enter key (13)
+
       $('#userInput').keyup(function(e) {
         // var keyCodeEvents = [13,32,186,8,46];
         var keyCodeEvents = [13];
@@ -82,6 +84,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
   editorPromptFromFb.once('value', function(snapshot) {
     console.log("editor prompt",snapshot.val());
     $scope.editorPrompt = snapshot.val();
+
   });
 
 }); // closes controller
