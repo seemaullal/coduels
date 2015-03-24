@@ -7,3 +7,13 @@
         </h5>
     </div>
 </section>
+
+<section id="openRooms">
+    <div class="container pt">
+        <h2> Active Rooms </h2>
+        <h5 ng-repeat="room in activeRoomData">
+            {{ room.exerciseName }}
+            <a href="/arena/{{ roomKey }}">Join Room</a>
+        </h5>
+    </div>
+</section>

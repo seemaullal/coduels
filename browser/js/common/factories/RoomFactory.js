@@ -1,10 +1,12 @@
-app.factory('RoomFactory', function($firebaseObject) {
+app.factory('RoomFactory', function($firebaseObject, $q) {
+
+    var factory = {}
 
     var rooms = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms');
 
-    var activeRooms = [];
+    factory.activeRooms = [];
 
-    var createRoom = function(exercise, user) {
+    factory.createRoom = function(exercise, user) {
         var roomData = {
             users: user,
             exerciseId: exercise._id,
@@ -18,7 +20,9 @@ app.factory('RoomFactory', function($firebaseObject) {
 
         };
         var roomKey = rooms.push(roomData).key();
-        activeRooms.push(roomKey);
+        factory.activeRooms.push(roomKey);
+
+
         return roomKey;
         //fetches the exercise from the DB (or get from exercise obj)
         //creates a room with that user in it
@@ -28,8 +32,20 @@ app.factory('RoomFactory', function($firebaseObject) {
         //^ /arena/(fb id)
     }; // closes createRoom function
     //very similar ( or same function?) for createPractice
-    return {
-        createRoom: createRoom
+
+    factory.updateActiveRoomData = function () {
+        return $q(function(resolve, reject) {        
+            var activeRoomData = [];
+            var ref = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/');
+            ref.once('value', function (firebaseSnapshot){
+                for (var key in firebaseSnapshot.val()){
+                    activeRoomData.push(firebaseSnapshot.val()[key]);
+                };
+                resolve(activeRoomData);
+            });
+        });
     };
+
+    return factory;
 
 });
