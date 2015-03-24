@@ -45,16 +45,19 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
           // another copy of the test to the iframe which was visually unruly, but has no
           // effect on the testing process
           document.getElementById('mocha-runner').src = document.getElementById('mocha-runner').src;
-
         } // closes if statement
       }); // closes keyup function
     }); // closes document.ready
   }; // closes getUserInput
 
-  var fromFirebase = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey + '/exerciseId')
-  fromFirebase.once('value', function(snapshot) {
-      $scope.exerciseId = snapshot.val()});
+  var exerciseIdFromFb = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey + '/exerciseId');
+  exerciseIdFromFb.once('value', function(snapshot) {
+      $scope.exerciseId = snapshot.val();
       $scope.srcUrl = $sce.trustAsResourceUrl('/api/arena/iframe/' + $scope.exerciseId).toString();
-      $scope.userInputCode = 'function add(one, two) {\n\n}';
+  });
 
+  var editorPromptFromFb = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey + '/editorPrompt');
+  editorPromptFromFb.once('value', function(snapshot) {
+      $scope.editorPrompt = snapshot.val();
+  });
 }); // closes controller

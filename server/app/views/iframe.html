@@ -32,10 +32,9 @@
     // listens for changes on the firebase reference, in this case the JSON object on /codes
     // the snapshot is the object at the time the user hits the enter key
     fromUserPad.on('value', function(snapshot) {
-
         // sets the data to an empty string so that upon a page refresh, the previous snapshot
         // doesn't persist or else the test will show that it passed even if there's no code
-        // fromUserPad.set('');
+        fromUserPad.set('');
 
         // dynamically creates a script tag and sets it on variable g
         var g = document.createElement('script');
