@@ -27,10 +27,17 @@
     <!-- Source file -->
     <script type="text/javascript">
 
-    // var socket = io.connect('http://localhost:1337');
+    var g = document.createElement('script');
+    var s = document.getElementsByTagName('script')[0];
     var socket = io();
-    socket.on('userCode', function (userCode){
-        console.log(userCode);
+    socket.on('theCode', function (userCode){
+        g.text = userCode;
+        console.log('this is the value from the socket:', userCode)
+        s.parentNode.insertBefore(g, s);
+
+        mocha.run(function(failures){
+            console.log("# of failures: ", failures);
+        });
     });
 
     // var fromUserPad = new Firebase('http://dazzling-torch-169.firebaseio.com/codes');
