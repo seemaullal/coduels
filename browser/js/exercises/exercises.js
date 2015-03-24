@@ -23,7 +23,8 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactor
 	});
 
 	$scope.makeNewRoom = function(exercise) {
-		$scope.roomKey = RoomFactory.createRoom(exercise, $scope.user);
-		// $scope.activeRoomData = RoomFactory.updateActiveRoomData();
+		 $scope.roomKey = RoomFactory.createRoom(exercise, $scope.user);
 	};
+
+
 });
