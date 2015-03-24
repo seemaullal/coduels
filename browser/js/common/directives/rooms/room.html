@@ -1,0 +1,5 @@
+<h5> Room Exercise: {{ room.exerciseName }} </h5>
+<h5>   
+	Room User(s): {{ room.users[0].username}}
+    <a href="/arena/{{ roomKey }}" ng-click="joinRoom(room.roomId)">Join Room</a>
+</h5>
