@@ -4,50 +4,38 @@
 <head>
     <meta charset="utf-8">
     <title>HTML</title>
-    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
-
-    <style> /* SHOULD BE MOVED TO A SCSS FILE */
-    #editor {
-        display: inline-block;
-        margin: auto;
-        width: 45%;
-        height: 500px;
-        border: 1px solid #888;
-    }
-    </style>
-
-
 </head>
 
 <body>
 
-    <div id="editor"> <!-- div where the editor lives, code is displayed as formatted below / EDITOR NOT DISPLAYED PROPERLY-->
-function add(one, two) {
+<section class="waiting" ng-show="!waitingDone">
+    <waiting-room></waiting-room>
+</section>
 
-}
+<div class="challengeStart" ng-show="waitingDone">
+    <h1> {{ game.exerciseName }}</h1>
+    <div ng-repeat="user in userDisplay">
+        <h5> Username: {{ user.username }} </h5>
+        <h5> Failures: {{ user.failures }} </h5>
     </div>
 
-    <iframe id="mocha-runner" src='/api/arena/iframe' style="display: inline-block; width: 40%; height: 500px;">
-        <!-- the iframe makes a request to the api route on page load, then subsequently on each return keypress -->
+    <ace-editor></ace-editor>
+    </div>
+
+
+<div class="col-sm-6">
+<div ng-repeat="user in userDisplay">
+        <h5> Username: {{ user.username }} </h5>
+        <h5> Failures: {{ user.failures }} </h5>
+</div>
+</div>
+
+
+    <iframe id="mocha-runner" ng-src="{{srcUrl}}" style="display: none; width: 40%; height: 500px;">
+        <!-- the iframe makes a request to the api routie on page load, then subsequently on each return keypress -->
     </iframe>
-
-    <script>
-    $(document).ready(function() {
-        var userPad = new Firebase('https://dazzling-torch-169.firebaseio.com/code');
-
-        var editor = ace.edit("editor");
-        editor.setTheme("ace/theme/monokai");
-        editor.getSession().setMode("ace/mode/javascript");
-        $('#editor').keypress(function(e) {
-            if (e.keyCode === 13) {
-                userPad.set(editor.getValue(), function(data) {
-                });
-                document.getElementById('mocha-runner').src = document.getElementById('mocha-runner').src;
-            }
-        });
-    });
-    </script>
-
+</div>
+</div>
 </body>
 
 </html>
