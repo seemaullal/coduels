@@ -6,7 +6,6 @@ var mongoose = require('mongoose');
 var UserModel = mongoose.model('User');
 
 module.exports = function (app) {
-    console.log("HIT");
     var githubConfig = app.getValue('env').GITHUB;
 
     var githubCredentials = {
@@ -17,7 +16,6 @@ module.exports = function (app) {
 
     var verifyCallback = function (accessToken, refreshToken, profile, done) {
         UserModel.findOne({ 'github.id': profile.id }, function (err, user) {
-            console.log(profile);
             if (err) return done(err);
 
             if (user) {
@@ -48,7 +46,6 @@ module.exports = function (app) {
     app.get('/auth/github/callback',
         passport.authenticate('github', { failureRedirect: '/login' }),
         function (req, res) {
-            console.log('getting here');
             res.redirect('/');
             
         });

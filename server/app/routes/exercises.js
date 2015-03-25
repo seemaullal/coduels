@@ -16,7 +16,6 @@ router.post('/exercises', function(req, res) {
 // gets exercises and sends it to the browser
 router.get('/exercises', function(req, res) {
     Exercise.find({}, function(err, exercises) {
-        console.log(exercises);
         if (!err) res.json(exercises);
         else res.send(err);
     });
