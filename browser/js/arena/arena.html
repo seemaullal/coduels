@@ -7,24 +7,17 @@
 </head>
 
 <body>
-    <!-- the id of the created room,
-    variable name should be changed to something more explicit -->
-    <!-- <div>{{ roomKey }}</div> -->
 
 <section class="waiting" ng-show="!waitingDone">
     <waiting-room></waiting-room>
 </section>
 
-<!--     | date : 'HH:mm' date formatting angular filter -->    
-<!-- setting a ng-model seems to remove the ability to set a default value
-    in-between the two divs, not sure how to get that to work with ng-model
-    UPDATE: it seems setting ng-model on the scope and injecting as seen below
-    will do what we want it to do
-    -->
-<div class="row">    
 <div class="challengeStart" ng-show="waitingDone">
-
-<div class="col-sm-6">
+    <h1> {{ game.exerciseName }}</h1>
+    <div ng-repeat="user in userDisplay">
+        <h5> Username: {{ user.username }} </h5>
+        <h5> Failures: {{ user.failures }} </h5>
+    </div>
 
     <ace-editor></ace-editor>
     </div>
@@ -39,7 +32,7 @@
 
 
     <iframe id="mocha-runner" ng-src="{{srcUrl}}" style="display: none; width: 40%; height: 500px;">
-        <!-- the iframe makes a request to the api route on page load, then subsequently on each return keypress -->
+        <!-- the iframe makes a request to the api routie on page load, then subsequently on each return keypress -->
     </iframe>
 </div>
 </div>
