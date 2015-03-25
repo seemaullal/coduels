@@ -15,7 +15,7 @@ module.exports = function (server) {
         });
 
         socket.on('failures', function (failures){
-        	console.log("failures", failures);
+        	console.log('failures', failures);
         	socket.broadcast.emit('theFailures', failures);
         });
     });

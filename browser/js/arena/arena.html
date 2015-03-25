@@ -13,14 +13,15 @@
 
     <div class="countdown" ng-show="!waitingDone"><waiting-room></waiting-room></div>
 
-<!--     | date : 'HH:mm' date formatting angular filter -->    
+<!--     | date : 'HH:mm' date formatting angular filter -->
 <!-- setting a ng-model seems to remove the ability to set a default value
     in-between the two divs, not sure how to get that to work with ng-model
     UPDATE: it seems setting ng-model on the scope and injecting as seen below
     will do what we want it to do
     -->
-    
+
 <div class="challengeStart" ng-show="waitingDone">
+    <h1> {{ game.exerciseName }}</h1>
     <div ng-repeat="user in userDisplay">
         <h5> Username: {{ user.username }} </h5>
         <h5> Failures: {{ user.failures }} </h5>
