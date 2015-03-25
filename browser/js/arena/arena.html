@@ -10,15 +10,15 @@
     <!-- the id of the created room,
     variable name should be changed to something more explicit -->
     <div>{{ roomKey }}</div>
-    <div>{{ timeLeft | date:'mm:ss' }}</div>
-    <div>{{ exerciseName }}</div>
+    <div class="countdown" ng-show="!waitingDone"><waiting-room></waiting-room></div>
+
 <!--     | date : 'HH:mm' date formatting angular filter -->    
 <!-- setting a ng-model seems to remove the ability to set a default value
     in-between the two divs, not sure how to get that to work with ng-model
     UPDATE: it seems setting ng-model on the scope and injecting as seen below
     will do what we want it to do
     -->
-
+<div class="challengeStart" ng-show="waitingDone">
     <ace-editor></ace-editor>
     <!-- </div> -->
 
@@ -26,6 +26,7 @@
     <iframe id="mocha-runner" ng-src="{{srcUrl}}" style="display: inline-block; width: 40%; height: 500px;">
         <!-- the iframe makes a request to the api route on page load, then subsequently on each return keypress -->
     </iframe>
+</div>
 </body>
 
 </html>

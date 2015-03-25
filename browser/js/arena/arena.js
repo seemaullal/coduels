@@ -9,6 +9,7 @@ app.config(function($stateProvider) {
 
 app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFactory, AuthService) {
 
+  $scope.waitingDone = false;
   // var socket = io();
 
   // sets the logged-in user on the scope and creates a new room with that user
@@ -20,13 +21,14 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
  var startTimeFromFb = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey + '/gameStartTime');
   startTimeFromFb.once('value', function(snapshot) {
       var startTime = new Date(snapshot.val());
-      console.log('start time: ',startTime);
       var timeout = setInterval(countDown, 1000);
       function countDown() {
         setTime(Math.max(0, startTime - Date.now()));
         if (startTime <= Date.now() ) {
           // $state.go('exercises');
           clearInterval(timeout);
+          $scope.waitingDone = true;
+          $scope.$digest();
         }
       }
 
@@ -39,6 +41,8 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
       }
 
   });
+
+
 
   // defines and sets the onLoad callback function on the scope
   $scope.userInputSession = function(_editor) {
