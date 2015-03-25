@@ -14,10 +14,10 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
 
   // sets the logged-in user on the scope and creates a new room with that user
   // in the newly created room
-  // AuthService.getLoggedInUser().then(function(user) {
-  //   $scope.user = user;
-  //   $scope.roomKey = RoomFactory.createRoom('exercise', $scope.user);
-  // });
+  AuthService.getLoggedInUser().then(function(user) {
+    $scope.user = user;
+  });
+
  var startTimeFromFb = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey + '/gameStartTime');
   startTimeFromFb.once('value', function(snapshot) {
       var startTime = new Date(snapshot.val());
@@ -62,7 +62,41 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
   editorPromptFromFb.once('value', function(snapshot) {
     console.log("editor prompt",snapshot.val());
     $scope.editorPrompt = snapshot.val();
-
   });
+
+  var socket = io();
+
+  $scope.test = "test";
+
+  var ref = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/'+$stateParams.roomKey+'/users');
+
+  socket.on('theFailures', function (failures){
+    $scope.failures = failures;
+    //send failures to Firebase
+    ref.once('value', function (userSnapshot){
+      console.log(userSnapshot.val());
+      userSnapshot.val().forEach(function (user,index){
+        if (user._id == $scope.user._id){
+          var updatedUser = userSnapshot.val()[index];
+          updatedUser.failures = failures;
+          ref.child(index).set(updatedUser);
+        };
+      });
+    });
+  });
+
+
+
+  ref.on('value', function (userSnapshot){
+    $scope.userDisplay = [];
+    userSnapshot.val().forEach(function (user){
+      var userObj = {};
+      userObj.username = user.username;
+      userObj.failures = user.failures;
+      $scope.userDisplay.push(userObj);
+      console.log("UserDisplay", $scope.userDisplay);
+    });
+  });
+
 
 }); // closes controller

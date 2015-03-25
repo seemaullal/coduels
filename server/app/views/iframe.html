@@ -38,7 +38,7 @@
         s.parentNode.insertBefore(g, s);
 
         mocha.run(function(failures){
-            console.log("# of failures: ", failures);
+            socket.emit('failures', failures);
         });
     });
 
