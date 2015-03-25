@@ -8,27 +8,28 @@
 
 <body>
 
+
 <section class="waiting" ng-show="!waitingDone">
     <waiting-room></waiting-room>
 </section>
 
+<div class="row">
 <div class="challengeStart" ng-show="waitingDone">
-    <h1> {{ game.exerciseName }}</h1>
+
+    <div class="col-sm-6">
+        <ace-editor></ace-editor>
+    </div>
+
+
+    <div class="col-sm-6">
+        <h2> {{ game.exerciseName }}</h2>
+        <h4> {{ game.longDescription }}</h4>
+        <h2> Current Players </h2>
     <div ng-repeat="user in userDisplay">
-        <h5> Username: {{ user.username }} </h5>
-        <h5> Failures: {{ user.failures }} </h5>
+            <h5> Username: {{ user.username }} </h5>
+            <h5> Failures: {{ user.failures }} </h5>
     </div>
-
-    <ace-editor></ace-editor>
     </div>
-
-
-<div class="col-sm-6">
-<div ng-repeat="user in userDisplay">
-        <h5> Username: {{ user.username }} </h5>
-        <h5> Failures: {{ user.failures }} </h5>
-</div>
-</div>
 
 
     <iframe id="mocha-runner" ng-src="{{srcUrl}}" style="display: none; width: 40%; height: 500px;">
@@ -36,6 +37,7 @@
     </iframe>
 </div>
 </div>
+
 </body>
 
 </html>
