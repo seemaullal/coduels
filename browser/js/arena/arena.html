@@ -12,6 +12,10 @@
     <div>{{ roomKey }}</div>
     <div>{{ timeLeft | date:'mm:ss' }}</div>
     <div>{{ exerciseName }}</div>
+    <div ng-repeat="user in userDisplay">
+        <h5> Username: {{ user.username }} </h5>
+        <h5> Failures: {{ user.failures }} </h5>
+    </div>
 <!--     | date : 'HH:mm' date formatting angular filter -->    
 <!-- setting a ng-model seems to remove the ability to set a default value
     in-between the two divs, not sure how to get that to work with ng-model
