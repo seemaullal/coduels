@@ -1,9 +1,15 @@
 'use strict';
-app.directive('aceEditor', function () {
+app.directive('aceEditor', function (AuthService) {
     return {
         restrict: 'E',
         templateUrl: 'js/common/directives/ace-editor/ace-editor.html',
         link: function(scope) {
+
+            var userId;
+
+            AuthService.getLoggedInUser().then(function (user) {
+                userId = user._id;
+            });
 
         	var socket = io();
 
@@ -11,7 +17,7 @@ app.directive('aceEditor', function () {
 
         	scope.onKeyPress = function($event) {
         		if(keyCodeEvents.indexOf($event.keyCode) > -1) {
-        			socket.emit('userCode', scope.aceEditor.getDocument().getValue());
+        			socket.emit('userCode', {code: scope.aceEditor.getDocument().getValue(), userId: userId});
                     document.getElementById('mocha-runner').src = document.getElementById('mocha-runner').src;
         		}
         	};

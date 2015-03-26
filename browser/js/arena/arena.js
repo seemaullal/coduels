@@ -63,14 +63,14 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
   var ref = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/'+$stateParams.roomKey+'/users');
 
   socket.on('theFailures', function (failures){
-    $scope.failures = failures;
+    $scope.failures = failures.failures;
     //send failures to Firebase
     ref.once('value', function (userSnapshot){
       console.log(userSnapshot.val());
       userSnapshot.val().forEach(function (user,index){
-        if (user._id == $scope.user._id){
+        if (user._id == failures.userId){
           var updatedUser = userSnapshot.val()[index];
-          updatedUser.failures = failures;
+          updatedUser.failures = failures.failures;
           ref.child(index).set(updatedUser);
         };
       });
