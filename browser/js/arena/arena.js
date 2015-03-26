@@ -1,6 +1,17 @@
 'use strict';
 app.config(function($stateProvider) {
   $stateProvider.state('arena', {
+    resolve: {
+      checkAuthorizedUser : function(AuthService, $state, $stateParams) {
+        return AuthService.getLoggedInUser().then(function(user) {
+          console.log(user);
+          if (!user) {
+            alert('You need to log in to do this.');
+            $state.go('home');
+          }
+        })
+      }
+    },
     url: '/arena/:roomKey',
     controller: 'ArenaController',
     templateUrl: 'js/arena/arena.html'
@@ -21,7 +32,6 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
  var startTimeFromFb = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey + '/gameStartTime');
   startTimeFromFb.once('value', function(snapshot) {
       var startTime = new Date(snapshot.val());
-      var timeout = setInterval(countDown, 1000);
       function countDown() {
         setTime(Math.max(0, startTime - Date.now()));
         if (startTime <= Date.now() ) {
@@ -31,6 +41,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
           $scope.$digest();
         }
       }
+      var timeout = setInterval(countDown, 1000);
 
       function setTime(remaining) {
       //   var minutes = Math.floor(remaining/60000);
