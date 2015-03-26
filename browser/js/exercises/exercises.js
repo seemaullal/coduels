@@ -10,6 +10,7 @@ app.config(function($stateProvider){
 
 
 app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactory, AuthService){
+	$scope.activeRoomData = [ ];
 	TestFactory.getExercises().then(function (exercises){
 		$scope.exercises = exercises;
 	});
@@ -20,7 +21,6 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactor
 
 	RoomFactory.updateActiveRoomData().then(function (activeRooms){
 		$scope.activeRoomData = activeRooms;
-		console.log($scope.activeRoomData);
 	});
 
 	$scope.joinRoom = function (roomId) {
@@ -34,7 +34,20 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactor
 		 $scope.roomKey = RoomFactory.createRoom(exercise, $scope.user);
 		 AuthService.getLoggedInUser().then(function(user) {
 		 	user.isAuthorized = $scope.roomKey;
-		 	console.log('iosdhfiqohrqihqio user authorized', user);
 		 });
 	};
+
+	function countDown() {
+		$scope.activeRoomData.forEach(function (room,index) {
+			room.timeUntilClose = Math.max(0, room.gameStartTime - Date.now());
+	  		if (room.gameStartTime <= Date.now() ) {
+	   	 		$scope.activeRoomData.splice(index,1);
+	  		}
+	  		$scope.$digest();
+	  		
+		})
+	}
+
+	var timeout = setInterval(countDown, 1000);
+
 });

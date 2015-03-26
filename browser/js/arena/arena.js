@@ -4,9 +4,6 @@ app.config(function($stateProvider) {
     resolve: {
       checkAuthorizedUser : function(AuthService, $state, $stateParams) {
         return AuthService.getLoggedInUser().then(function(user) {
-          console.log(user.isAuthorized === $stateParams.roomKey); //should be false;
-          console.log(user.isAuthorized);
-          console.log($stateParams.roomKey);
           if (!user) {
             alert('You need to log in to participate in a challenge.');
             $state.go('home');
