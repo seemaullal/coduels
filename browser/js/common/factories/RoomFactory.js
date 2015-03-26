@@ -36,6 +36,11 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
     }; // closes createRoom function
     //very similar ( or same function?) for createPractice
 
+    factory.deleteActiveRoom = function(roomKey) {
+        var ref = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + roomKey);
+        ref.remove();
+    }
+
     factory.updateActiveRoomData = function () {
         return $q(function(resolve, reject) {
             var activeRoomData = [];
@@ -44,7 +49,9 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
                 for (var key in firebaseSnapshot.val()){
                     var roomData = firebaseSnapshot.val()[key];
                     roomData.roomId = key;
-                    activeRoomData.push(roomData);
+                    if (roomData.gameStartTime > Date.now() ) 
+                    // don't put closed rooms (timed out) on scope for now
+                        activeRoomData.push(roomData);
                 };
                 resolve(activeRoomData);
             });
