@@ -38,7 +38,7 @@
         s.parentNode.insertBefore(g, s);
 
         mocha.run(function(failures){
-            console.log('this is the userId in iframe': userCode.userId)
+            console.log('this is the userId in iframe:', userCode.userId)
             socket.emit('failures', {failures: failures, userId: userCode.userId});
         });
     });
