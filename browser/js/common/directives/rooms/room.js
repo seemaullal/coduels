@@ -2,7 +2,10 @@
 app.directive('room', function () {
 	return {
 		restrict: 'E',
-		templateUrl: 'js/common/directives/rooms/room.html'
+		templateUrl: 'js/common/directives/rooms/room.html',
+		link: function(scope) {
+
+		}
 	};
 });
 

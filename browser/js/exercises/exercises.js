@@ -20,6 +20,7 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactor
 
 	RoomFactory.updateActiveRoomData().then(function (activeRooms){
 		$scope.activeRoomData = activeRooms;
+		console.log($scope.activeRoomData);
 	});
 
 	$scope.joinRoom = function (roomId) {

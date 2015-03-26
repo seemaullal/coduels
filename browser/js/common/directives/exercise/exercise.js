@@ -2,6 +2,6 @@
 app.directive('exercise', function () {
 	return {
 		restrict: 'E',
-		templateUrl: 'js/common/directives/exercises/exercise.html'
+		templateUrl: 'js/common/directives/exercise/exercise.html'
 	};
 });
