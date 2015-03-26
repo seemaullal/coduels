@@ -8,7 +8,7 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
 
     factory.createRoom = function(exercise, user) {
         var gameStartTime = new Date();
-        gameStartTime = gameStartTime.setMinutes(gameStartTime.getMinutes() + 1);
+        gameStartTime = gameStartTime.setSeconds(gameStartTime.getSeconds() + 20);
         var roomData = {
             users: [user],
             exerciseId: exercise._id,
@@ -49,7 +49,7 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
                 for (var key in firebaseSnapshot.val()){
                     var roomData = firebaseSnapshot.val()[key];
                     roomData.roomId = key;
-                    if (roomData.gameStartTime > Date.now() ) 
+                    if (roomData.gameStartTime > Date.now() )
                     // don't put closed rooms (timed out) on scope for now
                         activeRoomData.push(roomData);
                 };

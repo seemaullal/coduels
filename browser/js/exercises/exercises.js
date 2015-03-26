@@ -15,10 +15,6 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactor
 		$scope.exercises = exercises;
 	});
 
-    AuthService.getLoggedInUser().then(function(user) {
-      $scope.user = user;
-    });
-
 	RoomFactory.updateActiveRoomData().then(function (activeRooms){
 		$scope.activeRoomData = activeRooms;
 	});
@@ -31,8 +27,9 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactor
 	};
 
 	$scope.makeNewRoom = function(exercise) {
-		 $scope.roomKey = RoomFactory.createRoom(exercise, $scope.user);
 		 AuthService.getLoggedInUser().then(function(user) {
+		 	$scope.user = user;
+		 	$scope.roomKey = RoomFactory.createRoom(exercise, $scope.user);
 		 	user.isAuthorized = $scope.roomKey;
 		 });
 	};
@@ -44,7 +41,7 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactor
 	   	 		$scope.activeRoomData.splice(index,1);
 	  		}
 	  		$scope.$digest();
-	  		
+
 		})
 	}
 

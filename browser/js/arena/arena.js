@@ -105,6 +105,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
       $scope.userDisplay.push(userObj);
       console.log("UserDisplay", $scope.userDisplay);
     });
+    $scope.$digest();
   });
 
 
