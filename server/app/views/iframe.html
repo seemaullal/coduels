@@ -34,11 +34,11 @@
     socket.on('theCode', function (userCode){
 
         console.log('this is the value from the socket:', userCode)
-        g.text = userCode;
+        g.text = userCode.code;
         s.parentNode.insertBefore(g, s);
 
         mocha.run(function(failures){
-            socket.emit('failures', failures);
+            socket.emit('failures', {failures: failures, user: userCode.user});
         });
     });
 
