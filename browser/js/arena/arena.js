@@ -1,6 +1,23 @@
 'use strict';
 app.config(function($stateProvider) {
   $stateProvider.state('arena', {
+    resolve: {
+      checkAuthorizedUser : function(AuthService, $state, $stateParams) {
+        return AuthService.getLoggedInUser().then(function(user) {
+          console.log(user.isAuthorized === $stateParams.roomKey); //should be false;
+          console.log(user.isAuthorized);
+          console.log($stateParams.roomKey);
+          if (!user) {
+            alert('You need to log in to participate in a challenge.');
+            $state.go('home');
+          }
+          if (user.isAuthorized !== $stateParams.roomKey) {
+            alert("Sorry this challenge has already begun :( ");
+              $state.go('exercises');
+          }
+        })
+      }
+    },
     url: '/arena/:roomKey',
     controller: 'ArenaController',
     templateUrl: 'js/arena/arena.html'
@@ -14,23 +31,26 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
 
   // sets the logged-in user on the scope and creates a new room with that user
   // in the newly created room
-  AuthService.getLoggedInUser().then(function(user) {
-    $scope.user = user;
-  });
+   AuthService.getLoggedInUser().then(function(user) {
+      $scope.user = user;
+   });
 
  var startTimeFromFb = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey + '/gameStartTime');
   startTimeFromFb.once('value', function(snapshot) {
       var startTime = new Date(snapshot.val());
-      var timeout = setInterval(countDown, 1000);
       function countDown() {
         setTime(Math.max(0, startTime - Date.now()));
         if (startTime <= Date.now() ) {
           // $state.go('exercises');
           clearInterval(timeout);
-          $scope.waitingDone = true;
-          $scope.$digest();
+          AuthService.getLoggedInUser().then(function(user) {
+            user.isAuthorized = null;
+            console.log('should be null for authorized', user);
+            $scope.waitingDone = true;
+          });
         }
       }
+      var timeout = setInterval(countDown, 1000);
 
       function setTime(remaining) {
       //   var minutes = Math.floor(remaining/60000);

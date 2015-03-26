@@ -20,13 +20,21 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactor
 
 	RoomFactory.updateActiveRoomData().then(function (activeRooms){
 		$scope.activeRoomData = activeRooms;
+		console.log($scope.activeRoomData);
 	});
 
 	$scope.joinRoom = function (roomId) {
 		RoomFactory.addUserToRoom($scope.user, roomId);
+		AuthService.getLoggedInUser().then(function(user) {
+			user.isAuthorized = roomId;
+		});
 	};
 
 	$scope.makeNewRoom = function(exercise) {
 		 $scope.roomKey = RoomFactory.createRoom(exercise, $scope.user);
+		 AuthService.getLoggedInUser().then(function(user) {
+		 	user.isAuthorized = $scope.roomKey;
+		 	console.log('iosdhfiqohrqihqio user authorized', user);
+		 });
 	};
 });
