@@ -11,12 +11,12 @@ module.exports = function (server) {
     io.on('connection', function (socket) {
         socket.on('userCode', function (code){
         	console.log(code);
-        	socket.broadcast.emit('theCode', code);
+        	socket.emit('theCode', code);
         });
 
         socket.on('failures', function (failures){
         	console.log('failures', failures);
-        	socket.broadcast.emit('theFailures', failures);
+        	socket.emit('theFailures', failures);
         });
     });
 };
