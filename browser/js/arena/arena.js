@@ -86,11 +86,13 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
     $scope.failures = failures.failures;
     //send failures to Firebase
     ref.once('value', function (userSnapshot){
-      console.log(userSnapshot.val());
+      // console.log(userSnapshot.val());
       userSnapshot.val().forEach(function (user,index){
         if (user._id == failures.userId){
+          console.log('this is the userId tied to failures in arena.js', failures.userId)
           var updatedUser = userSnapshot.val()[index];
           updatedUser.failures = failures.failures;
+          console.log('the updated user object', updatedUser);
           ref.child(index).set(updatedUser);
         };
       });
@@ -106,7 +108,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
       userObj.username = user.username;
       userObj.failures = user.failures;
       $scope.userDisplay.push(userObj);
-      console.log("UserDisplay", $scope.userDisplay);
+      // console.log("UserDisplay", $scope.userDisplay);
     });
   });
 
