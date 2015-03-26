@@ -38,7 +38,7 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
     //very similar ( or same function?) for createPractice
 
     factory.updateActiveRoomData = function () {
-        return $q(function(resolve, reject) {        
+        return $q(function(resolve, reject) {
             var activeRoomData = [];
             var ref = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/');
             ref.once('value', function (firebaseSnapshot){

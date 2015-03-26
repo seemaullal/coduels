@@ -35,7 +35,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
       function setTime(remaining) {
       //   var minutes = Math.floor(remaining/60000);
       //   var secs = Math.round(remaining/1000);
-        $scope.timeLeft = remaining
+        $scope.timeLeft = remaining;
         // minutes + ':' + secs;
         $scope.$digest();
       }
@@ -52,21 +52,13 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
   };
 
 
-  var exerciseIdFromFb = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey + '/exerciseId');
-  exerciseIdFromFb.once('value', function(snapshot) {
-      $scope.exerciseId = snapshot.val();
-      $scope.srcUrl = $sce.trustAsResourceUrl('/api/arena/iframe/' + $scope.exerciseId).toString();
-  });
-
-  var editorPromptFromFb = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey + '/editorPrompt');
-  editorPromptFromFb.once('value', function(snapshot) {
-    console.log("editor prompt",snapshot.val());
-    $scope.editorPrompt = snapshot.val();
+  var roomInfo = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey);
+  roomInfo.once('value', function(snapshot) {
+      $scope.game = snapshot.val();
+      $scope.srcUrl = $sce.trustAsResourceUrl('/api/arena/iframe/' + $scope.game.exerciseId).toString();
   });
 
   var socket = io();
-
-  $scope.test = "test";
 
   var ref = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/'+$stateParams.roomKey+'/users');
 
