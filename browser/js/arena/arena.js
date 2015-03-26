@@ -32,7 +32,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
       $scope.user = user;
    });
 
- var startTimeFromFb = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey + '/gameStartTime');
+ var startTimeFromFb = new Firebase('https://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey + '/gameStartTime');
   startTimeFromFb.once('value', function(snapshot) {
       var startTime = new Date(snapshot.val());
       function countDown() {
@@ -69,7 +69,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
   };
 
 
-  var roomInfo = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey);
+  var roomInfo = new Firebase('https://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey);
   roomInfo.once('value', function(snapshot) {
       $scope.game = snapshot.val();
       $scope.srcUrl = $sce.trustAsResourceUrl('/api/arena/iframe/' + $scope.game.exerciseId).toString();
@@ -77,17 +77,19 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
 
   var socket = io();
 
-  var ref = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/'+$stateParams.roomKey+'/users');
+  var ref = new Firebase('https://dazzling-torch-169.firebaseio.com/rooms/'+$stateParams.roomKey+'/users');
 
   socket.on('theFailures', function (failures){
     $scope.failures = failures.failures;
     //send failures to Firebase
     ref.once('value', function (userSnapshot){
-      console.log(userSnapshot.val());
+      // console.log(userSnapshot.val());
       userSnapshot.val().forEach(function (user,index){
         if (user._id == failures.userId){
+          console.log('this is the userId tied to failures in arena.js', failures.userId)
           var updatedUser = userSnapshot.val()[index];
           updatedUser.failures = failures.failures;
+          console.log('the updated user object', updatedUser);
           ref.child(index).set(updatedUser);
         };
       });
@@ -103,7 +105,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
       userObj.username = user.username;
       userObj.failures = user.failures;
       $scope.userDisplay.push(userObj);
-      console.log("UserDisplay", $scope.userDisplay);
+      // console.log("UserDisplay", $scope.userDisplay);
     });
     $scope.$digest();
   });

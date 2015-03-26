@@ -1,6 +1,6 @@
 'use strict';
 
-app.config(function($stateProvider){
+app.config(function($stateProvider) {
 	$stateProvider.state('exercises', {
 		url: '/exercises',
 		controller: 'exercisesCtrl',
@@ -19,7 +19,7 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactor
 		$scope.activeRoomData = activeRooms;
 	});
 
-	$scope.joinRoom = function (roomId) {
+	$scope.joinRoom = function(roomId) {
 		RoomFactory.addUserToRoom($scope.user, roomId);
 		AuthService.getLoggedInUser().then(function(user) {
 			user.isAuthorized = roomId;
