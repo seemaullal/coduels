@@ -4,10 +4,16 @@ app.config(function($stateProvider) {
     resolve: {
       checkAuthorizedUser : function(AuthService, $state, $stateParams) {
         return AuthService.getLoggedInUser().then(function(user) {
-          console.log(user);
+          console.log(user.isAuthorized === $stateParams.roomKey); //should be false;
+          console.log(user.isAuthorized);
+          console.log($stateParams.roomKey);
           if (!user) {
-            alert('You need to log in to do this.');
+            alert('You need to log in to participate in a challenge.');
             $state.go('home');
+          }
+          if (user.isAuthorized !== $stateParams.roomKey) {
+            alert("Sorry this challenge has already begun :( ");
+              $state.go('exercises');
           }
         })
       }
@@ -25,9 +31,9 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
 
   // sets the logged-in user on the scope and creates a new room with that user
   // in the newly created room
-  AuthService.getLoggedInUser().then(function(user) {
-    $scope.user = user;
-  });
+   AuthService.getLoggedInUser().then(function(user) {
+      $scope.user = user;
+   });
 
  var startTimeFromFb = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey + '/gameStartTime');
   startTimeFromFb.once('value', function(snapshot) {
@@ -37,8 +43,11 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
         if (startTime <= Date.now() ) {
           // $state.go('exercises');
           clearInterval(timeout);
-          $scope.waitingDone = true;
-          $scope.$digest();
+          AuthService.getLoggedInUser().then(function(user) {
+            user.isAuthorized = null;
+            console.log('should be null for authorized', user);
+            $scope.waitingDone = true;
+          });
         }
       }
       var timeout = setInterval(countDown, 1000);

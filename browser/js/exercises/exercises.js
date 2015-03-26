@@ -33,6 +33,7 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactor
 		 $scope.roomKey = RoomFactory.createRoom(exercise, $scope.user);
 		 AuthService.getLoggedInUser().then(function(user) {
 		 	user.isAuthorized = $scope.roomKey;
+		 	console.log('iosdhfiqohrqihqio user authorized', user);
 		 });
 	};
 });
