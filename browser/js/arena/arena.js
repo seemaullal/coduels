@@ -18,7 +18,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
     $scope.user = user;
   });
 
- var startTimeFromFb = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey + '/gameStartTime');
+ var startTimeFromFb = new Firebase('https://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey + '/gameStartTime');
   startTimeFromFb.once('value', function(snapshot) {
       var startTime = new Date(snapshot.val());
       var timeout = setInterval(countDown, 1000);
@@ -52,7 +52,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
   };
 
 
-  var roomInfo = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey);
+  var roomInfo = new Firebase('https://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey);
   roomInfo.once('value', function(snapshot) {
       $scope.game = snapshot.val();
       $scope.srcUrl = $sce.trustAsResourceUrl('/api/arena/iframe/' + $scope.game.exerciseId).toString();
@@ -60,7 +60,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
 
   var socket = io();
 
-  var ref = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/'+$stateParams.roomKey+'/users');
+  var ref = new Firebase('https://dazzling-torch-169.firebaseio.com/rooms/'+$stateParams.roomKey+'/users');
 
   socket.on('theFailures', function (failures){
     $scope.failures = failures.failures;
