@@ -1,13 +1,17 @@
-<section id="Exercises">
-    <div class="container pt">
-        <h2> Exercises </h2>
-        <exercise ng-repeat="exercise in exercises"></exercise>
-    </div>
-</section>
+<div class="row">
+<div class="col-sm-6" id="Exercises">
+<div class="container pt">
+  <h2> Exercises </h2>
+  <exercise ng-repeat="exercise in exercises">
+  </exercise>
+  </div>
+</div>
 
-<section id="activeRooms">
-    <div class="container pt">
-        <h2> Active Rooms </h2>
-        <room ng-repeat="room in activeRoomData"></room>
+<div class="col-sm-6" id="activeRooms">
+<div class="container pt">
+    <h2> Active Rooms </h2>
+    <room ng-repeat="room in activeRoomData"></room>
+    <waiting-room></waiting-room>
     </div>
-</section>
+</div>
+</div>
