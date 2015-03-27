@@ -32,6 +32,8 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
       $scope.user = user;
    });
 
+ var socket = io();
+
  var startTimeFromFb = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey + '/gameStartTime');
   startTimeFromFb.once('value', function(snapshot) {
       var startTime = new Date(snapshot.val());
@@ -44,6 +46,9 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
             user.isAuthorized = null;
             console.log('should be null for authorized', user);
             $scope.waitingDone = true;
+            //Display # of failures when arena view changes, before user makes any significant key press.
+            socket.emit('userCode', {code: $scope.aceEditor.getDocument().getValue(), userId: $scope.user._id});
+            document.getElementById('mocha-runner').src = document.getElementById('mocha-runner').src;
           });
         }
       }
@@ -75,11 +80,11 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
       $scope.srcUrl = $sce.trustAsResourceUrl('/api/arena/iframe/' + $scope.game.exerciseId).toString();
   });
 
-  var socket = io();
-
+  
   var ref = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/'+$stateParams.roomKey+'/users');
 
   socket.on('theFailures', function (failures){
+    if (!$scope.failures) {$scope.numTests = failures.failures;}
     $scope.failures = failures.failures;
     //send failures to Firebase
     ref.once('value', function (userSnapshot){
@@ -88,6 +93,8 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
         if (user._id == failures.userId){
           var updatedUser = userSnapshot.val()[index];
           updatedUser.failures = failures.failures;
+          // Only include if we want passed tests as a user property in firebase.
+          // updatedUser.passed = $scope.numTests - failures.failures;
           updatedUser.code = failures.userCode
           ref.child(index).set(updatedUser);
           if (failures.failures === 0) {
@@ -121,6 +128,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
       var userObj = {};
       userObj.username = user.username;
       userObj.failures = user.failures;
+      userObj.passed = $scope.numTests - user.failures;
       $scope.userDisplay.push(userObj);
       console.log("UserDisplay", $scope.userDisplay);
     });
