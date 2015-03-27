@@ -20,7 +20,8 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
             testCode: exercise.testCode,
             category: exercise.category,
             difficulty: exercise.difficulty,
-            gameStartTime: gameStartTime
+            gameStartTime: gameStartTime,
+            winner: null
 
         };
         var roomKey = rooms.push(roomData).key();

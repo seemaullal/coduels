@@ -84,17 +84,32 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
     //send failures to Firebase
     ref.once('value', function (userSnapshot){
       console.log(userSnapshot.val());
-      userSnapshot.val().forEach(function (user,index){
+      userSnapshot.val().forEach(function (user, index){
         if (user._id == failures.userId){
           var updatedUser = userSnapshot.val()[index];
           updatedUser.failures = failures.failures;
           ref.child(index).set(updatedUser);
-        };
-      });
-    });
-  });
+          if (failures.failures === 0) {
+            roomInfo.once('value', function(roomSnapshot) {
+              var isWinner = false;
+              if(!roomSnapshot.val().winner) {
+                roomInfo.child('winner').set(updatedUser);
+                isWinner = true;
+              } // closes if (!roomSnapshot)
+              // factory.sendCompletion = function (exerciseID, userID, code, difficulty, numUsers, isWinner){}
+            }) // closes roomInfo.once
+          } // closes if (failures.failures) statement
+        }; // closes if (user._id) statement
+      }); // closes forEach
+    }); // closes ref.once
+  }); // closes socket.on
 
+  var winnerRef = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/'+$stateParams.roomKey+'/winner');
 
+  winnerRef.on('value', function(winnerSnapshot) {
+    $scope.winner = winnerSnapshot.val().username;
+    $scope.$digest();
+  })
 
   ref.on('value', function (userSnapshot){
     $scope.userDisplay = [];
