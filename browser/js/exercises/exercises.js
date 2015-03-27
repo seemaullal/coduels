@@ -20,8 +20,9 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactor
 	});
 
 	$scope.joinRoom = function (roomId) {
-		RoomFactory.addUserToRoom($scope.user, roomId);
 		AuthService.getLoggedInUser().then(function(user) {
+			$scope.user = user;
+			RoomFactory.addUserToRoom($scope.user, roomId);
 			user.isAuthorized = roomId;
 		});
 	};
