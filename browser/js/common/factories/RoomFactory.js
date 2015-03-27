@@ -1,3 +1,4 @@
+'use strict'
 app.factory('RoomFactory', function($firebaseObject, $q) {
 
     var factory = {}
