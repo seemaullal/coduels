@@ -82,7 +82,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
 
   
   var ref = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/'+$stateParams.roomKey+'/users');
-
+console.log('arena controllinglasdkjfl;askjdfl;akjdfk');
   socket.on('theFailures', function (failures){
     if (!$scope.failures) {$scope.numTests = failures.failures;}
     $scope.failures = failures.failures;
@@ -105,6 +105,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
                 roomInfoRef.child('winner').set(updatedUser);
                 isWinner = true;
               } // closes if (!roomSnapshot)
+              
               CompletionFactory.sendCompletion(user._id, $scope.game.exerciseId, updatedUser.code, $scope.game.difficulty, userSnapshot.val().length, isWinner);
             }) // closes roomInfoRef.once
           } // closes if (failures.failures) statement

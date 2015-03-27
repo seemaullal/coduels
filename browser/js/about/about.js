@@ -10,8 +10,11 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('AboutController', function ($scope) {
+app.controller('AboutController', function ($scope, AuthService) {
+	AuthService.getLoggedInUser().then(function(user){
+		$scope.user = user
+		console.log('total user score',  user);
 
-  
+	})
 
 });
