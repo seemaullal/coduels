@@ -25,10 +25,11 @@
         <h2> {{ game.exerciseName }}</h2>
         <h4> {{ game.longDescription }}</h4>
         <h2> Current Players </h2>
-    <div ng-repeat="user in userDisplay">
+        <div ng-repeat="user in userDisplay">
             <h5> Username: {{ user.username }} </h5>
             <h5> Failures: {{ user.failures }} </h5>
-    </div>
+        </div>
+        <h1>Winner: {{ winner }}</h1>
     </div>
 
 
