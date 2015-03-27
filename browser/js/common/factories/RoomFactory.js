@@ -25,7 +25,7 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
         };
         var roomKey = rooms.push(roomData).key();
         factory.activeRooms.push(roomKey);
-
+        
 
         return roomKey;
         //fetches the exercise from the DB (or get from exercise obj)
