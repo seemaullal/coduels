@@ -105,7 +105,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
   var winnerRef = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/'+$stateParams.roomKey+'/winner');
 
   winnerRef.on('value', function(winnerSnapshot) {
-    $scope.winner = winnerSnapshot.val();
+    $scope.winner = winnerSnapshot.val().username;
     $scope.$digest();
   })
 
