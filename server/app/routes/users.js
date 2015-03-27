@@ -12,4 +12,4 @@ router.post('/users/:userId/exercises/', function (req, res, next) {
 		if (!err) res.json(user);
 		else next(err);
 	});
-};
+});

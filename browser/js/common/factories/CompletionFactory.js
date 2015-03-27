@@ -12,7 +12,7 @@ app.factory('CompletionFactory', function ($http){
 			return numUsers*5+difficultyPoints[difficulty];
 		}
 		else {
-			return difficultPoints[difficulty];
+			return difficultyPoints[difficulty];
 		}
 		
 	};
