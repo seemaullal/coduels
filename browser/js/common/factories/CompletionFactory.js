@@ -25,7 +25,7 @@ app.factory('CompletionFactory', function ($http){
 			score: score, 
 			challenge: true
 		};
-		return $http.post('/api/users/exercises'+userID, completionObj).then(function(response){
+		return $http.post('/api/users/'+ userID + '/exercises', completionObj).then(function(response){
 			return response.data;
 		});
 	};
