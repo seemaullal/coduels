@@ -27,7 +27,7 @@
         <h2> Current Players </h2>
         <div ng-repeat="user in userDisplay">
             <h5> Username: {{ user.username }} </h5>
-            <h5> Failures: {{ user.failures }} </h5>
+            <h5> Passing: {{ user.passed }} / {{ numTests }} </h5>
         </div>
         <h1>Winner: {{ winner }}</h1>
     </div>
