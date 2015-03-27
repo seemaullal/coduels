@@ -106,6 +106,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
 
   winnerRef.on('value', function(winnerSnapshot) {
     $scope.winner = winnerSnapshot.val();
+    $scope.$digest();
   })
 
   ref.on('value', function (userSnapshot){
