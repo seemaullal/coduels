@@ -13,10 +13,10 @@ app.directive('aceEditor', function (AuthService) {
 
         	var socket = io();
 
-        	var keyCodeEvents = [13,32,186,8,46,9];
+        	scope.keyCodeEvents = [13,32,186,8,46,9];
 
         	scope.onKeyPress = function($event) {
-        		if(keyCodeEvents.indexOf($event.keyCode) > -1) {
+        		if(scope.keyCodeEvents.indexOf($event.keyCode) > -1) {
         			socket.emit('userCode', {code: scope.aceEditor.getDocument().getValue(), userId: userId});
                     document.getElementById('mocha-runner').src = document.getElementById('mocha-runner').src;
         		}
