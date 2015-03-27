@@ -40,6 +40,23 @@ var schema = new mongoose.Schema({
 
 });
 
+schema.virtual('totalScore').get(function() {
+    var total = 0;
+    this.exercises.forEach(function(exercise) {
+        total += exercise.score;
+    });
+    return total;
+})
+
+schema.virtual('completedChallenges').get(function() {
+    var total = 0;
+    this.exercises.forEach(function(exercise) {
+        if(exercise.challenge) {
+            total++
+        }
+    });
+    return total;
+})
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
 // are all used for local authentication security.
 var generateSalt = function () {
