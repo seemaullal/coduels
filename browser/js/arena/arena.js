@@ -91,10 +91,12 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
           ref.child(index).set(updatedUser);
           if (failures.failures === 0) {
             roomInfo.once('value', function(roomSnapshot) {
+              var isWinner = false;
               if(!roomSnapshot.val().winner) {
-                roomInfo.child('winner').set(updatedUser)
+                roomInfo.child('winner').set(updatedUser);
+                isWinner = true;
               } // closes if (!roomSnapshot)
-              // factory.sendCompletion = function (exerciseID, userID, code, difficulty, numUsers){}
+              // factory.sendCompletion = function (exerciseID, userID, code, difficulty, numUsers, isWinner){}
             }) // closes roomInfo.once
           } // closes if (failures.failures) statement
         }; // closes if (user._id) statement
