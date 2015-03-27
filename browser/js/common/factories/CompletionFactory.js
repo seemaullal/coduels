@@ -2,16 +2,22 @@
 app.factory('CompletionFactory', function ($http){
 	var factory = {};
 
-	factory.calculateScore = function (difficulty, numUsers) {
+	factory.calculateScore = function (difficulty, numUsers, isWinner) {
 		var difficultyPoints = {
 			Easy: 10,
 			Medium: 20,
 			Hard: 30
 		};
-		return numUsers*5+difficultyPoints[difficulty];
+		if (isWinner){
+			return numUsers*5+difficultyPoints[difficulty];
+		}
+		else {
+			return difficultPoints[difficulty];
+		}
+		
 	};
 
-	factory.sendCompletion = function (userID, exerciseID, code, difficulty, numUsers){
+	factory.sendCompletion = function (userID, exerciseID, code, difficulty, numUsers, isWinner){
 		var score = factory.calculateScore(difficulty, numUsers);
 		var completionObj = {
 			exerciseID: exerciseID, 
