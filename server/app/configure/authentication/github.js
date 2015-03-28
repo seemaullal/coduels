@@ -25,7 +25,8 @@ module.exports = function (app) {
                     github: {
                         id: profile.id
                     },
-                    username: profile.username
+                    username: profile.username,
+                    image: profile.avatar_url
                 }).then(function (user) {
                     done(null, user);
                 }, function (err) {

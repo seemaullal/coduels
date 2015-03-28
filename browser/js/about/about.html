@@ -1,13 +1,15 @@
 <section id="about">
 	<div class="container pt">
+		<img src="{{ user.image }}">
 		<h1>Hello, {{ user.username }}</h1>
 		<h2>Your Total Score: {{ user.totalScore }}</h2>
 		<div class="row mt">
 			<div class="col-lg-6">
-				<h4>Challenges you have completed</h4>
+				<h2>Challenges you have completed</h2>
 				<div ng-repeat="challenge in userChallenges">
-				<h5>{{ challenge.name }}</h5>
-				<p>{{ challenge.shortDescription }}<p>
+				<h3>{{ challenge.name }}</h3>
+				<p>{{ challenge.shortDescription }}<br>
+				Difficulty: {{ challenge.difficulty }}</p>
 				</div>
 			</div><!-- /colg-lg-6 -->
 			

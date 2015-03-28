@@ -13,9 +13,8 @@ app.config(function ($stateProvider) {
 app.controller('AboutController', function ($scope, AuthService, TestFactory) {
 
 	AuthService.getLoggedInUser().then(function(user){
-		$scope.user = user
-        
-        console.log("user unique challenges", $scope.user.uniqueChallenges)
+        console.log('userinfo', user);
+        $scope.user = user
 
         TestFactory.getExercises().then(function(data) {
             $scope.userChallenges = [];

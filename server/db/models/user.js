@@ -60,11 +60,6 @@ schema.virtual('completedChallenges').get(function() {
 })
 
 schema.virtual('uniqueChallenges').get(function() {
-        // Exercise.find().populate('exercises')
-        //     .exec(function(err, exercise) { 
-        //         if(err) return(err);
-        //         console.log('exercise?', exercise)
-        //     })
 
         var unique = {};
         var ids = [];
@@ -76,7 +71,6 @@ schema.virtual('uniqueChallenges').get(function() {
             });
 
                 return ids;
-                console.log('uniqueIDs', ids);
 })
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
