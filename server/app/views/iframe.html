@@ -40,12 +40,12 @@
         mocha.run(function(failures){
             socket.emit('failures', {failures: failures, userId: userCode.userId, userCode: userCode.code});
         }).on('suite end', function(suite) {
-            var failedArray = [];
-            suite.tests.forEach(function(elem) {
-                if (elem.state === 'failed') {
-                    failedArray.push(elem.fullTitle())
+            var failedTestsArr = [];
+            suite.tests.forEach(function(test) {
+                if (test.state === 'failed') {
+                    failedTestsArr.push(test.fullTitle())
                 }
-                socket.emit('testFailed', failedArray);
+                socket.emit('testsFailed', failedTestsArr);
             })
         });
     });

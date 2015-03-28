@@ -25,7 +25,7 @@
         <h2> {{ game.exerciseName }}</h2>
         <h4> {{ game.longDescription }}</h4>
         <h2> Tests </h2>
-        <h5 ng-repeat="failure in moreFailures"> {{ failure }} </h5>
+        <h5 ng-repeat="title in failedTestTitles"> {{ title }} </h5>
         <h2> Current Players </h2>
         <div ng-repeat="user in userDisplay">
             <h5> Username: {{ user.username }} </h5>

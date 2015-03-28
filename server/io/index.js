@@ -19,8 +19,8 @@ module.exports = function (server) {
             socket.broadcast.emit('theFailures', failures);
         });
 
-        socket.on('testFailed', function (failedTest){
-        	socket.broadcast.emit('moreFailures', failedTest);
+        socket.on('testsFailed', function (arrFromIframe){
+        	socket.broadcast.emit('failedTests', arrFromIframe);
         });
     });
 };

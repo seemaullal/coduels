@@ -65,16 +65,14 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
   });
 
 
-  socket.on('moreFailures', function(testTitle) {
-      $scope.moreFailures = testTitle;
+  socket.on('failedTests', function(testTitles) {
+      $scope.failedTestTitles = testTitles;
       $scope.$digest();
   })
 
   // defines and sets the onLoad callback function on the scope
   $scope.userInputSession = function(_editor) {
     $scope.aceEditor = _editor.getSession();
-    // $scope.getUserInput(_editor);
-    // console.log($scope.aceEditor);
   };
 
 
