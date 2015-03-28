@@ -40,6 +40,11 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
           AuthService.getLoggedInUser().then(function(user) {
             user.isAuthorized = null;
             $scope.waitingDone = true;
+            if ($scope.userDisplay.length === 1) {
+              /*even if a user joined a challenge, if 
+              they are the only one there, consider it practice*/
+              $scope.isPractice = true;
+            }
             //Display # of failures when arena view changes, before user makes any significant key press.
             socket.emit('userCode', {code: $scope.aceEditor.getDocument().getValue(), userId: $scope.user._id});
             document.getElementById('mocha-runner').src = document.getElementById('mocha-runner').src;
