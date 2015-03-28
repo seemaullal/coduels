@@ -7,9 +7,11 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
 
     factory.activeRooms = [];
 
-    factory.createRoom = function(exercise, user) {
+    factory.createRoom = function(exercise, user,isChallenge) {
         var gameStartTime = new Date();
-        gameStartTime = gameStartTime.setSeconds(gameStartTime.getSeconds() + 5);
+
+        gameStartTime = gameStartTime.setSeconds(gameStartTime.getSeconds() + 20); 
+
         var roomData = {
             users: [user],
             exerciseId: exercise._id,
@@ -21,22 +23,36 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
             category: exercise.category,
             difficulty: exercise.difficulty,
             gameStartTime: gameStartTime,
-            winner: null
-
+            winner: null,
+            isPractice: false
         };
         var roomKey = rooms.push(roomData).key();
+        if (isChallenge) {
         factory.activeRooms.push(roomKey);
-        
-
+        }
         return roomKey;
-        //fetches the exercise from the DB (or get from exercise obj)
-        //creates a room with that user in it
-        //adds the room to FB
-        //has a route to that room (for other users)
-        //^ /arena/(exercise) [one exercise at a time]
-        //^ /arena/(fb id)
-    }; // closes createRoom function
-    //very similar ( or same function?) for createPractice
+
+    };
+
+    factory.createPracticeRoom = function(exercise, user,isChallenge) {
+        var gameStartTime = new Date();
+        var roomData = {
+            users: [user],
+            exerciseId: exercise._id,
+            exerciseName: exercise.name,
+            shortDescription: exercise.shortDescription,
+            longDescription: exercise.longDescription,
+            editorPrompt: exercise.editorPrompt,
+            testCode: exercise.testCode,
+            category: exercise.category,
+            difficulty: exercise.difficulty,
+            gameStartTime: gameStartTime,
+            winner: null,
+            isPractice: true
+        };
+        var roomKey = rooms.push(roomData).key();
+        return roomKey;
+    }; 
 
     factory.deleteActiveRoom = function(roomKey) {
         var ref = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + roomKey);
