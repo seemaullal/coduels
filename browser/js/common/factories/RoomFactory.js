@@ -10,6 +10,7 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
     factory.createRoom = function(exercise, user,isChallenge) {
         var gameStartTime = new Date();
         gameStartTime = gameStartTime.setSeconds(gameStartTime.getSeconds() + 20);
+
         var roomData = {
             users: [user],
             exerciseId: exercise._id,
