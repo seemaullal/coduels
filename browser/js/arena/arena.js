@@ -65,6 +65,10 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
   });
 
 
+  socket.on('moreFailures', function(testTitle) {
+      $scope.moreFailures = testTitle;
+      $scope.$digest();
+  })
 
   // defines and sets the onLoad callback function on the scope
   $scope.userInputSession = function(_editor) {
@@ -80,7 +84,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
       $scope.srcUrl = $sce.trustAsResourceUrl('/api/arena/iframe/' + $scope.game.exerciseId).toString();
   });
 
-  
+
   var ref = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/'+$stateParams.roomKey+'/users');
 
   socket.on('theFailures', function (failures){
@@ -116,7 +120,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
   var winnerRef = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/'+$stateParams.roomKey+'/winner');
 
   winnerRef.on('value', function(winnerSnapshot) {
-    if (winnerSnapshot.val()){    
+    if (winnerSnapshot.val()){
       $scope.winner = winnerSnapshot.val().username;
       $scope.$digest();
     };

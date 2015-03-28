@@ -9,7 +9,7 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
 
     factory.createRoom = function(exercise, user) {
         var gameStartTime = new Date();
-        gameStartTime = gameStartTime.setSeconds(gameStartTime.getSeconds() + 20);
+        gameStartTime = gameStartTime.setSeconds(gameStartTime.getSeconds() + 5);
         var roomData = {
             users: [user],
             exerciseId: exercise._id,
@@ -26,7 +26,7 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
         };
         var roomKey = rooms.push(roomData).key();
         factory.activeRooms.push(roomKey);
-        
+
 
         return roomKey;
         //fetches the exercise from the DB (or get from exercise obj)
