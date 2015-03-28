@@ -27,4 +27,8 @@ var schema = new mongoose.Schema({
 
 });
 
-mongoose.model('Exercise', schema);
+var Exercise = mongoose.model('Exercise', schema);
+
+module.exports = {
+	Exercise: Exercise
+}

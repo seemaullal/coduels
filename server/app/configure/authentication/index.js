@@ -48,7 +48,7 @@ module.exports = function (app) {
     // logged in already.
     app.get('/session', function (req, res) {
         if (req.user) {
-            res.send({ user: _.omit(req.user.toJSON(), ['salt', 'password']) });
+            res.send({ user: _.omit(req.user.toJSON({virtuals:true}), ['salt', 'password']) });
         } else {
             res.status(401).end();
         }

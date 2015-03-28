@@ -10,8 +10,30 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('AboutController', function ($scope) {
+app.controller('AboutController', function ($scope, AuthService, TestFactory) {
 
-  
+	AuthService.getLoggedInUser().then(function(user){
+        console.log('userinfo', user);
+        $scope.user = user
+
+        TestFactory.getExercises().then(function(data) {
+            $scope.userChallenges = [];
+            var exercisesInfo = _.pluck(data, "_id");
+
+            $scope.user.uniqueChallenges.forEach(function(challenge) {
+                var userChallenges = {};
+                var index = exercisesInfo.indexOf(challenge);
+                if(index == -1) {
+                    console.log('there are no unique challenges')
+                } else {
+                    userChallenges = data[index];
+                    $scope.userChallenges.push(userChallenges);
+                }
+            })
+
+            console.log('exercisesinfo please', $scope.userChallenges);
+        })
+    })
+
 
 });
