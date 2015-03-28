@@ -9,7 +9,7 @@ router.post('/users/:userId/exercises/', function (req, res, next) {
 	var exercisesObj = req.body;
 
 	User.findByIdAndUpdate(userId, {$push: {exercises: exercisesObj}}, function (err, user) {
-		console.log('all user info-------', user.uniqueChallenges);
+		console.log('>> user unique challenges <<', user.uniqueChallenges);
 		if (!err) res.json(user.toObject({virtuals:true}));
 		else next(err);
 	});

@@ -5,7 +5,10 @@
 		<div class="row mt">
 			<div class="col-lg-6">
 				<h4>Challenges you have completed</h4>
-				<p>This should include some useful information about the current user</p>
+				<div ng-repeat="challenge in userChallenges">
+				<h5>{{ challenge.name }}</h5>
+				<p>{{ challenge.shortDescription }}<p>
+				</div>
 			</div><!-- /colg-lg-6 -->
 			
 			<div class="col-lg-6">
