@@ -34,7 +34,11 @@ span.co {
 #footer {
 	background-color: #1e1e1e;
 	padding-top: 50px;
-	padding-bottom: 50px; 
+	padding-bottom: 50px;
+	position: fixed;
+	bottom: 0px;
+	width: 100vw;
+	max-height: 208px;
 }
 
 #footer p {
