@@ -38,7 +38,7 @@
         s.parentNode.insertBefore(g, s);
 
         mocha.run(function(failures){
-<<<<<<< HEAD
+            
             socket.emit('failures', {failures: failures, userId: userCode.userId, userCode: userCode.code});
         }).on('suite end', function(suite) {
             var failedTestsArr = [];
@@ -51,30 +51,6 @@
         });
     });
 
-=======
-            console.log('this is the userId in iframe:', userCode.userId)
-            socket.emit('failures', {failures: failures, userId: userCode.userId});
-        });
-    });
-
-    // var fromUserPad = new Firebase('http://dazzling-torch-169.firebaseio.com/codes');
-
-    // fromUserPad.on('value', function(snapshot) {
-
-    //     var g = document.createElement('script');
-
-    //     var s = document.getElementsByTagName('script')[0];
-
-    //     g.text = snapshot.val();
-    //     console.log('this is the snapshot value:', snapshot.val())
-    //     s.parentNode.insertBefore(g, s);
-
-    //     mocha.run(function(failures){
-    //         console.log("# of failures: ", failures);
-    //     });
-    // });
-
->>>>>>> 1c0fe5ebf348846fd82bede7d9eee29b9ec08f25
     </script>
 
     <!-- Test file -->
