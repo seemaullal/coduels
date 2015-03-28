@@ -37,6 +37,15 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactor
 		 });
 	};
 
+	$scope.makePracticeRoom = function(exercise) {
+		 AuthService.getLoggedInUser().then(function(user) {
+		 	$scope.user = user;
+		 	$scope.roomKey = RoomFactory.createPracticeRoom(exercise, $scope.user);
+		 	user.isAuthorized = $scope.roomKey;
+		 	$scope.$digest();
+		 });
+	};
+
 	function countDown() {
 		$scope.activeRoomData.forEach(function (room,index) {
 			room.timeUntilClose = Math.max(0, room.gameStartTime - Date.now());
