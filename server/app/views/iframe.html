@@ -38,26 +38,17 @@
         s.parentNode.insertBefore(g, s);
 
         mocha.run(function(failures){
-            socket.emit('failures', {failures:failures, userId: userCode.userId, userCode: userCode.code});
+            socket.emit('failures', {failures: failures, userId: userCode.userId, userCode: userCode.code});
+        }).on('suite end', function(suite) {
+            var failedTestsArr = [];
+            suite.tests.forEach(function(test) {
+                if (test.state === 'failed') {
+                    failedTestsArr.push(test.fullTitle())
+                }
+                socket.emit('testsFailed', failedTestsArr);
+            })
         });
     });
-
-    // var fromUserPad = new Firebase('http://dazzling-torch-169.firebaseio.com/codes');
-
-    // fromUserPad.on('value', function(snapshot) {
-
-    //     var g = document.createElement('script');
-        
-    //     var s = document.getElementsByTagName('script')[0];
-
-    //     g.text = snapshot.val();
-    //     console.log('this is the snapshot value:', snapshot.val())
-    //     s.parentNode.insertBefore(g, s);
-
-    //     mocha.run(function(failures){
-    //         console.log("# of failures: ", failures);
-    //     });
-    // });
 
     </script>
 

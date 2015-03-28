@@ -15,8 +15,12 @@ module.exports = function (server) {
         });
 
         socket.on('failures', function (failures){
-        	console.log('failures', failures);
-        	socket.broadcast.emit('theFailures', failures);
+            console.log('failures', failures);
+            socket.broadcast.emit('theFailures', failures);
+        });
+
+        socket.on('testsFailed', function (arrFromIframe){
+        	socket.broadcast.emit('failedTests', arrFromIframe);
         });
     });
 };

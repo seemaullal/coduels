@@ -25,7 +25,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
 
   $scope.waitingDone = false;
   $scope.isPractice = false;
-  
+
 
  var socket = io();
 
@@ -41,7 +41,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
             user.isAuthorized = null;
             $scope.waitingDone = true;
             if ($scope.userDisplay.length === 1) {
-              /*even if a user joined a challenge, if 
+              /*even if a user joined a challenge, if
               they are the only one there, consider it practice*/
               $scope.isPractice = true;
             }
@@ -67,12 +67,14 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
   });
 
 
+  socket.on('failedTests', function(testTitles) {
+      $scope.failedTestTitles = testTitles;
+      $scope.$digest();
+  })
 
   // defines and sets the onLoad callback function on the scope
   $scope.userInputSession = function(_editor) {
     $scope.aceEditor = _editor.getSession();
-    // $scope.getUserInput(_editor);
-    // console.log($scope.aceEditor);
   };
 
   var ref = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/'+$stateParams.roomKey+'/users');
@@ -125,7 +127,7 @@ console.log('arena controllinglasdkjfl;askjdfl;akjdfk');
   var winnerRef = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/'+$stateParams.roomKey+'/winner');
 
   winnerRef.on('value', function(winnerSnapshot) {
-    if (winnerSnapshot.val()){    
+    if (winnerSnapshot.val()){
       $scope.winner = winnerSnapshot.val().username;
       if(!$scope.$$phase) {
         //if no digest in progress
@@ -134,8 +136,6 @@ console.log('arena controllinglasdkjfl;askjdfl;akjdfk');
     }
   });
 
-
-    
   });
  var roomInfoRef = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey);
  roomInfoRef.once('value', function(snapshot) {
@@ -146,6 +146,7 @@ console.log('arena controllinglasdkjfl;askjdfl;akjdfk');
      }
      $scope.srcUrl = $sce.trustAsResourceUrl('/api/arena/iframe/' + $scope.game.exerciseId).toString();
  });
+
   AuthService.getLoggedInUser().then(function(user) {
      $scope.user = user;
   });

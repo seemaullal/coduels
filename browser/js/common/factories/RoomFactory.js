@@ -9,8 +9,7 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
 
     factory.createRoom = function(exercise, user,isChallenge) {
         var gameStartTime = new Date();
-
-        gameStartTime = gameStartTime.setSeconds(gameStartTime.getSeconds() + 20); 
+        gameStartTime = gameStartTime.setSeconds(gameStartTime.getSeconds() + 20);
 
         var roomData = {
             users: [user],
@@ -31,7 +30,6 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
         factory.activeRooms.push(roomKey);
         }
         return roomKey;
-
     };
 
     factory.createPracticeRoom = function(exercise, user,isChallenge) {
@@ -52,7 +50,7 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
         };
         var roomKey = rooms.push(roomData).key();
         return roomKey;
-    }; 
+    };
 
     factory.deleteActiveRoom = function(roomKey) {
         var ref = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + roomKey);
