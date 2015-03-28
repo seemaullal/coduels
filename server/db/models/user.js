@@ -59,18 +59,16 @@ schema.virtual('completedChallenges').get(function() {
 })
 
 schema.virtual('uniqueChallenges').get(function() {
-    var unique = [];
+    var unique = {};
     var ids = [];
-    this.exercises.forEach(function(exercise, index) {
-        var exerciseId = exercise.exerciseID;
-        // console.log('exerciseidlasjlfkjfdsjdfs', exerciseId);
-        if(exercise.indexOf(exerciseId) !== -1) {
-            unique.push(exerciseId);
-        console.log('unique', unique);
-            ids.push(exerciseId);
+    this.exercises.forEach(function(exercise) {
+        if(!unique[exercise.exerciseID]) {
+            ids.push(exercise.exerciseID);
+            unique[exercise.exerciseID] = true;
         }
     })
-    return ids;
+        return ids;
+        console.log('uniqueIDs', ids);
 })
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
 // are all used for local authentication security.
