@@ -1,6 +1,6 @@
 'use strict';
 
-app.config(function($stateProvider){
+app.config(function($stateProvider) {
 	$stateProvider.state('exercises', {
 		url: '/exercises',
 		controller: 'exercisesCtrl',
