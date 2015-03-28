@@ -1,6 +1,7 @@
 'use strict';
 var crypto = require('crypto');
 var mongoose = require('mongoose');
+var Exercise = require('./exercise.js').Exercise;
 
 var schema = new mongoose.Schema({
     username: {
@@ -39,6 +40,38 @@ var schema = new mongoose.Schema({
     //totalScores, completedExercises, completedChallenges can be virtuals because it's an artificial value since it's a sum of all the exercise scores
 
 });
+
+schema.virtual('totalScore').get(function() {
+    var total = 0;
+    this.exercises.forEach(function(exercise) {
+        total += exercise.score;
+    });
+    return total;
+})
+
+schema.virtual('completedChallenges').get(function() {
+    var total = 0;
+    this.exercises.forEach(function(exercise) {
+        if(exercise.challenge) {
+            total++
+        }
+    });
+    return total;
+})
+
+schema.virtual('uniqueChallenges').get(function() {
+
+        var unique = {};
+        var ids = [];
+        this.exercises.forEach(function(exercise, exerciseInfo) {
+                if(!unique[exercise.exerciseID]) {
+                    ids.push(exercise.exerciseID);
+                    unique[exercise.exerciseID] = true;
+                }
+            });
+
+                return ids;
+})
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
 // are all used for local authentication security.

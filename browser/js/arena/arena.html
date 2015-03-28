@@ -13,6 +13,7 @@
     <waiting-room></waiting-room>
 </section>
 
+<div class="container">
 <div class="row">
 <div class="challengeStart" ng-show="waitingDone">
 
@@ -24,17 +25,27 @@
     <div class="col-sm-6">
         <h2> {{ game.exerciseName }}</h2>
         <h4> {{ game.longDescription }}</h4>
+        <h2> Tests </h2>
+        <h5 ng-repeat="title in failedTestTitles"> {{ title }} </h5>
+
         <h2> Current Players </h2>
-    <div ng-repeat="user in userDisplay">
+        <div ng-repeat="user in userDisplay">
+        <div ng-show="isPractice">
+            <h5 ng-show="numTests" ng-repeat="user in userDisplay"> Passing: {{ user.passed }} / {{ numTests }} </h5>
+        </div>
+         <h2 ng-show="!isPractice"> Current Players </h2>
+        <div ng-show="!isPractice" ng-repeat="user in userDisplay">
             <h5> Username: {{ user.username }} </h5>
-            <h5> Failures: {{ user.failures }} </h5>
-    </div>
+            <h5> Passing: {{ user.passed }} / {{ numTests }} </h5>
+        </div>
+        <h1 ng-show="!isPractice">Winner: {{ winner }}</h1>
     </div>
 
 
     <iframe id="mocha-runner" ng-src="{{srcUrl}}" style="display: none; width: 40%; height: 500px;">
         <!-- the iframe makes a request to the api routie on page load, then subsequently on each return keypress -->
     </iframe>
+</div>
 </div>
 </div>
 
