@@ -6,7 +6,7 @@
 		<div class="row mt">
 			<div class="col-lg-6">
 				<h2>Challenges you have completed</h2>
-				<div ng-repeat="challenge in userChallenges">
+				<div ng-repeat="challenge in userChallenges track by $index">
 				<h3>{{ challenge.name }}</h3>
 				<p>{{ challenge.shortDescription }}<br>
 				Difficulty: {{ challenge.difficulty }}</p>
