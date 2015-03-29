@@ -1,6 +1,6 @@
-<table class="table table-bordered" id="exerciseTable">
+<table class="table table-bordered">
 	<tr>
-		<td width="30px">{{ exercise.name }}</td>
+		<td width="30px" id="exerciseName">{{ exercise.name }}</td>
 		<td width="20px"><a href="/arena/{{ roomKey }}" ng-click="makeNewRoom(exercise)">Create Room</a></td>
 		<td width="20px"><a href="/arena/{{ roomKey }}" ng-click="makePraticeRoom(exercise)">Practice</a></td>
 	</tr>

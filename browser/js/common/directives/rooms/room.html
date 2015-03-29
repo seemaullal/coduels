@@ -6,7 +6,7 @@
 
 <table class="table table-bordered" id="exerciseTable">
 	<tr>
-		<td width="30px">{{ room.exerciseName }}</td>
+		<td width="30px" id="exerciseName">{{ room.exerciseName }}</td>
 		<td width="20px">{{room.timeUntilClose | date:'mm:ss'}}</td>
 		<td width="20px"><a href="/arena/{{ room.roomId }}" ng-click="joinRoom(room.roomId)">Join Room</a></td>
 	</tr>
