@@ -4,7 +4,6 @@
 	margin: 5px;
 	}
 </style>
-
 <section id="challenges">
 	<div class="container pt">
 		<div class="row">
@@ -19,7 +18,7 @@
 						onLoad: aceLoaded1,
 						onChange: aceChanged,
 						showPrintMargin: false
-					 }" ng-model="content" id="test">
+						}" ng-model="content" id="test">
 					</div>
 				</div>
 				<div class="row">
@@ -32,18 +31,22 @@
 						onLoad: aceLoaded2,
 						onChange: aceChanged,
 						showPrintMargin: false
-					 }" ng-model="content2" id="prompt">
+						}" ng-model="content2" id="prompt">
 					</div>
 				</div>
 			</div>
-
 			<div class="col-md-6">
 				<h2> Instructions </h2>
 				<form>
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="Name of Exercise" ng-model="exercise.name">
-						<input type="text" class="form-control" placeholder="Short description of Exercise" ng-model="exercise.shortDescription"><input type="text" class="form-control" placeholder="Long description of Exercise" ng-model="exercise.longDescription">
-						<input type="text" class="form-control" placeholder="Category" ng-model="exercise.category">
+						<input type="text" class="form-control" placeholder="Short description of Exercise" ng-model="exercise.shortDescription">
+						<textarea rows="3" type="text" class="form-control" placeholder="Long description of Exercise" ng-model="exercise.longDescription"></textarea>
+						<span>
+							<input type="text" class="form-control" placeholder="Category 1" ng-model="exercise.category[0]">
+							<input type="text" class="form-control" placeholder="Category 2" ng-model="exercise.category[1]">
+							<input type="text" class="form-control" placeholder="Category 3" ng-model="exercise.category[2]">
+						</span>
 						<input type="text" class="form-control" placeholder="Difficulty" ng-model="exercise.difficulty">
 						<h5><a href="" ng-click="submitTest(exercise)">Submit Test</a></h5>
 						<h3>{{successMessage}}</h3>
