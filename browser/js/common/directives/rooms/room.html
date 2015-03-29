@@ -1,5 +1,16 @@
-<h5> Room Exercise: {{ room.exerciseName }}  {{room.timeUntilClose | date:'mm:ss'}}</h5>
+<!-- <h5> Room Exercise: {{ room.exerciseName }}  {{room.timeUntilClose | date:'mm:ss'}}</h5>
 <h5>   
 	Room User(s): {{ room.users[0].username}}
     <a href="/arena/{{ room.roomId }}" ng-click="joinRoom(room.roomId)">Join Room</a>
-</h5>
+</h5> -->
+
+<table class="table table-bordered" id="exerciseTable">
+	<tr>
+		<td width="30px" id="exerciseName">{{ room.exerciseName }}</td>
+		<td width="20px">{{room.timeUntilClose | date:'mm:ss'}}</td>
+		<td width="20px"><a href="/arena/{{ room.roomId }}" ng-click="joinRoom(room.roomId)">Join Room</a></td>
+	</tr>
+	<tr>
+		<td colspan="3"> Users: <span ng-repeat="roomUser in room.users" >{{ roomUser.username}}&nbsp;&nbsp;&nbsp;</span></td>
+	</tr>
+</table>
