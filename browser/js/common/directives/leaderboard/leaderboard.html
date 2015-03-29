@@ -1,9 +1,10 @@
 <div id="leaderboard">
 	<div class="container">
 		<div class="row">
+		<h1>Leaderboard</h1>
 				<div class="col-sm-3">
 				<h3>Name</h3>
-				<div ng-repeat="user in users | orderBy: '-totalScore'">
+				<div ng-repeat="user in topFive | orderBy: '-totalScore'">
 				{{ user.username  }}
 				</div>
 				
@@ -11,7 +12,7 @@
 
 				<div class="col-sm-3">
 				<h3>Score</h3>
-				<div ng-repeat="user in users | orderBy: '-totalScore'">
+				<div ng-repeat="user in topFive | orderBy: '-totalScore'">
 				{{ user.totalScore }}
 				</div>
 
