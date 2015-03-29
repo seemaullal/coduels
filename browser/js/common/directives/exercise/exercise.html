@@ -1,4 +1,10 @@
-<h5>
-    {{ exercise.name }}
-    <a href="/arena/{{ roomKey }}" ng-click="makeNewRoom(exercise)">Create Room</a>&nbsp;&nbsp;&nbsp;<a href="/arena/{{ roomKey }}" ng-click="makePracticeRoom(exercise)">Practice</a>
-</h5>
+<table class="table table-bordered" id="exerciseTable">
+	<tr>
+		<td width="30px">{{ exercise.name }}</td>
+		<td width="20px"><a href="/arena/{{ roomKey }}" ng-click="makeNewRoom(exercise)">Create Room</a></td>
+		<td width="20px"><a href="/arena/{{ roomKey }}" ng-click="makePraticeRoom(exercise)">Practice</a></td>
+	</tr>
+	<tr>
+		<td colspan="3">{{ exercise.shortDescription }}</td>
+	</tr>
+</table>

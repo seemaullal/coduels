@@ -4,7 +4,7 @@ app.directive('room', function () {
 		restrict: 'E',
 		templateUrl: 'js/common/directives/rooms/room.html',
 		link: function(scope) {
-
+			
 		}
 	};
 });
