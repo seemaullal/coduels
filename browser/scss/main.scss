@@ -7,11 +7,13 @@
 
 body {
     font-family: 'Montserrat', sans-serif;
+    height: 100%;
 }
 
 html {
     font-family: 'Montserrat', sans-serif;
 }
+
 
 @mixin clearfix {
     &:after {
