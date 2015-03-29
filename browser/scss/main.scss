@@ -14,9 +14,6 @@ html {
     font-family: 'Montserrat', sans-serif;
 }
 
-.wrapper {
-    min-height: 100%;
-}
 
 @mixin clearfix {
     &:after {
