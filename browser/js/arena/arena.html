@@ -28,7 +28,6 @@
         <h2> Tests </h2>
         <h5 ng-repeat="title in failedTestTitles"> {{ title }} </h5>
 
-        <h2> Current Players </h2>
         <div ng-repeat="user in userDisplay">
         <div ng-show="isPractice">
             <h5 ng-show="numTests" ng-repeat="user in userDisplay"> Passing: {{ user.passed }} / {{ numTests }} </h5>
