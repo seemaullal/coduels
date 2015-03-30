@@ -26,7 +26,7 @@ app.config(function($stateProvider) {
   });
 });
 
-app.controller('ArenaController', function($scope, $firebaseObject, $firebaseArray, $stateParams, $sce, RoomFactory, AuthService, CompletionFactory, $modal, $state) {
+app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFactory, AuthService, CompletionFactory, $modal, $state) {
   AuthService.getLoggedInUser().then(function(user) {
      $scope.user = user;
   });
@@ -34,9 +34,9 @@ app.controller('ArenaController', function($scope, $firebaseObject, $firebaseArr
   $scope.isPractice = false;
   var currFirebaseRoom = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey);
 
- var socket = io();
+  var socket = io();
 
- var startTimeFromFb = currFirebaseRoom.child('gameStartTime');
+  var startTimeFromFb = currFirebaseRoom.child('gameStartTime');
   startTimeFromFb.once('value', function(snapshot) {
       var startTime = new Date(snapshot.val());
       function countDown() {
@@ -79,14 +79,14 @@ app.controller('ArenaController', function($scope, $firebaseObject, $firebaseArr
         test.color = false;
       } else {
         test.color = true;
-      };
+      }
     });
     return allTests;
   };
 
-  $scope.allTestTitles;
+  $scope.allTestTitles = null;
   socket.on('failedTests', function(testTitles) {
-    if (testTitles[0] == undefined){ return };
+    if (testTitles[0] === undefined){ return; }
     console.log("testTitles: ", testTitles);
     console.count("Number");
       if (!$scope.allTestTitles){
@@ -95,7 +95,7 @@ app.controller('ArenaController', function($scope, $firebaseObject, $firebaseArr
             $scope.allTestTitles.push({title: testTitle, color: false});
           });
         console.log("allTestTitles", $scope.allTestTitles);
-      };
+      }
       $scope.failedTestTitles = testTitles;
       $scope.allTestTitles = setColorProperty($scope.allTestTitles, $scope.failedTestTitles);
       $scope.$digest();
@@ -118,7 +118,7 @@ socket.on('theFailures', function (failures){
         updatedUser.failures = failures.failures;
         // Only include if we want passed tests as a user property in firebase.
         // updatedUser.passed = $scope.numTests - failures.failures;
-        updatedUser.code = failures.userCode
+        updatedUser.code = failures.userCode;
         userRef.child(index).set(updatedUser);
         if (failures.failures === 0) {
           $scope.keyCodeEvents = [];
@@ -144,9 +144,9 @@ socket.on('theFailures', function (failures){
                 return;
               });
             }
-          }) // closes currFirebaseRoom.once
+          }); // closes currFirebaseRoom.once
         } // closes if (failures.failures) statement
-      }; // closes if (user._id) statement
+      } // closes if (user._id) statement
     }); // closes forEach
   }); // closes ref.once
 }); // closes socket.on
@@ -184,7 +184,5 @@ socket.on('theFailures', function (failures){
      }
      $scope.srcUrl = $sce.trustAsResourceUrl('/api/arena/iframe/' + $scope.game.exerciseId).toString();
  });
-
-
 
 }); // closes controller
