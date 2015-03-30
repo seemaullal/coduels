@@ -6,12 +6,13 @@
 		</div>
 		<div class="row mt">
 			<div class="col-lg-6">
-				<h3>Challenges completed</h3>
+				<h2>Challenges completed</h2>
 				<div ng-repeat="challenge in userChallenges track by $index">
-				<h3 ng-show="none">{{ none }}</h3>
-				<h3>{{ challenge.name }}</h3>
+				<ul>
+				<li><h3>{{ challenge.name }}</h3>
 				<p>{{ challenge.shortDescription }}<br>
-				Difficulty: {{ challenge.difficulty }}</p>
+				Difficulty: {{ challenge.difficulty }}</p></li>
+				</ul>
 				</div>
 			</div><!-- /colg-lg-6 -->
 			
