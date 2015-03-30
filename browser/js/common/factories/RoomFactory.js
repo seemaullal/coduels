@@ -9,7 +9,7 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
 
     factory.createRoom = function(exercise, user,isChallenge) {
         var gameStartTime = new Date();
-        gameStartTime = gameStartTime.setSeconds(gameStartTime.getSeconds() + 10);
+        gameStartTime = gameStartTime.setSeconds(gameStartTime.getSeconds() + 20);
 
         var roomData = {
             users: [user],
@@ -92,7 +92,7 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
             list.forEach (function (user, index) {
                 if (userId == user._id){
                     list.splice(index,1);
-                };  
+                };
             });
             ref.child('users').set(list);
         });
