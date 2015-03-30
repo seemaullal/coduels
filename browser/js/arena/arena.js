@@ -68,8 +68,31 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
   });
 
 
+  var setColorProperty = function (allTests, failedTests){
+    allTests.forEach(function (test){
+      if( failedTests.indexOf(test.title) > -1){
+        test.color = false;
+      } else {
+        test.color = true;
+      };
+    });
+    return allTests;
+  };
+
+  $scope.allTestTitles;
   socket.on('failedTests', function(testTitles) {
+    if (testTitles[0] == undefined){ return };
+    console.log("testTitles: ", testTitles);
+    console.count("Number");
+      if (!$scope.allTestTitles){
+        $scope.allTestTitles = [];
+        testTitles.forEach(function (testTitle){
+            $scope.allTestTitles.push({title: testTitle, color: false});
+          });
+        console.log("allTestTitles", $scope.allTestTitles);
+      };
       $scope.failedTestTitles = testTitles;
+      $scope.allTestTitles = setColorProperty($scope.allTestTitles, $scope.failedTestTitles);
       $scope.$digest();
   });
 
@@ -79,7 +102,6 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
   };
 
   var ref = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/'+$stateParams.roomKey+'/users');
-console.log('arena controllinglasdkjfl;askjdfl;akjdfk');
   socket.on('theFailures', function (failures){
     if (!$scope.failures) {$scope.numTests = failures.failures;}
     $scope.failures = failures.failures;
