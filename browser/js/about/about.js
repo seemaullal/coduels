@@ -40,7 +40,7 @@ app.controller('AboutController', function ($scope, AuthService, TestFactory, Us
                     var userChallenges = {};
                     var index = exercisesInfo.indexOf(challenge);
                     if(index === -1) {
-                        $scope.none = 'You haven\'t completed any challenges!'
+                        console.log('No challenges completed');
                     } else {
                         $scope.none = false;
                         userChallenges = data[index];
