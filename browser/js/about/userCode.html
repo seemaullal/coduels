@@ -13,7 +13,7 @@
 		<accordion ng-repeat="exercise in userExercises">
 			<accordion-group heading="{{exercise.name}} | Difficulty: {{ exercise.difficulty }}" is-open="false" >
 
-			<div ng-repeat="exercise in userExercise track by $index | orderBy: 'time' : false" >
+			<div ng-repeat="exercise in userExercise track by $index | orderBy: 'time'" >
 			<p>{{ exercise.time | date:'short'}}</p>
 			<div ui-ace="{useWrapMode : true,
 			showGutter: true,
