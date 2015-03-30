@@ -1,18 +1,41 @@
-<div class="container">
-<div class="row">
-<div class="col-sm-6" id="Exercises">
-<div class="container pt">
-  <h2> Exercises </h2>
-  <exercise ng-repeat="exercise in exercises">
-  </exercise>
-  </div>
-</div>
+<div class="container" style="height:100%">
 
-<div class="col-sm-6" id="activeRooms">
-<div class="container pt">
-    <h2> Active Rooms </h2>
-    <room ng-repeat="room in activeRoomData"></room>
-    </div>
-</div>
+<div class="row">
+<!-- 	<div class="col-sm-6" id="Exercises">
+	  <h2> Exercises </h2>
+	  <h4> Easy </h4>
+	  <exercise ng-repeat="exercise in exercises" ng-show="exercise.difficulty == 'Easy'">
+	  </exercise>
+	  <h4> Medium </h4>
+	  <exercise ng-repeat="exercise in exercises" ng-show="exercise.difficulty == 'Medium'">
+	  </exercise>
+	  <h4> Hard </h4>
+	  <exercise ng-repeat="exercise in exercises" ng-show="exercise.difficulty == 'Hard'">
+	  </exercise>
+	</div> -->
+
+	<div class="col-sm-6" id="Exercises">
+		<h2> Exercises </h2>
+		<accordion close-others="">
+			<accordion-group heading="Easy" is-open="true">
+				<exercise ng-repeat="exercise in exercises"  ng-show="exercise.difficulty == 'Easy'">
+				</exercise>
+			</accordion-group>
+			<accordion-group heading="Medium" is-open="true">
+				<exercise ng-repeat="exercise in exercises"  ng-show="exercise.difficulty == 'Medium'">
+				</exercise>
+			</accordion-group>
+			<accordion-group heading="Hard" is-open="true">
+				<exercise ng-repeat="exercise in exercises" is-open="true" ng-show="exercise.difficulty == 'Hard'">
+				</exercise>
+			</accordion-group>
+		</accordion>
+	</div>
+
+
+	<div class="col-sm-6" id="activeRooms">
+	    <h2> Active Rooms </h2>
+	    <room ng-repeat="room in activeRoomData"></room>
+	</div>
 </div>
 </div>
