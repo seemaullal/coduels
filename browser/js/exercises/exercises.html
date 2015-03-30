@@ -21,11 +21,11 @@
 				<exercise ng-repeat="exercise in exercises"  ng-show="exercise.difficulty == 'Easy'">
 				</exercise>
 			</accordion-group>
-			<accordion-group heading="Medium" is-open="true">
+			<accordion-group heading="Medium" is-open="false">
 				<exercise ng-repeat="exercise in exercises"  ng-show="exercise.difficulty == 'Medium'">
 				</exercise>
 			</accordion-group>
-			<accordion-group heading="Hard" is-open="true">
+			<accordion-group heading="Hard" is-open="false">
 				<exercise ng-repeat="exercise in exercises" is-open="true" ng-show="exercise.difficulty == 'Hard'">
 				</exercise>
 			</accordion-group>

@@ -1,3 +1,15 @@
+html,body {
+	height:100%;
+}
+
+#wrap {
+	 min-height: 100%;
+}
+#main {
+	overflow: auto;
+	padding-bottom: 75px;
+	margin-bottom: 75px;
+}
 #home {
 	
 	padding-top: 70px;
@@ -37,7 +49,10 @@ span.co {
 	background-color: #1e1e1e;
 	padding-top: 40px;
 	padding-bottom: 40px;
-
+	position: relative;
+	// margin-top: -75px;
+	// height: 75px;
+	clear:both;
 }
 
 #footer p {
