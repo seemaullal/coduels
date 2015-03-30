@@ -35,7 +35,11 @@ var schema = new mongoose.Schema({
         exerciseID: {type: mongoose.Schema.Types.ObjectId, ref: "Exercise" },
         code: String,
         score: Number,
-        challenge: Boolean
+        challenge: Boolean,
+        time: {
+            type: Date,
+            default: Date.now
+        }
     } ]
     //totalScores, completedExercises, completedChallenges can be virtuals because it's an artificial value since it's a sum of all the exercise scores
 
