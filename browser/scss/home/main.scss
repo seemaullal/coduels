@@ -5,17 +5,11 @@ html,body {
 #wrap {
 	 min-height: 100%;
 }
-#main {
-	overflow: auto;
-	padding-bottom: 75px;
-	margin-bottom: 75px;
-}
+
 #home {
-	
 	padding-top: 70px;
 	padding-bottom: 70px;
 	background-color: #1e1e1e;
-
   }
 
 .header {
@@ -57,7 +51,8 @@ span.co {
 	padding-bottom: 40px;
 	width: 100%;
 	height: 208px;
-
+	position: relative;
+	clear:both;
 }
 
 #exercises {
