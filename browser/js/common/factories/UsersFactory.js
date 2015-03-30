@@ -10,7 +10,7 @@ app.factory('UsersFactory', function($http) {
 
 	factory.getUser = function(userId) {
 		return $http.get('/api/user/' + userId).then(function(response) {
-			console.log(response.data);
+			console.log('user info', response.data);
 			return response.data;
 		});
 	};
