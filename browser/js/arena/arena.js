@@ -38,7 +38,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
           // $state.go('exercises');
           clearInterval(timeout);
           AuthService.getLoggedInUser().then(function(user) {
-            if (!isPractice)
+            if (!$scope.isPractice)
               user.isAuthorized = null;
             $scope.waitingDone = true;
             if ($scope.userDisplay.length === 1) {
@@ -71,7 +71,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
   socket.on('failedTests', function(testTitles) {
       $scope.failedTestTitles = testTitles;
       $scope.$digest();
-  })
+  });
 
   // defines and sets the onLoad callback function on the scope
   $scope.userInputSession = function(_editor) {
@@ -102,7 +102,7 @@ console.log('arena controllinglasdkjfl;askjdfl;akjdfk');
                 roomInfoRef.child('winner').set(updatedUser);
                 isWinner = true;
               } // closes if (!roomSnapshot)
-              
+
               CompletionFactory.sendCompletion(user._id, $scope.game.exerciseId, updatedUser.code, $scope.game.difficulty, userSnapshot.val().length, isWinner);
               if ($scope.isPractice) {
                 var modalInstance = $modal.open({
@@ -116,7 +116,7 @@ console.log('arena controllinglasdkjfl;askjdfl;akjdfk');
                 });
                 modalInstance.result.then(function() {
                   return;
-                }); 
+                });
               }
             }) // closes roomInfoRef.once
           } // closes if (failures.failures) statement
