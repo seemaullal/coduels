@@ -17,6 +17,11 @@ app.config(function($stateProvider) {
     },
     url: '/arena/:roomKey',
     controller: 'ArenaController',
+    onExit: function(RoomFactory, AuthService, $stateParams) {
+      AuthService.getLoggedInUser().then(function(user){        
+        RoomFactory.removeUserFromRoom(user._id, $stateParams.roomKey);
+      });
+    },
     templateUrl: 'js/arena/arena.html'
   });
 });
