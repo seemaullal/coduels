@@ -4,7 +4,6 @@
 	margin: 5px;
 	}
 </style>
-
 <section id="challenges">
 	<div class="container pt">
 		<div class="row">
@@ -17,8 +16,9 @@
 						theme: 'monokai',
 						mode: 'javascript',
 						onLoad: aceLoaded1,
-						onChange: aceChanged
-					 }" ng-model="content" id="test">
+						onChange: aceChanged,
+						showPrintMargin: false
+						}" ng-model="content" id="test">
 					</div>
 				</div>
 				<div class="row">
@@ -29,22 +29,26 @@
 						theme: 'monokai',
 						mode: 'javascript',
 						onLoad: aceLoaded2,
-						onChange: aceChanged
-					 }" ng-model="content2" id="prompt">
+						onChange: aceChanged,
+						showPrintMargin: false
+						}" ng-model="content2" id="prompt">
 					</div>
 				</div>
 			</div>
-
 			<div class="col-md-6">
 				<h2> Instructions </h2>
 				<form>
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Name of Exercise" ng-model="exercise.name">
-						<input type="text" class="form-control" placeholder="Short description of Exercise" ng-model="exercise.shortDescription"><input type="text" class="form-control" placeholder="Long description of Exercise" ng-model="exercise.longDescription">
-						<input type="text" class="form-control" placeholder="Category" ng-model="exercise.category">
-						<input type="text" class="form-control" placeholder="Difficulty" ng-model="exercise.difficulty">
-						<h5><a href="" ng-click="submitTest(exercise)">Submit Test</a></h5>
-						<h3>{{successMessage}}</h3>
+						<input type="text" class="form-control" placeholder="Name of Exercise" ng-model="exercise.name"><br>
+						<input type="text" class="form-control" placeholder="Short description of Exercise" ng-model="exercise.shortDescription"><br>
+						<textarea rows="3" type="text" class="form-control" placeholder="Long description of Exercise" ng-model="exercise.longDescription"></textarea><br>
+						<div class="row">
+							<div class="col-md-4"><input type="text" class="form-control" placeholder="Category 1" ng-model="exercise.category[0]"></div>
+							<div class="col-md-4"><input type="text" class="form-control" placeholder="Category 2" ng-model="exercise.category[1]"></div>
+							<div class="col-md-4"><input type="text" class="form-control" placeholder="Category 3" ng-model="exercise.category[2]"></div>
+						</div><br>
+						<input type="text" class="form-control" placeholder="Difficulty" ng-model="exercise.difficulty"><br>
+						<h5><a href="" ng-click="submitTest(exercise)">Submit Test</a></h5><br>
 					</div>
 				</form>
 			</div>

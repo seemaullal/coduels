@@ -57,6 +57,8 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactor
 		})
 	}
 
+	$scope.isOpen = true;
+
 	var timeout = setInterval(countDown, 1000);
 
 });

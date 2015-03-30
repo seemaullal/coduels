@@ -12,7 +12,7 @@ app.config(function($stateProvider) {
             alert("Sorry this challenge has already begun :( ");
               $state.go('exercises');
           }
-        })
+        });
       }
     },
     url: '/arena/:roomKey',
@@ -21,7 +21,7 @@ app.config(function($stateProvider) {
   });
 });
 
-app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFactory, AuthService, CompletionFactory) {
+app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFactory, AuthService, CompletionFactory, $modal, $state) {
 
   $scope.waitingDone = false;
   $scope.isPractice = false;
@@ -83,8 +83,9 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
     if (!$scope.failures) {$scope.numTests = failures.failures;}
     $scope.failures = failures.failures;
     //send failures to Firebase
+
     ref.once('value', function (userSnapshot){
-      userSnapshot.val().forEach(function (user, index){
+      userSnapshot.val().forEach(function (user,index){
         if (user._id == failures.userId){
           console.log('this is the userId tied to failures in arena.js', failures.userId)
           var updatedUser = userSnapshot.val()[index];
@@ -93,6 +94,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
           // Only include if we want passed tests as a user property in firebase.
           // updatedUser.passed = $scope.numTests - failures.failures;
           updatedUser.code = failures.userCode
+
           ref.child(index).set(updatedUser);
           if (failures.failures === 0) {
             $scope.keyCodeEvents = [];
@@ -104,6 +106,20 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
               } // closes if (!roomSnapshot)
 
               CompletionFactory.sendCompletion(user._id, $scope.game.exerciseId, updatedUser.code, $scope.game.difficulty, userSnapshot.val().length, isWinner);
+              if ($scope.isPractice) {
+                var modalInstance = $modal.open({
+                      templateUrl: '/js/arena/practice-modal.html',
+                      controller: function($scope, $modalInstance) {
+                          $scope.ok = function() {
+                            $modalInstance.close('ok');
+                            $state.go("exercises");
+                          };
+                        }
+                });
+                modalInstance.result.then(function() {
+                  return;
+                });
+              }
             }) // closes roomInfoRef.once
           } // closes if (failures.failures) statement
         }; // closes if (user._id) statement

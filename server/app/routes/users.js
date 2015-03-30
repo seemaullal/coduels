@@ -9,16 +9,24 @@ router.get('/users', function(req, res) {
 		var userArr = [];
 		user.forEach(function(user) {
 			userArr.push(user.toObject({virtuals:true}));
-		})
+		});
 		res.json(userArr);
-	})
-})
+	});
+});
 
 router.post('/users/:userId/exercises/', function (req, res, next) {
 	var userId = req.params.userId;
 	var exercisesObj = req.body;
 
 	User.findByIdAndUpdate(userId, {$push: {exercises: exercisesObj}}, function (err, user) {
+		if (!err) res.json(user.toObject({virtuals:true}));
+		else next(err);
+	});
+});
+
+router.get('/user/:userId', function (req, res, next) {
+	var userId = req.params.userId;
+	User.findById(userId, function (err, user) {
 		if (!err) res.json(user.toObject({virtuals:true}));
 		else next(err);
 	});
