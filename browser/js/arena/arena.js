@@ -17,6 +17,11 @@ app.config(function($stateProvider) {
     },
     url: '/arena/:roomKey',
     controller: 'ArenaController',
+    onExit: function(RoomFactory, AuthService, $stateParams) {
+      AuthService.getLoggedInUser().then(function(user){
+        RoomFactory.removeUserFromRoom(user._id, $stateParams.roomKey);
+      });
+    },
     templateUrl: 'js/arena/arena.html'
   });
 });
@@ -40,7 +45,7 @@ app.controller('ArenaController', function($scope, $firebaseObject, $firebaseArr
           // $state.go('exercises');
           clearInterval(timeout);
           AuthService.getLoggedInUser().then(function(user) {
-              user.isAuthorized = null;
+            user.isAuthorized = null;
             $scope.waitingDone = true;
             if ($scope.userDisplay.length === 1) {
               /*even if a user joined a challenge, if
@@ -65,59 +70,82 @@ app.controller('ArenaController', function($scope, $firebaseObject, $firebaseArr
   });
 
 
+  var setColorProperty = function (allTests, failedTests){
+    allTests.forEach(function (test){
+      if( failedTests.indexOf(test.title) > -1){
+        test.color = false;
+      } else {
+        test.color = true;
+      };
+    });
+    return allTests;
+  };
+
+  $scope.allTestTitles;
   socket.on('failedTests', function(testTitles) {
+    if (testTitles[0] == undefined){ return };
+    console.log("testTitles: ", testTitles);
+    console.count("Number");
+      if (!$scope.allTestTitles){
+        $scope.allTestTitles = [];
+        testTitles.forEach(function (testTitle){
+            $scope.allTestTitles.push({title: testTitle, color: false});
+          });
+        console.log("allTestTitles", $scope.allTestTitles);
+      };
       $scope.failedTestTitles = testTitles;
+      $scope.allTestTitles = setColorProperty($scope.allTestTitles, $scope.failedTestTitles);
       $scope.$digest();
-  })
+  });
 
   // defines and sets the onLoad callback function on the scope
   $scope.userInputSession = function(_editor) {
     $scope.aceEditor = _editor.getSession();
   };
 var userRef = currFirebaseRoom.child('users');
-  socket.on('theFailures', function (failures){
-    if (!$scope.failures) {$scope.numTests = failures.failures;}
-    $scope.failures = failures.failures;
-    //send failures to Firebase
-    userRef.once('value', function (userSnapshot){
-      userSnapshot.val().forEach(function (user, index){
-        if (user._id == failures.userId){
-          var updatedUser = userSnapshot.val()[index];
-          updatedUser.failures = failures.failures;
-          // Only include if we want passed tests as a user property in firebase.
-          // updatedUser.passed = $scope.numTests - failures.failures;
-          updatedUser.code = failures.userCode
-          userRef.child(index).set(updatedUser);
-          if (failures.failures === 0) {
-            $scope.keyCodeEvents = [];
-            currFirebaseRoom.once('value', function(roomSnapshot) {
-              var isWinner = false;
-              if(!roomSnapshot.val().winner) {
-                currFirebaseRoom.child('winner').set(updatedUser);
-                isWinner = true;
-              } // closes if (!roomSnapshot)
-              
-              CompletionFactory.sendCompletion(user._id, $scope.game.exerciseId, updatedUser.code, $scope.game.difficulty, userSnapshot.val().length, isWinner);
-              if ($scope.isPractice) {
-                var modalInstance = $modal.open({
-                      templateUrl: '/js/arena/practice-modal.html',
-                      controller: function($scope, $modalInstance) {
-                          $scope.ok = function() {
-                            $modalInstance.close('ok');
-                          };
-                        }
-                });
-                modalInstance.result.then(function() {
-                  $state.go("exercises");
-                  return;
-                }); 
-              }
-            }) // closes currFirebaseRoom.once
-          } // closes if (failures.failures) statement
-        }; // closes if (user._id) statement
-      }); // closes forEach
-    }); // closes ref.once
-  }); // closes socket.on
+socket.on('theFailures', function (failures){
+  if (!$scope.failures) {$scope.numTests = failures.failures;}
+  $scope.failures = failures.failures;
+  //send failures to Firebase
+  userRef.once('value', function (userSnapshot){
+    userSnapshot.val().forEach(function (user, index){
+      if (user._id == failures.userId){
+        var updatedUser = userSnapshot.val()[index];
+        updatedUser.failures = failures.failures;
+        // Only include if we want passed tests as a user property in firebase.
+        // updatedUser.passed = $scope.numTests - failures.failures;
+        updatedUser.code = failures.userCode
+        userRef.child(index).set(updatedUser);
+        if (failures.failures === 0) {
+          $scope.keyCodeEvents = [];
+          currFirebaseRoom.once('value', function(roomSnapshot) {
+            var isWinner = false;
+            if(!roomSnapshot.val().winner) {
+              currFirebaseRoom.child('winner').set(updatedUser);
+              isWinner = true;
+            } // closes if (!roomSnapshot)
+
+            CompletionFactory.sendCompletion(user._id, $scope.game.exerciseId, updatedUser.code, $scope.game.difficulty, userSnapshot.val().length, isWinner);
+            if ($scope.isPractice) {
+              var modalInstance = $modal.open({
+                    templateUrl: '/js/arena/practice-modal.html',
+                    controller: function($scope, $modalInstance) {
+                        $scope.ok = function() {
+                          $modalInstance.close('ok');
+                        };
+                      }
+              });
+              modalInstance.result.then(function() {
+                $state.go("exercises");
+                return;
+              });
+            }
+          }) // closes currFirebaseRoom.once
+        } // closes if (failures.failures) statement
+      }; // closes if (user._id) statement
+    }); // closes forEach
+  }); // closes ref.once
+}); // closes socket.on
 
   userRef.on('value', function (userSnapshot){
     $scope.userDisplay = [];
@@ -133,7 +161,7 @@ var userRef = currFirebaseRoom.child('users');
       $scope.$digest();
     }
 
-  var winnerRef = currFirebaseRoom.child('winner')
+  var winnerRef = currFirebaseRoom.child('winner');
   winnerRef.on('value', function(winnerSnapshot) {
     if (winnerSnapshot.val()){
       $scope.winner = winnerSnapshot.val().username;

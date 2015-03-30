@@ -26,17 +26,18 @@
         <h2> {{ game.exerciseName }}</h2>
         <h4> {{ game.longDescription }}</h4>
         <h2> Tests </h2>
-        <h5 ng-repeat="title in failedTestTitles"> {{ title }} </h5>
+        <h5 ng-repeat="title in allTestTitles" ng-class="{green: title.color, red:!title.color}"> {{ title.title }} </h5>
 
-        <div ng-repeat="user in userDisplay">
-        <div ng-show="isPractice">
+        <div ng-show="isPractice" ng-repeat="user in userDisplay">
             <h5 ng-show="numTests" ng-repeat="user in userDisplay"> Passing: {{ user.passed }} / {{ numTests }} </h5>
         </div>
-         <h2 ng-show="!isPractice"> Current Players </h2>
-        <div ng-show="!isPractice" ng-repeat="user in userDisplay">
-            <h5> Username: {{ user.username }} </h5>
-            <h5> Passing: {{ user.passed }} / {{ numTests }} </h5>
-        </div>
+            <div ng-show="!isPractice">
+                <h2> Current Players </h2>
+                <div ng-repeat="user in userDisplay">
+                    <h5> Username: {{ user.username }} </h5>
+                    <h5> Passing: {{ user.passed }} / {{ numTests }} </h5>
+                </div>
+
         <h1 ng-show="!isPractice">Winner: {{ winner }}</h1>
     </div>
 
