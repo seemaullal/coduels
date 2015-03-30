@@ -175,7 +175,6 @@ socket.on('theFailures', function (failures){
       }
     }
   });
-  });
 
  currFirebaseRoom.once('value', function(snapshot) {
      $scope.game = snapshot.val();
