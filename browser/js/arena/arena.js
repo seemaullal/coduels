@@ -162,17 +162,19 @@ socket.on('theFailures', function (failures){
     }
 
   var winnerRef = currFirebaseRoom.child('winner');
-  winnerRef.on('value', function(winnerSnapshot) {
-    if (winnerSnapshot.val()){
-      $scope.winner = winnerSnapshot.val().username;
-      if(!$scope.$$phase) {
-        //if no digest in progress
-        $scope.$digest();
-      }
-    }
-  });
+  $scope.winner = $firebaseObject(winnerRef);
+  
+  // winnerRef.on('value', function(winnerSnapshot) {
+  //   if (winnerSnapshot.val()){
+  //     $scope.winner = winnerSnapshot.val().username;
+  //     if(!$scope.$$phase) {
+  //       //if no digest in progress
+  //       $scope.$digest();
+  //     }
+  //   }
+  // });
 
-  });
+  // });
 
  currFirebaseRoom.once('value', function(snapshot) {
      $scope.game = snapshot.val();
