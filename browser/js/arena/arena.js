@@ -159,6 +159,7 @@ socket.on('theFailures', function (failures){
       var userObj = {};
       userObj.username = user.username;
       userObj.failures = user.failures;
+      userObj.totalScore = user.totalScore;
       userObj.passed = $scope.numTests - user.failures;
       $scope.userDisplay.push(userObj);
     });
