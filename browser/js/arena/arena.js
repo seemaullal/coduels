@@ -17,6 +17,11 @@ app.config(function($stateProvider) {
     },
     url: '/arena/:roomKey',
     controller: 'ArenaController',
+    onExit: function(RoomFactory, AuthService, $stateParams) {
+      AuthService.getLoggedInUser().then(function(user){
+        RoomFactory.removeUserFromRoom(user._id, $stateParams.roomKey);
+      });
+    },
     templateUrl: 'js/arena/arena.html'
   });
 });
@@ -38,7 +43,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
           // $state.go('exercises');
           clearInterval(timeout);
           AuthService.getLoggedInUser().then(function(user) {
-              user.isAuthorized = null;
+            user.isAuthorized = null;
             $scope.waitingDone = true;
             if ($scope.userDisplay.length === 1) {
               /*even if a user joined a challenge, if
@@ -67,10 +72,33 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
   });
 
 
+  var setColorProperty = function (allTests, failedTests){
+    allTests.forEach(function (test){
+      if( failedTests.indexOf(test.title) > -1){
+        test.color = false;
+      } else {
+        test.color = true;
+      };
+    });
+    return allTests;
+  };
+
+  $scope.allTestTitles;
   socket.on('failedTests', function(testTitles) {
+    if (testTitles[0] == undefined){ return };
+    console.log("testTitles: ", testTitles);
+    console.count("Number");
+      if (!$scope.allTestTitles){
+        $scope.allTestTitles = [];
+        testTitles.forEach(function (testTitle){
+            $scope.allTestTitles.push({title: testTitle, color: false});
+          });
+        console.log("allTestTitles", $scope.allTestTitles);
+      };
       $scope.failedTestTitles = testTitles;
+      $scope.allTestTitles = setColorProperty($scope.allTestTitles, $scope.failedTestTitles);
       $scope.$digest();
-  })
+  });
 
   // defines and sets the onLoad callback function on the scope
   $scope.userInputSession = function(_editor) {
@@ -78,7 +106,6 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
   };
 
   var ref = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/'+$stateParams.roomKey+'/users');
-console.log('arena controllinglasdkjfl;askjdfl;akjdfk');
   socket.on('theFailures', function (failures){
     if (!$scope.failures) {$scope.numTests = failures.failures;}
     $scope.failures = failures.failures;
@@ -101,7 +128,7 @@ console.log('arena controllinglasdkjfl;askjdfl;akjdfk');
                 roomInfoRef.child('winner').set(updatedUser);
                 isWinner = true;
               } // closes if (!roomSnapshot)
-              
+
               CompletionFactory.sendCompletion(user._id, $scope.game.exerciseId, updatedUser.code, $scope.game.difficulty, userSnapshot.val().length, isWinner);
               if ($scope.isPractice) {
                 var modalInstance = $modal.open({
@@ -115,7 +142,7 @@ console.log('arena controllinglasdkjfl;askjdfl;akjdfk');
                 });
                 modalInstance.result.then(function() {
                   return;
-                }); 
+                });
               }
             }) // closes roomInfoRef.once
           } // closes if (failures.failures) statement
