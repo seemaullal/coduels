@@ -1,9 +1,15 @@
+html,body {
+	height:100%;
+}
+
+#wrap {
+	 min-height: 100%;
+}
+
 #home {
-	
 	padding-top: 70px;
 	padding-bottom: 70px;
 	background-color: #1e1e1e;
-
   }
 
 .header {
@@ -43,9 +49,8 @@ span.co {
 	background-color: #1e1e1e;
 	padding-top: 40px;
 	padding-bottom: 40px;
-	width: 100%;
-	height: 208px;
-
+	position: relative;
+	clear:both;
 }
 
 #exercises {
