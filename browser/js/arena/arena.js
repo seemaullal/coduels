@@ -12,7 +12,7 @@ app.config(function($stateProvider) {
             alert("Sorry this challenge has already begun :( ");
               $state.go('exercises');
           }
-        })
+        });
       }
     },
     url: '/arena/:roomKey',
@@ -21,7 +21,7 @@ app.config(function($stateProvider) {
   });
 });
 
-app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFactory, AuthService, CompletionFactory) {
+app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFactory, AuthService, CompletionFactory, $modal, $state) {
 
   $scope.waitingDone = false;
   $scope.isPractice = false;
@@ -102,6 +102,20 @@ console.log('arena controllinglasdkjfl;askjdfl;akjdfk');
               } // closes if (!roomSnapshot)
               
               CompletionFactory.sendCompletion(user._id, $scope.game.exerciseId, updatedUser.code, $scope.game.difficulty, userSnapshot.val().length, isWinner);
+              if ($scope.isPractice) {
+                var modalInstance = $modal.open({
+                      templateUrl: '/js/arena/practice-modal.html',
+                      controller: function($scope, $modalInstance) {
+                          $scope.ok = function() {
+                            $modalInstance.close('ok');
+                            $state.go("exercises");
+                          };
+                        }
+                });
+                modalInstance.result.then(function() {
+                  return;
+                }); 
+              }
             }) // closes roomInfoRef.once
           } // closes if (failures.failures) statement
         }; // closes if (user._id) statement

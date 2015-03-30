@@ -1,9 +1,15 @@
+html,body {
+	height:100%;
+}
+
+#wrap {
+	 min-height: 100%;
+}
+
 #home {
-	
 	padding-top: 70px;
 	padding-bottom: 70px;
 	background-color: #1e1e1e;
-
   }
 
 .header {
@@ -29,12 +35,26 @@ span.co {
 .pt {
 	padding-top: 50px;
 	padding-bottom: 50px;
+
 }
 
+.info {
+	height: 350px;
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+
 #footer {
+	bottom: 0;
 	background-color: #1e1e1e;
-	padding-top: 50px;
-	padding-bottom: 50px; 
+	padding-top: 40px;
+	padding-bottom: 40px;
+	position: relative;
+	clear:both;
+}
+
+#exercises {
+	font-family: 'Source Sans Pro', sans-serif;
 }
 
 #footer p {
