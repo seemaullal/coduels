@@ -69,6 +69,9 @@ app.controller('ArenaController', function($scope, $firebaseObject, $firebaseArr
 
   });
 
+  // var winnerRef = currFirebaseRoom.child('winner');
+  // $scope.winner = $firebaseObject(winnerRef).$value;
+  // console.log('scope winner', $scope.winner);
 
   var setColorProperty = function (allTests, failedTests){
     allTests.forEach(function (test){
@@ -121,7 +124,7 @@ socket.on('theFailures', function (failures){
           currFirebaseRoom.once('value', function(roomSnapshot) {
             var isWinner = false;
             if(!roomSnapshot.val().winner) {
-              currFirebaseRoom.child('winner').set(updatedUser);
+              winnerRef.set(updatedUser);
               isWinner = true;
             } // closes if (!roomSnapshot)
 
@@ -160,21 +163,18 @@ socket.on('theFailures', function (failures){
       //if no digest in progress
       $scope.$digest();
     }
-
-  var winnerRef = currFirebaseRoom.child('winner');
-  $scope.winner = $firebaseObject(winnerRef);
+  });
   
-  // winnerRef.on('value', function(winnerSnapshot) {
-  //   if (winnerSnapshot.val()){
-  //     $scope.winner = winnerSnapshot.val().username;
-  //     if(!$scope.$$phase) {
-  //       //if no digest in progress
-  //       $scope.$digest();
-  //     }
-  //   }
-  // });
-
-  // });
+  winnerRef.on('value', function(winnerSnapshot) {
+    if (winnerSnapshot.val()){
+      $scope.winner = winnerSnapshot.val().username;
+      if(!$scope.$$phase) {
+        //if no digest in progress
+        $scope.$digest();
+      }
+    }
+  });
+  });
 
  currFirebaseRoom.once('value', function(snapshot) {
      $scope.game = snapshot.val();
