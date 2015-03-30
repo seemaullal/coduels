@@ -1,5 +1,22 @@
+<style>
+.ace_editor {
+	height: 100px;
+	width: 400px;
+}
+</style>
+
+<div class="container">
 <h1>hello again</h1>
 
-<div ng-repeat='code in userExercise track by $index'>
-{{ code }}
+<div ng-repeat='exercise in userExercise track by $index'>
+<h4>{{ exercise.exerciseID.name }}</h4>
+<div ui-ace="{useWrapMode : true,
+			showGutter: true,
+			theme: 'monokai',
+			mode: 'javascript',
+			showPrintMargin: false}" ng-model="exercise.code">
+			
+			</div>
+</div>
+
 </div>

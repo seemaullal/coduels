@@ -15,18 +15,14 @@ app.controller('AboutController', function ($scope, AuthService, TestFactory, Us
     AuthService.getLoggedInUser().then( function(archivedUser){
         UsersFactory.getUser(archivedUser._id).then( function(user) {
             $scope.user = user;
-            
 
             TestFactory.getExercises().then(function(data) {
                 $scope.easyTotal = [];
                 $scope.medTotal = [];
                 $scope.hardTotal = [];
 
-                console.log('user information', $scope.user);
-
-                
-
                 var difficulties = _.pluck(data, 'difficulty');
+               
                 
                 difficulties.forEach(function(value) {
                     if(value === "Easy") {
@@ -41,32 +37,23 @@ app.controller('AboutController', function ($scope, AuthService, TestFactory, Us
                 $scope.userChallenges = [];
                 var exercisesInfo = _.pluck(data, "_id");
 
-                $scope.user.uniqueChallenges.forEach(function(challenge) {
-
+                $scope.user.uniqueChallenges.forEach(function(
+                    challenge) {
+                    console.log('challenge', challenge);
                     var userChallenges = {};
-                    var index = exercisesInfo.indexOf(challenge);
+                    var index = exercisesInfo.indexOf(challenge._id);
                     if(index === -1) {
                         console.log('No challenges completed');
                     } else {
                         $scope.none = false;
                         userChallenges = data[index];
-
-                        userChallenges.userCode = $scope.user.exercises;
                         $scope.userChallenges.push(userChallenges);
-
-                        console.log('user challenges', $scope.userChallenges.userCode)
 
                         $scope.userEasy = [];
                         $scope.userMed = [];
                         $scope.userHard = [];
 
-
                         $scope.userChallenges.forEach(function(challenge) {
-                            console.log('individual user challenge', challenge.userCode)
-                            var codes = _.pluck(challenge.userCode, "exerciseID");
-                            var i = codes.indexOf(challenge.userCode);
-                            console.log('what is i', i);
-                            console.log('code ids', codes);
                             if(!challenge.difficulty) {
                                 return 0;
                             } else if(challenge.difficulty === "Easy" ) {

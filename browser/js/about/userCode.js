@@ -14,13 +14,13 @@ app.controller('UserCodeCtrl', function($scope, AuthService, UsersFactory) {
 	AuthService.getLoggedInUser().then(function(archivedUser) {
 		UsersFactory.getUser(archivedUser._id).then(function(user) {
 			$scope.user = user;
-			console.log('this page user', $scope.user.exercises);
+			console.log('this page user', $scope.user);
 
 			$scope.userExercise = [];
 			$scope.user.exercises.forEach(function(exercise) {
-				$scope.userExercise.push(exercise.code);
-				console.log($scope.userExercise)
+				$scope.userExercise.push(exercise);
 			})
+
 		})
 	})
 })
