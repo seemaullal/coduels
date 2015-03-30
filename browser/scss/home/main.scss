@@ -1,9 +1,9 @@
-html,body {
-	height:100%;
+html {
+	position: relative;
+	min-height: 100%;
 }
-
-#wrap {
-	 min-height: 100%;
+body {
+	margin-bottom: 208px;
 }
 
 #home {
@@ -39,19 +39,19 @@ span.co {
 }
 
 .info {
-	height: 350px;
+	height: 100%;
 	font-family: 'Source Sans Pro', sans-serif;
 }
 
 
-#footer {
+.footer {
+	position: absolute;
 	bottom: 0;
 	background-color: #1e1e1e;
 	padding-top: 40px;
 	padding-bottom: 40px;
 	width: 100%;
 	height: 208px;
-	position: relative;
 	clear:both;
 }
 
@@ -63,11 +63,11 @@ span.co {
 	clear:both;
 }
 
-#footer p {
+.footer p {
 	color: white;
 }
 
-#footer h4 {
+.footer h4 {
 	color: white;
 	text-transform: uppercase;
 	padding-bottom: 20px;
