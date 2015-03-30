@@ -38,7 +38,8 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
           // $state.go('exercises');
           clearInterval(timeout);
           AuthService.getLoggedInUser().then(function(user) {
-            user.isAuthorized = null;
+            if (!isPractice)
+              user.isAuthorized = null;
             $scope.waitingDone = true;
             if ($scope.userDisplay.length === 1) {
               /*even if a user joined a challenge, if
