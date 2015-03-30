@@ -18,7 +18,7 @@ app.factory('CompletionFactory', function ($http){
 	};
 
 	factory.sendCompletion = function (userID, exerciseID, code, difficulty, numUsers, isWinner){
-		var score = factory.calculateScore(difficulty, numUsers);
+		var score = factory.calculateScore(difficulty, numUsers, isWinner);
 		var isChallenge = true;
 		var date = new Date();
 		if (numUsers === 1) 
