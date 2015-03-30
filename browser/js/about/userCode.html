@@ -15,7 +15,7 @@
 
 			<div ng-repeat='exercise in userExercise track by $index'>
 			<h4>{{ exercise.exerciseID.name }}</h4>
-			<p>{{ exercise.exerciseID.time | date: 'short'}}</p>
+			<p>{{ exercise.time | date: 'short'}}</p>
 			<div ui-ace="{useWrapMode : true,
 			showGutter: true,
 			theme: 'monokai',
