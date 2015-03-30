@@ -29,7 +29,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
 
  var socket = io();
 
- var startTimeFromFb = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey + '/gameStartTime');
+ var startTimeFromFb = new Firebase('https://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey + '/gameStartTime');
   startTimeFromFb.once('value', function(snapshot) {
       var startTime = new Date(snapshot.val());
       function countDown() {
@@ -38,8 +38,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
           // $state.go('exercises');
           clearInterval(timeout);
           AuthService.getLoggedInUser().then(function(user) {
-            if (!isPractice)
-              user.isAuthorized = null;
+            user.isAuthorized = null;
             $scope.waitingDone = true;
             if ($scope.userDisplay.length === 1) {
               /*even if a user joined a challenge, if
@@ -80,19 +79,18 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
 
   var ref = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/'+$stateParams.roomKey+'/users');
 console.log('arena controllinglasdkjfl;askjdfl;akjdfk');
+
   socket.on('theFailures', function (failures){
     if (!$scope.failures) {$scope.numTests = failures.failures;}
     $scope.failures = failures.failures;
     //send failures to Firebase
+
     ref.once('value', function (userSnapshot){
-      console.log(userSnapshot.val());
-      userSnapshot.val().forEach(function (user, index){
+      userSnapshot.val().forEach(function (user,index){
         if (user._id == failures.userId){
+          console.log('this is the userId tied to failures in arena.js', failures.userId)
           var updatedUser = userSnapshot.val()[index];
           updatedUser.failures = failures.failures;
-          // Only include if we want passed tests as a user property in firebase.
-          // updatedUser.passed = $scope.numTests - failures.failures;
-          updatedUser.code = failures.userCode
           ref.child(index).set(updatedUser);
           if (failures.failures === 0) {
             $scope.keyCodeEvents = [];

@@ -3,7 +3,7 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
 
     var factory = {}
 
-    var rooms = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms');
+    var rooms = new Firebase('https://dazzling-torch-169.firebaseio.com/rooms');
 
     factory.activeRooms = [];
 
@@ -60,7 +60,7 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
     factory.updateActiveRoomData = function () {
         return $q(function(resolve, reject) {
             var activeRoomData = [];
-            var ref = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/');
+            var ref = new Firebase('https://dazzling-torch-169.firebaseio.com/rooms/');
             ref.once('value', function (firebaseSnapshot){
                 for (var key in firebaseSnapshot.val()){
                     var roomData = firebaseSnapshot.val()[key];
@@ -75,7 +75,7 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
     };
 
     factory.addUserToRoom = function (userObj, roomId) {
-        var ref = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/'+roomId);
+        var ref = new Firebase('https://dazzling-torch-169.firebaseio.com/rooms/'+roomId);
         var list = [];
         ref.once('value', function (snap){
             list = snap.val().users;
