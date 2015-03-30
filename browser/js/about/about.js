@@ -22,6 +22,7 @@ app.controller('AboutController', function ($scope, AuthService, TestFactory, Us
                 $scope.hardTotal = [];
 
                 var difficulties = _.pluck(data, 'difficulty');
+               
                 
                 difficulties.forEach(function(value) {
                     if(value === "Easy") {
@@ -36,9 +37,11 @@ app.controller('AboutController', function ($scope, AuthService, TestFactory, Us
                 $scope.userChallenges = [];
                 var exercisesInfo = _.pluck(data, "_id");
 
-                $scope.user.uniqueChallenges.forEach(function(challenge) {
+                $scope.user.uniqueChallenges.forEach(function(
+                    challenge) {
+                    console.log('challenge', challenge);
                     var userChallenges = {};
-                    var index = exercisesInfo.indexOf(challenge);
+                    var index = exercisesInfo.indexOf(challenge._id);
                     if(index === -1) {
                         console.log('No challenges completed');
                     } else {
