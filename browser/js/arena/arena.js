@@ -121,6 +121,9 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
           updatedUser.code = failures.userCode
           ref.child(index).set(updatedUser);
           if (failures.failures === 0) {
+            $scope.allTestTitles.forEach(function(test) {
+              test.color = true;
+            })
             $scope.keyCodeEvents = [];
             roomInfoRef.once('value', function(roomSnapshot) {
               var isWinner = false;
