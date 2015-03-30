@@ -32,7 +32,7 @@
         <div ng-show="isPractice">
             <h5 ng-show="numTests" ng-repeat="user in userDisplay"> Passing: {{ user.passed }} / {{ numTests }} </h5>
         </div>
-         <h2 ng-show="!isPractice"> Current Players </h2>
+        <h2 ng-show="!isPractice"> Current Players </h2>
         <div ng-show="!isPractice" ng-repeat="user in userDisplay">
             <h5> Username: {{ user.username }} </h5>
             <h5> Passing: {{ user.passed }} / {{ numTests }} </h5>

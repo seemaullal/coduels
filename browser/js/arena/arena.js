@@ -38,7 +38,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
           // $state.go('exercises');
           clearInterval(timeout);
           AuthService.getLoggedInUser().then(function(user) {
-            if (!isPractice)
+            if (!$scope.isPractice)
               user.isAuthorized = null;
             $scope.waitingDone = true;
             if ($scope.userDisplay.length === 1) {
