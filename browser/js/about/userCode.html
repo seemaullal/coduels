@@ -6,11 +6,14 @@
 </style>
 
 <div class="container">
-<h1>hello again</h1>
+	<h2> {{ user.username }}, View Your Code </h2> <h4><a ui-sref="profile">Go back to your Profile</a></h4>
+		<accordion ng-repeat="exercise in userExercises">
+			<accordion-group heading="{{exercise.name}} | Difficulty: {{ exercise.difficulty }}" is-open="false" >
 
-<div ng-repeat='exercise in userExercise track by $index'>
-<h4>{{ exercise.exerciseID.name }}</h4>
-<div ui-ace="{useWrapMode : true,
+			<div ng-repeat='exercise in userExercise track by $index'>
+			<h4>{{ exercise.exerciseID.name }}</h4>
+			<p>{{ exercise.exerciseID.time | date: 'short'}}</p>
+			<div ui-ace="{useWrapMode : true,
 			showGutter: true,
 			theme: 'monokai',
 			mode: 'javascript',
@@ -18,5 +21,11 @@
 			
 			</div>
 </div>
+				
+			</accordion-group>
+		
+		</accordion>
+
+
 
 </div>
