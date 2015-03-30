@@ -1,12 +1,14 @@
 <section id="about">
 	<div class="container pt">
-		<img src="{{ user.image }}">
+	<div class="page-header">
 		<h1>Hello, {{ user.username }}</h1>
 		<h2>Your Total Score: {{ user.totalScore }}</h2>
+		</div>
 		<div class="row mt">
 			<div class="col-lg-6">
-				<h2>Challenges you have completed</h2>
+				<h3>Challenges completed</h3>
 				<div ng-repeat="challenge in userChallenges track by $index">
+				<h3 ng-show="none">{{ none }}</h3>
 				<h3>{{ challenge.name }}</h3>
 				<p>{{ challenge.shortDescription }}<br>
 				Difficulty: {{ challenge.difficulty }}</p>
@@ -16,25 +18,13 @@
 			<div class="col-lg-6">
 				<h4>Overall progress</h4>
 				Easy Challenges
-				<div class="progress">
-					<div class="progress-bar easy" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-						<span class="sr-only">60% Complete</span>
-					</div>
-				</div>
+				<progressbar max="100" value="(userEasy.length * 100) / easyTotal.length"><span style="color:black; white-space:nowrap;"> {{ userEasy.length }} / {{ easyTotal.length }}</span></progressbar>
 
 				Medium Challenges
-				<div class="progress">
-					<div class="progress-bar med" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-						<span class="sr-only">80% Complete</span>
-					</div>
-				</div>
+				<progressbar max="100" value="(userMed.length * 100) / medTotal.length"><span style="color:black; white-space:nowrap;">{{ userMed.length }} / {{ medTotal.length }}</span></progressbar>
 				
 				Hard Challenges
-				<div class="progress">
-					<div class="progress-bar hard" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-						<span class="sr-only">95% Complete</span>
-					</div>
-				</div>
+				<progressbar max="100" value="(userHard.length * 100) / hardTotal.length"><span style="color:black; white-space:nowrap;">{{ userHard.length }} / {{ hardTotal.length }}</span></progressbar>
 
 			</div><!-- /col-lg-6 -->
 		</div><!-- /row -->
