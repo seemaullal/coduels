@@ -1,3 +1,8 @@
 <div class="countdown">
 {{ timeLeft | date:'mm:ss' }}
 </div>
+
+<div>
+	<h3> Users </h3>
+	<h5 ng-repeat="user in userDisplay"> Username: {{ user.username }} &nbsp;&nbsp;&nbsp; Score: {{ user.totalScore }} </h5>
+</div>
