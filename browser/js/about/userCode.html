@@ -13,16 +13,15 @@
 		<accordion ng-repeat="exercise in userExercises">
 			<accordion-group heading="{{exercise.name}} | Difficulty: {{ exercise.difficulty }}" is-open="false" >
 
-			<div ng-repeat='exercise in userExercise track by $index'>
-			<h4>{{ exercise.exerciseID.name }}</h4>
-			<p>{{ exercise.time | date: 'short'}}</p>
+			<div ng-repeat="exercise in userExercise track by $index | orderBy: 'time'" >
+			<p>{{ exercise.time | date:'short'}}</p>
 			<div ui-ace="{useWrapMode : true,
 			showGutter: true,
 			theme: 'monokai',
 			mode: 'javascript',
 			showPrintMargin: false}" ng-model="exercise.code">
 			
-			</div>
+			</div><br>
 </div>
 				
 			</accordion-group>
