@@ -21,15 +21,17 @@ app.config(function($stateProvider) {
   });
 });
 
-app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFactory, AuthService, CompletionFactory, $modal, $state) {
-
+app.controller('ArenaController', function($scope, $firebaseObject, $firebaseArray, $stateParams, $sce, RoomFactory, AuthService, CompletionFactory, $modal, $state) {
+  AuthService.getLoggedInUser().then(function(user) {
+     $scope.user = user;
+  });
   $scope.waitingDone = false;
   $scope.isPractice = false;
-
+  var currFirebaseRoom = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey);
 
  var socket = io();
 
- var startTimeFromFb = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey + '/gameStartTime');
+ var startTimeFromFb = currFirebaseRoom.child('gameStartTime');
   startTimeFromFb.once('value', function(snapshot) {
       var startTime = new Date(snapshot.val());
       function countDown() {
@@ -54,12 +56,8 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
       var timeout = setInterval(countDown, 1000);
 
       function setTime(remaining) {
-      //   var minutes = Math.floor(remaining/60000);
-      //   var secs = Math.round(remaining/1000);
         $scope.timeLeft = remaining;
-        // minutes + ':' + secs;
         if(!$scope.$$phase) {
-          //if no digest in progress
           $scope.$digest();
         }
       }
@@ -76,15 +74,12 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
   $scope.userInputSession = function(_editor) {
     $scope.aceEditor = _editor.getSession();
   };
-
-  var ref = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/'+$stateParams.roomKey+'/users');
-console.log('arena controllinglasdkjfl;askjdfl;akjdfk');
+var userRef = currFirebaseRoom.child('users');
   socket.on('theFailures', function (failures){
     if (!$scope.failures) {$scope.numTests = failures.failures;}
     $scope.failures = failures.failures;
     //send failures to Firebase
-    ref.once('value', function (userSnapshot){
-      console.log(userSnapshot.val());
+    userRef.once('value', function (userSnapshot){
       userSnapshot.val().forEach(function (user, index){
         if (user._id == failures.userId){
           var updatedUser = userSnapshot.val()[index];
@@ -92,13 +87,13 @@ console.log('arena controllinglasdkjfl;askjdfl;akjdfk');
           // Only include if we want passed tests as a user property in firebase.
           // updatedUser.passed = $scope.numTests - failures.failures;
           updatedUser.code = failures.userCode
-          ref.child(index).set(updatedUser);
+          userRef.child(index).set(updatedUser);
           if (failures.failures === 0) {
             $scope.keyCodeEvents = [];
-            roomInfoRef.once('value', function(roomSnapshot) {
+            currFirebaseRoom.once('value', function(roomSnapshot) {
               var isWinner = false;
               if(!roomSnapshot.val().winner) {
-                roomInfoRef.child('winner').set(updatedUser);
+                currFirebaseRoom.child('winner').set(updatedUser);
                 isWinner = true;
               } // closes if (!roomSnapshot)
               
@@ -109,22 +104,22 @@ console.log('arena controllinglasdkjfl;askjdfl;akjdfk');
                       controller: function($scope, $modalInstance) {
                           $scope.ok = function() {
                             $modalInstance.close('ok');
-                            $state.go("exercises");
                           };
                         }
                 });
                 modalInstance.result.then(function() {
+                  $state.go("exercises");
                   return;
                 }); 
               }
-            }) // closes roomInfoRef.once
+            }) // closes currFirebaseRoom.once
           } // closes if (failures.failures) statement
         }; // closes if (user._id) statement
       }); // closes forEach
     }); // closes ref.once
   }); // closes socket.on
 
-  ref.on('value', function (userSnapshot){
+  userRef.on('value', function (userSnapshot){
     $scope.userDisplay = [];
     userSnapshot.val().forEach(function (user){
       var userObj = {};
@@ -138,8 +133,7 @@ console.log('arena controllinglasdkjfl;askjdfl;akjdfk');
       $scope.$digest();
     }
 
-  var winnerRef = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/'+$stateParams.roomKey+'/winner');
-
+  var winnerRef = currFirebaseRoom.child('winner')
   winnerRef.on('value', function(winnerSnapshot) {
     if (winnerSnapshot.val()){
       $scope.winner = winnerSnapshot.val().username;
@@ -151,8 +145,8 @@ console.log('arena controllinglasdkjfl;askjdfl;akjdfk');
   });
 
   });
- var roomInfoRef = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey);
- roomInfoRef.once('value', function(snapshot) {
+
+ currFirebaseRoom.once('value', function(snapshot) {
      $scope.game = snapshot.val();
      if ($scope.game.isPractice) {
        $scope.isPractice = true;
@@ -161,8 +155,6 @@ console.log('arena controllinglasdkjfl;askjdfl;akjdfk');
      $scope.srcUrl = $sce.trustAsResourceUrl('/api/arena/iframe/' + $scope.game.exerciseId).toString();
  });
 
-  AuthService.getLoggedInUser().then(function(user) {
-     $scope.user = user;
-  });
+
 
 }); // closes controller
