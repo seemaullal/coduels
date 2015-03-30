@@ -31,16 +31,16 @@
     margin-top: 50px;
   }
 
-  .easy {
-    background-color: #008D00;
+  .progress {
+    background: rgba(123,121,145,1);
+    border: 0px solid rgba(123,121,145,1);
+    border-radius: 0;
+    height: 20px;
+    padding: 1px;
   }
 
-  .med {
-    background-color: #F1EE68;
-  } 
-
-  .hard {
-    background-color: #A02E36;
+  .progress-bar {
+    background: rgba(255,0,0,1);
   }
 
 }

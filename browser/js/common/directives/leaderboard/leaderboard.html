@@ -4,7 +4,7 @@
 				<div class="col-sm-6">
 				<h3>Name</h3>
 				<div ng-repeat="user in topFive | orderBy: '-totalScore'">
-				{{ user.username  }}
+				<h4>{{ user.username  }}</h4>
 				</div>
 				
 				</div>
@@ -12,7 +12,7 @@
 				<div class="col-sm-3">
 				<h3>Score</h3>
 				<div ng-repeat="user in topFive | orderBy: '-totalScore'">
-				{{ user.totalScore }}
+				<h4>{{ user.totalScore }}</h4>
 				</div>
 
 		</div>	
