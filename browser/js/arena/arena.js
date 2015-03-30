@@ -69,7 +69,7 @@ app.controller('ArenaController', function($scope, $firebaseObject, $firebaseArr
 
   });
 
-  // var winnerRef = currFirebaseRoom.child('winner');
+  var winnerRef = currFirebaseRoom.child('winner');
   // $scope.winner = $firebaseObject(winnerRef).$value;
   // console.log('scope winner', $scope.winner);
 
@@ -105,6 +105,7 @@ app.controller('ArenaController', function($scope, $firebaseObject, $firebaseArr
   $scope.userInputSession = function(_editor) {
     $scope.aceEditor = _editor.getSession();
   };
+
 var userRef = currFirebaseRoom.child('users');
 socket.on('theFailures', function (failures){
   if (!$scope.failures) {$scope.numTests = failures.failures;}
