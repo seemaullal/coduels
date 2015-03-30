@@ -9,7 +9,7 @@ app.factory('CompletionFactory', function ($http){
 			Hard: 30
 		};
 		if (isWinner){
-			return numUsers*5+difficultyPoints[difficulty];
+			return (numUsers-1)*5+difficultyPoints[difficulty];
 		}
 		else {
 			return difficultyPoints[difficulty];
