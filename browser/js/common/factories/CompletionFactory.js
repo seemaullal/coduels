@@ -9,7 +9,7 @@ app.factory('CompletionFactory', function ($http){
 			Hard: 30
 		};
 		if (isWinner){
-			return numUsers*5+difficultyPoints[difficulty];
+			return (numUsers-1)*5+difficultyPoints[difficulty];
 		}
 		else {
 			return difficultyPoints[difficulty];
@@ -18,15 +18,17 @@ app.factory('CompletionFactory', function ($http){
 	};
 
 	factory.sendCompletion = function (userID, exerciseID, code, difficulty, numUsers, isWinner){
-		var score = factory.calculateScore(difficulty, numUsers);
+		var score = factory.calculateScore(difficulty, numUsers, isWinner);
 		var isChallenge = true;
+		var date = new Date();
 		if (numUsers === 1) 
 			isChallenge=false;
 		var completionObj = {
 			exerciseID: exerciseID, 
 			code: code, 
 			score: score, 
-			challenge: isChallenge
+			challenge: isChallenge,
+			time: date
 		};
 		console.log('numUsers', numUsers);
 		console.log('completionObj',completionObj);

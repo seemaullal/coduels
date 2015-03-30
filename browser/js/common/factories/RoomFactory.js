@@ -84,6 +84,24 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
         });
     };
 
+    factory.removeUserFromRoom = function (userId, roomId) {
+        var ref = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/'+roomId);
+        var userlist = [];
+        ref.once('value', function (snap){
+            userlist = snap.val().users;
+            if (userlist.length == 1){
+                ref.remove();
+                return;
+            }
+            userlist.forEach (function (user, index) {
+                if (userId == user._id){
+                    userlist.splice(index,1);
+                };
+            });
+            ref.child('users').set(userlist);
+        });
+    };
+
     return factory;
 
 });

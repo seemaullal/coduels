@@ -1,0 +1,34 @@
+<style>
+.ace_editor {
+	height: 100px;
+	width: 400px;
+}
+</style>
+
+<div class="container">
+<div class="page-header">
+	<h2> {{ user.username }}, view all your code here </h2> <h4><a ui-sref="about">Go back to your Profile</a></h4>
+	</div>
+	<div class="col-lg-9">
+		<accordion ng-repeat="exercise in userExercises">
+			<accordion-group heading="{{exercise.name}} | Difficulty: {{ exercise.difficulty }}" is-open="false" >
+
+			<div ng-repeat="exercise in userExercise track by $index | orderBy: 'time'" >
+			<p>{{ exercise.time | date:'short'}}</p>
+			<div ui-ace="{useWrapMode : true,
+			showGutter: true,
+			theme: 'monokai',
+			mode: 'javascript',
+			showPrintMargin: false}" ng-model="exercise.code">
+			
+			</div><br>
+</div>
+				
+			</accordion-group>
+		
+		</accordion>
+		</div>
+
+
+
+</div>

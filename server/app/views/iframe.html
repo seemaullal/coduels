@@ -45,9 +45,9 @@
             suite.tests.forEach(function(test) {
                 if (test.state === 'failed') {
                     failedTestsArr.push(test.fullTitle())
-                }
-                socket.emit('testsFailed', failedTestsArr);
-            })
+                };
+            });
+            socket.emit('testsFailed', failedTestsArr);
         });
     });
 
