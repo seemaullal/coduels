@@ -123,6 +123,9 @@ socket.on('theFailures', function (failures){
         updatedUser.code = failures.userCode;
         userRef.child(index).set(updatedUser);
         if (failures.failures === 0) {
+          $scope.allTestTitles.forEach(function(test) {
+            test.color = true;
+          });
           $scope.keyCodeEvents = [];
           currFirebaseRoom.once('value', function(roomSnapshot) {
             var isWinner = false;
@@ -168,7 +171,7 @@ socket.on('theFailures', function (failures){
       $scope.$digest();
     }
   });
-  
+
   winnerRef.on('value', function(winnerSnapshot) {
     if (winnerSnapshot.val()){
       $scope.winner = winnerSnapshot.val().username;
