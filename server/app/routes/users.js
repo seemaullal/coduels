@@ -26,7 +26,7 @@ router.post('/users/:userId/exercises/', function (req, res, next) {
 
 router.get('/user/:userId', function (req, res, next) {
 	var userId = req.params.userId;
-	User.findById(userId, function (err, user) {
+	User.findById(userId).populate('exercises.exerciseID').exec(function (err, user) {
 		if (!err) res.json(user.toObject({virtuals:true}));
 		else next(err);
 	});
