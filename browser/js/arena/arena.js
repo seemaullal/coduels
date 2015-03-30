@@ -17,6 +17,11 @@ app.config(function($stateProvider) {
     },
     url: '/arena/:roomKey',
     controller: 'ArenaController',
+    onExit: function(RoomFactory, AuthService, $stateParams) {
+      AuthService.getLoggedInUser().then(function(user){
+        RoomFactory.removeUserFromRoom(user._id, $stateParams.roomKey);
+      });
+    },
     templateUrl: 'js/arena/arena.html'
   });
 });
@@ -38,8 +43,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
           // $state.go('exercises');
           clearInterval(timeout);
           AuthService.getLoggedInUser().then(function(user) {
-            if (!isPractice)
-              user.isAuthorized = null;
+            user.isAuthorized = null;
             $scope.waitingDone = true;
             if ($scope.userDisplay.length === 1) {
               /*even if a user joined a challenge, if
@@ -68,10 +72,33 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
   });
 
 
+  var setColorProperty = function (allTests, failedTests){
+    allTests.forEach(function (test){
+      if( failedTests.indexOf(test.title) > -1){
+        test.color = false;
+      } else {
+        test.color = true;
+      };
+    });
+    return allTests;
+  };
+
+  $scope.allTestTitles;
   socket.on('failedTests', function(testTitles) {
+    if (testTitles[0] == undefined){ return };
+    console.log("testTitles: ", testTitles);
+    console.count("Number");
+      if (!$scope.allTestTitles){
+        $scope.allTestTitles = [];
+        testTitles.forEach(function (testTitle){
+            $scope.allTestTitles.push({title: testTitle, color: false});
+          });
+        console.log("allTestTitles", $scope.allTestTitles);
+      };
       $scope.failedTestTitles = testTitles;
+      $scope.allTestTitles = setColorProperty($scope.allTestTitles, $scope.failedTestTitles);
       $scope.$digest();
-  })
+  });
 
   // defines and sets the onLoad callback function on the scope
   $scope.userInputSession = function(_editor) {
@@ -98,6 +125,9 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
 
           ref.child(index).set(updatedUser);
           if (failures.failures === 0) {
+            $scope.allTestTitles.forEach(function(test) {
+              test.color = true;
+            })
             $scope.keyCodeEvents = [];
             roomInfoRef.once('value', function(roomSnapshot) {
               var isWinner = false;

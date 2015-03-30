@@ -9,18 +9,30 @@ app.config(function($stateProvider) {
 });
 
 
-app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactory, AuthService){
+app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactory, AuthService, $interval){
 	$scope.activeRoomData = [ ];
 	TestFactory.getExercises().then(function (exercises){
 		$scope.exercises = exercises;
 	});
 
-	RoomFactory.updateActiveRoomData().then(function (activeRooms){
-		$scope.activeRoomData = activeRooms;
-		$scope.$digest();
-	});
+	function updateRoomData() {
+		RoomFactory.updateActiveRoomData().then(function (activeRooms){
+				if (!$scope.activeRooms || !$scope.activeRooms.length) {
+					$scope.activeRoomData = activeRooms;
+				}
+				else {
+					$scope.activeRoomData = activeRooms;
+				}
+		});
+	}
+
+
+
+	 var timeout = $interval(updateRoomData, 1000);
 
 	$scope.joinRoom = function (roomId) {
+		$interval.cancel(timeout);
+		$interval.cancel(timeout2);
 		AuthService.getLoggedInUser().then(function(user) {
 			$scope.user = user;
 			RoomFactory.addUserToRoom($scope.user, roomId);
@@ -29,6 +41,8 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactor
 	};
 
 	$scope.makeNewRoom = function(exercise) {
+		$interval.cancel(timeout);
+		$interval.cancel(timeout2);
 		 AuthService.getLoggedInUser().then(function(user) {
 		 	$scope.user = user;
 		 	$scope.roomKey = RoomFactory.createRoom(exercise, $scope.user);
@@ -38,10 +52,12 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactor
 	};
 
 	$scope.makePracticeRoom = function(exercise) {
-		 AuthService.getLoggedInUser().then(function(user) {
+		$interval.cancel(timeout);
+		$interval.cancel(timeout2);
+		AuthService.getLoggedInUser().then(function(user) {
 		 	$scope.roomKey = RoomFactory.createPracticeRoom(exercise, user);
 		 	user.isAuthorized = $scope.roomKey;
-		 	$scope.$digest();
+		 	clearInterval(timeout);
 		 });
 	};
 
@@ -50,14 +66,15 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactor
 			room.timeUntilClose = Math.max(0, room.gameStartTime - Date.now());
 	  		if (room.gameStartTime <= Date.now() ) {
 	   	 		$scope.activeRoomData.splice(index,1);
+	   	 		$interval.cancel(timeout);
+				$interval.cancel(timeout2);
 	  		}
-	  		$scope.$digest();
 
 		})
 	}
 
 	$scope.isOpen = true;
 
-	var timeout = setInterval(countDown, 1000);
+	var timeout2 = $interval(countDown, 1000);
 
 });

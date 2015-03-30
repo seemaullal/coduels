@@ -22,9 +22,13 @@ var schema = new mongoose.Schema({
 		type: [String]
 	},
 	difficulty: {
-		type: String //should be Easy, Medium, or Hard
+		type: String,
+		enum: ['Easy', 'Medium', 'Hard']
+	},
+	time: {
+		type: Date,
+		default: Date.now
 	}
-
 });
 
 var Exercise = mongoose.model('Exercise', schema);
