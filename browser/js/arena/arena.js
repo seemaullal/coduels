@@ -27,14 +27,16 @@ app.config(function($stateProvider) {
 });
 
 app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFactory, AuthService, CompletionFactory, $modal, $state) {
-
+  AuthService.getLoggedInUser().then(function(user) {
+     $scope.user = user;
+  });
   $scope.waitingDone = false;
   $scope.isPractice = false;
+  var currFirebaseRoom = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey);
 
+  var socket = io();
 
- var socket = io();
-
- var startTimeFromFb = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey + '/gameStartTime');
+  var startTimeFromFb = currFirebaseRoom.child('gameStartTime');
   startTimeFromFb.once('value', function(snapshot) {
       var startTime = new Date(snapshot.val());
       function countDown() {
@@ -61,18 +63,17 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
       var timeout = setInterval(countDown, 1000);
 
       function setTime(remaining) {
-      //   var minutes = Math.floor(remaining/60000);
-      //   var secs = Math.round(remaining/1000);
         $scope.timeLeft = remaining;
-        // minutes + ':' + secs;
         if(!$scope.$$phase) {
-          //if no digest in progress
           $scope.$digest();
         }
       }
 
   });
 
+  var winnerRef = currFirebaseRoom.child('winner');
+  // $scope.winner = $firebaseObject(winnerRef).$value;
+  // console.log('scope winner', $scope.winner);
 
   var setColorProperty = function (allTests, failedTests){
     allTests.forEach(function (test){
@@ -80,14 +81,14 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
         test.color = false;
       } else {
         test.color = true;
-      };
+      }
     });
     return allTests;
   };
 
-  $scope.allTestTitles;
+  $scope.allTestTitles = null;
   socket.on('failedTests', function(testTitles) {
-    if (testTitles[0] == undefined){ return };
+    if (testTitles[0] === undefined){ return; }
     console.log("testTitles: ", testTitles);
     console.count("Number");
       if (!$scope.allTestTitles){
@@ -96,7 +97,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
             $scope.allTestTitles.push({title: testTitle, color: false});
           });
         console.log("allTestTitles", $scope.allTestTitles);
-      };
+      }
       $scope.failedTestTitles = testTitles;
       $scope.allTestTitles = setColorProperty($scope.allTestTitles, $scope.failedTestTitles);
       $scope.$digest();
@@ -107,56 +108,52 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
     $scope.aceEditor = _editor.getSession();
   };
 
-  var ref = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/'+$stateParams.roomKey+'/users');
-  socket.on('theFailures', function (failures){
-    if (!$scope.failures) {$scope.numTests = failures.failures;}
-    $scope.failures = failures.failures;
-    //send failures to Firebase
-    ref.once('value', function (userSnapshot){
-      console.log(userSnapshot.val());
-      userSnapshot.val().forEach(function (user, index){
-        if (user._id == failures.userId){
-          var updatedUser = userSnapshot.val()[index];
-          updatedUser.failures = failures.failures;
-          // Only include if we want passed tests as a user property in firebase.
-          // updatedUser.passed = $scope.numTests - failures.failures;
-          updatedUser.code = failures.userCode
-          ref.child(index).set(updatedUser);
-          if (failures.failures === 0) {
-            $scope.allTestTitles.forEach(function(test) {
-              test.color = true;
-            })
-            $scope.keyCodeEvents = [];
-            roomInfoRef.once('value', function(roomSnapshot) {
-              var isWinner = false;
-              if(!roomSnapshot.val().winner) {
-                roomInfoRef.child('winner').set(updatedUser);
-                isWinner = true;
-              } // closes if (!roomSnapshot)
+var userRef = currFirebaseRoom.child('users');
+socket.on('theFailures', function (failures){
+  if (!$scope.failures) {$scope.numTests = failures.failures;}
+  $scope.failures = failures.failures;
+  //send failures to Firebase
+  userRef.once('value', function (userSnapshot){
+    userSnapshot.val().forEach(function (user, index){
+      if (user._id == failures.userId){
+        var updatedUser = userSnapshot.val()[index];
+        updatedUser.failures = failures.failures;
+        // Only include if we want passed tests as a user property in firebase.
+        // updatedUser.passed = $scope.numTests - failures.failures;
+        updatedUser.code = failures.userCode;
+        userRef.child(index).set(updatedUser);
+        if (failures.failures === 0) {
+          $scope.keyCodeEvents = [];
+          currFirebaseRoom.once('value', function(roomSnapshot) {
+            var isWinner = false;
+            if(!roomSnapshot.val().winner) {
+              winnerRef.set(updatedUser);
+              isWinner = true;
+            } // closes if (!roomSnapshot)
 
-              CompletionFactory.sendCompletion(user._id, $scope.game.exerciseId, updatedUser.code, $scope.game.difficulty, userSnapshot.val().length, isWinner);
-              if ($scope.isPractice) {
-                var modalInstance = $modal.open({
-                      templateUrl: '/js/arena/practice-modal.html',
-                      controller: function($scope, $modalInstance) {
-                          $scope.ok = function() {
-                            $modalInstance.close('ok');
-                            $state.go("exercises");
-                          };
-                        }
-                });
-                modalInstance.result.then(function() {
-                  return;
-                });
-              }
-            }) // closes roomInfoRef.once
-          } // closes if (failures.failures) statement
-        }; // closes if (user._id) statement
-      }); // closes forEach
-    }); // closes ref.once
-  }); // closes socket.on
+            CompletionFactory.sendCompletion(user._id, $scope.game.exerciseId, updatedUser.code, $scope.game.difficulty, userSnapshot.val().length, isWinner);
+            if ($scope.isPractice) {
+              var modalInstance = $modal.open({
+                    templateUrl: '/js/arena/practice-modal.html',
+                    controller: function($scope, $modalInstance) {
+                        $scope.ok = function() {
+                          $modalInstance.close('ok');
+                        };
+                      }
+              });
+              modalInstance.result.then(function() {
+                $state.go("exercises");
+                return;
+              });
+            }
+          }); // closes currFirebaseRoom.once
+        } // closes if (failures.failures) statement
+      } // closes if (user._id) statement
+    }); // closes forEach
+  }); // closes ref.once
+}); // closes socket.on
 
-  ref.on('value', function (userSnapshot){
+  userRef.on('value', function (userSnapshot){
     $scope.userDisplay = [];
     userSnapshot.val().forEach(function (user){
       var userObj = {};
@@ -169,9 +166,8 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
       //if no digest in progress
       $scope.$digest();
     }
-
-  var winnerRef = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/'+$stateParams.roomKey+'/winner');
-
+  });
+  
   winnerRef.on('value', function(winnerSnapshot) {
     if (winnerSnapshot.val()){
       $scope.winner = winnerSnapshot.val().username;
@@ -182,9 +178,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
     }
   });
 
-  });
- var roomInfoRef = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey);
- roomInfoRef.once('value', function(snapshot) {
+ currFirebaseRoom.once('value', function(snapshot) {
      $scope.game = snapshot.val();
      if ($scope.game.isPractice) {
        $scope.isPractice = true;
@@ -192,9 +186,5 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
      }
      $scope.srcUrl = $sce.trustAsResourceUrl('/api/arena/iframe/' + $scope.game.exerciseId).toString();
  });
-
-  AuthService.getLoggedInUser().then(function(user) {
-     $scope.user = user;
-  });
 
 }); // closes controller
