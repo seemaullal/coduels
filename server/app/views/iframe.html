@@ -38,7 +38,6 @@
         s.parentNode.insertBefore(g, s);
 
         mocha.run(function(failures){
-            
             socket.emit('failures', {failures: failures, userId: userCode.userId, userCode: userCode.code});
         }).on('suite end', function(suite) {
             var failedTestsArr = [];
