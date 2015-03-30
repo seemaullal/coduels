@@ -16,9 +16,15 @@ app.controller('UserCodeCtrl', function($scope, AuthService, UsersFactory, TestF
 			$scope.user = user;
 
 			$scope.userExercise = [];
+
 			$scope.user.exercises.forEach(function(exercise) {
 				$scope.userExercise.push(exercise);
 			})
+
+			$scope.userExercise.sort(function(obj1, obj2) {
+				return new Date(obj2.time) - new Date(obj1.time)
+			})
+
 			console.log('userExercise', $scope.userExercise);
 
 			TestFactory.getExercises().then(function(data) {
