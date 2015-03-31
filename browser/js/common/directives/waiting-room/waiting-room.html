@@ -2,8 +2,17 @@
 {{ timeLeft | date:'mm:ss' }}
 </div>
 
+
 <div>
-	<h3> {{ game.exerciseName }}  </h3>
-	<h3> Users </h3>
-	<h5 ng-repeat="user in userDisplay"> <img src="{{user.image}}"> Username: {{ user.username }} &nbsp;&nbsp;&nbsp; Score: {{ user.totalScore }} </h5>
-</div>
+<h3> {{ game.exerciseName }}  </h3>
+<h3> Users </h3>
+<div class="col-sm-6 col-md-4 col-md-offset-4">
+<div class="thumbnail" ng-repeat="user in userDisplay">
+	<div class="caption">
+	    <h4>Username: {{ user.username }}</h4>
+	 </div>
+	    <h4> Score: {{ user.totalScore }} </h4>
+
+  </div>
+  </div>
+<!--   </div> -->
