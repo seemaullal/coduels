@@ -12,10 +12,9 @@ app.config(function($stateProvider){
 app.controller('settingsCtrl', function($scope, ExerciseFactory, $timeout){
 	ExerciseFactory.getExercises().then( function (exercises) {
 		$scope.exercises = exercises;
-		console.log(exercises);
 	});
 
-
+	$scope.difficulties = ['Easy','Medium','Hard'];
 	$scope.pickExercise = function() {
 		$scope.exerciseForm.submitted = false;
 	};
@@ -28,7 +27,6 @@ app.controller('settingsCtrl', function($scope, ExerciseFactory, $timeout){
 		}
 		ExerciseFactory.updateExercise($scope.selectedExercise).then ( function (response) {
 			$scope.exerciseForm.submitted = false;
-			console.log('response',response);
 			$scope.success = 'Test successfully added';
 			$timeout(function() {
 				$scope.success = null;
@@ -37,7 +35,6 @@ app.controller('settingsCtrl', function($scope, ExerciseFactory, $timeout){
 			$scope.selectedExercise = "";
 			ExerciseFactory.getExercises().then( function (exercises) {
 				$scope.exercises = exercises; //update exercise list with updated exercises
-				console.log(exercises);
 			});		
 		});
 	};

@@ -51,7 +51,9 @@
 							<div class="col-md-4"><input type="text" class="form-control" placeholder="Category 2" ng-model="selectedExercise.category[1]"></div>
 							<div class="col-md-4"><input type="text" class="form-control" placeholder="Category 3" ng-model="selectedExercise.category[2]"></div>
 						</div><br>
-						<input type="text" class="form-control" placeholder="Difficulty" ng-model="selectedExercise.difficulty" required><br>
+						<select required ng-model="selectedExercise.difficulty" class="custom-select" ng-options="difficulty for difficulty in difficulties">
+			<option></option>
+		</select><br><br><br>
 						<button type="button" class="btn btn-success" ng-click="updateExercise()">Update Exercise</button>
 						<h3>{{success}}</h3>
 						<h3 ng-show="exerciseForm.submitted">{{errMessage}}</h3>

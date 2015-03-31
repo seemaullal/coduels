@@ -17,14 +17,12 @@ router.post('/exercises', function(req, res) {
     Exercise.create(req.body, function(err, content) {
         if (err) res.send(err);
         else res.json(content);
-        console.log('content;lakjds;f', content);
     });
 });
 
 // updates the exercise specified
 router.put('/exercises', function(req, res) {
     Exercise.update({_id: req.body._id}, req.body, function(err, numUpdated, response) {
-    	console.log(response);
     	if (!err) res.json(response);
     	else res.send(err);
     });
