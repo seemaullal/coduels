@@ -21,13 +21,29 @@ app.controller('settingsCtrl', function($scope, ExerciseFactory, $timeout){
 
 	$scope.updateExercise = function(){
 		if ($scope.exerciseForm.$invalid) {
-			$scope.errMessage = 'You need to fill in all the fields before updating!'
+			$scope.errMessage = 'You need to fill in all the fields before updating!';
 			$scope.exerciseForm.submitted = true;
 			return;
 		}
 		ExerciseFactory.updateExercise($scope.selectedExercise).then ( function (response) {
 			$scope.exerciseForm.submitted = false;
-			$scope.success = 'Test successfully added';
+			$scope.success = 'Exercise successfully added';
+			$timeout(function() {
+				$scope.success = null;
+			}, 5000);
+			$scope.exercise = {};
+			$scope.selectedExercise = "";
+			ExerciseFactory.getExercises().then( function (exercises) {
+				$scope.exercises = exercises; //update exercise list with updated exercises
+			});		
+		});
+	};
+
+	$scope.deleteExercise = function(){
+		ExerciseFactory.deleteExercise($scope.selectedExercise._id).then ( function (response) {
+			console.log(response);
+			$scope.exerciseForm.submitted = false;
+			$scope.success = 'Exercise has been deleted';
 			$timeout(function() {
 				$scope.success = null;
 			}, 5000);
