@@ -66,7 +66,7 @@ app.controller('settingsCtrl', function($scope, ExerciseFactory, $timeout, $moda
 		}
 		ExerciseFactory.updateExercise($scope.selectedExercise).then ( function (response) {
 			$scope.exerciseForm.submitted = false;
-			$scope.success = 'Exercise successfully added';
+			$scope.success = 'Exercise successfully updated';
 			$timeout(function() {
 				$scope.success = null;
 			}, 5000);
