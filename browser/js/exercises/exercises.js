@@ -12,7 +12,7 @@ app.config(function($stateProvider) {
 app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactory, AuthService, $interval, $rootScope){
 
 	 $rootScope.$on('$stateChangeStart', function( event, toState, toParams, fromState, fromParams ) {
-        if (fromState.name == 'exercises') {
+        if (fromState.name === 'exercises') { //cancel interval functions when leaving state
            $interval.cancel(timeout);
 			$interval.cancel(timeout2);
         }
@@ -25,12 +25,15 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactor
 	function updateRoomData() {
 		RoomFactory.updateActiveRoomData().then(function (activeRooms){
 				console.log('something  happening');
-				if (!$scope.activeRooms || !$scope.activeRooms.length) {
-					$scope.activeRoomData = activeRooms;
-				}
-				else {
-					$scope.activeRoomData = activeRooms;
-				}
+				// if (!$scope.activeRoomData || !$scope.activeRoomData.length) {
+				// 	$scope.activeRoomData = activeRooms;
+				// }
+				// else {
+					activeRooms.forEach(function (room) {
+						if (_.findIndex($scope.activeRoomData, {roomId: room.roomId}) === -1)
+							$scope.activeRoomData.push(room);
+					});
+				// }
 		});
 	}
 
