@@ -9,20 +9,31 @@ app.config(function($stateProvider) {
 });
 
 
-app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactory, AuthService, $interval){
+app.controller('exercisesCtrl', function($scope, $state, RoomFactory, ExerciseFactory, AuthService, $interval, $rootScope){
+
+	 $rootScope.$on('$stateChangeStart', function( event, toState, toParams, fromState, fromParams ) {
+        if (fromState.name === 'exercises') { //cancel interval functions when leaving state
+           $interval.cancel(timeout);
+			$interval.cancel(timeout2);
+        }
+    });
 	$scope.activeRoomData = [ ];
-	TestFactory.getExercises().then(function (exercises){
+	ExerciseFactory.getExercises().then(function (exercises){
 		$scope.exercises = exercises;
 	});
 
 	function updateRoomData() {
 		RoomFactory.updateActiveRoomData().then(function (activeRooms){
-				if (!$scope.activeRooms || !$scope.activeRooms.length) {
-					$scope.activeRoomData = activeRooms;
-				}
-				else {
-					$scope.activeRoomData = activeRooms;
-				}
+				console.log('something  happening');
+				// if (!$scope.activeRoomData || !$scope.activeRoomData.length) {
+				// 	$scope.activeRoomData = activeRooms;
+				// }
+				// else {
+					activeRooms.forEach(function (room) {
+						if (_.findIndex($scope.activeRoomData, {roomId: room.roomId}) === -1)
+							$scope.activeRoomData.push(room);
+					});
+				// }
 		});
 	}
 
@@ -31,8 +42,6 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactor
 	 var timeout = $interval(updateRoomData, 1000);
 
 	$scope.joinRoom = function (roomId) {
-		$interval.cancel(timeout);
-		$interval.cancel(timeout2);
 		AuthService.getLoggedInUser().then(function(user) {
 			$scope.user = user;
 			RoomFactory.addUserToRoom($scope.user, roomId);
@@ -41,8 +50,6 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactor
 	};
 
 	$scope.makeNewRoom = function(exercise) {
-		$interval.cancel(timeout);
-		$interval.cancel(timeout2);
 		 AuthService.getLoggedInUser().then(function(user) {
 		 	$scope.user = user;
 		 	$scope.roomKey = RoomFactory.createRoom(exercise, $scope.user);
@@ -52,8 +59,6 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactor
 	};
 
 	$scope.makePracticeRoom = function(exercise) {
-		$interval.cancel(timeout);
-		$interval.cancel(timeout2);
 		AuthService.getLoggedInUser().then(function(user) {
 		 	$scope.roomKey = RoomFactory.createPracticeRoom(exercise, user);
 		 	user.isAuthorized = $scope.roomKey;
@@ -66,8 +71,6 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactor
 			room.timeUntilClose = Math.max(0, room.gameStartTime - Date.now());
 	  		if (room.gameStartTime <= Date.now() ) {
 	   	 		$scope.activeRoomData.splice(index,1);
-	   	 		$interval.cancel(timeout);
-				$interval.cancel(timeout2);
 	  		}
 
 		})
