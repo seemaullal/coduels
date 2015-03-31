@@ -37,18 +37,21 @@
 			</div>
 			<div class="col-md-6">
 				<h2> Instructions </h2>
-				<form>
+				<form name='exerciseForm' ng-class="{submitted:exerciseForm.submitted}" novalidate>
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Name of Exercise" ng-model="exercise.name"><br>
-						<input type="text" class="form-control" placeholder="Short description of Exercise" ng-model="exercise.shortDescription"><br>
-						<textarea rows="3" type="text" class="form-control" placeholder="Long description of Exercise" ng-model="exercise.longDescription"></textarea><br>
+						<input type="text" class="form-control" placeholder="Name of Exercise" ng-model="exercise.name" required><br>
+						<input type="text" class="form-control" placeholder="Short description of Exercise" ng-model="exercise.shortDescription" required><br>
+						<textarea rows="3" type="text" class="form-control" placeholder="Long description of Exercise" ng-model="exercise.longDescription" required></textarea><br>
 						<div class="row">
-							<div class="col-md-4"><input type="text" class="form-control" placeholder="Category 1" ng-model="exercise.category[0]"></div>
+							<div class="col-md-4"><input type="text" class="form-control" placeholder="Category 1" ng-model="exercise.category[0]" required></div>
 							<div class="col-md-4"><input type="text" class="form-control" placeholder="Category 2" ng-model="exercise.category[1]"></div>
 							<div class="col-md-4"><input type="text" class="form-control" placeholder="Category 3" ng-model="exercise.category[2]"></div>
 						</div><br>
-						<input type="text" class="form-control" placeholder="Difficulty" ng-model="exercise.difficulty"><br>
-						<h5><a href="" ng-click="submitTest(exercise)">Submit Test</a></h5><br>
+										<select required ng-model="exercise.difficulty" class="custom-select" ng-options="difficulty for difficulty in difficulties">
+							<option></option>
+						</select><br><br><br>
+						<button type="button" class="btn btn-success" ng-click="submitExercise(exercise)">Submit Exercise</button>
+						<h3 ng-show="exerciseForm.submitted">{{errMessage}}</h3>
 					</div>
 				</form>
 			</div>
