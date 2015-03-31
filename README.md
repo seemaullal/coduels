@@ -12,7 +12,7 @@
  - Track your progress on the profile page, view your previous code, and try to get a high score on our leaderboard!
 
 ###Contributors###
+ - Ivan Loughman-Pawelko <a  target="_blank" href="https://github.com/iloughman/">Github</a>
  - Linda Kung <a  target="_blank" href="https://github.com/lindakung/">Github</a>
  - Michael Bae <a  target="_blank" href="https://github.com/michaelbbae">Github</a>
- - Ivan Loughman-Pawelko <a  target="_blank" href="https://github.com/iloughman/">Github</a>
  - Seema Ullal <a target="_blank" href="https://github.com/seemaullal/">Github</a>
