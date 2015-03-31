@@ -1,7 +1,7 @@
 <style>
 .ace_editor {
-	height: 100px;
-	width: 400px;
+	height: 175px;
+	width: 620px;
 }
 </style>
 
@@ -13,13 +13,13 @@
 		<accordion ng-repeat="exercise in userExercises">
 			<accordion-group heading="{{exercise.name}} | Difficulty: {{ exercise.difficulty }}" is-open="false" >
 
-			<div ng-repeat="exercise in userExercise track by $index | orderBy: 'time'" >
-			<p>{{ exercise.time | date:'short'}}</p>
+			<div ng-repeat="userCode in exercise.allCode track by $index | orderBy: 'time'" >
+			<p>{{userCode.name}}<br>{{ userCode.time | date:'short'}}</p>
 			<div ui-ace="{useWrapMode : true,
 			showGutter: true,
 			theme: 'monokai',
 			mode: 'javascript',
-			showPrintMargin: false}" ng-model="exercise.code">
+			showPrintMargin: false}" ng-model="userCode.code">
 			
 			</div><br>
 </div>
