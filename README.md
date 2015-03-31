@@ -6,7 +6,7 @@
  - Track your progress on the profile page, view your previous code, and try to get a high score on our leaderboard!
 
 ###Technical Information###
- - We used Javascript to build this application--- Angular, Node.js, MongoDB/Mongoose, Express, and Firebase. 
+ - We used Javascript to build this application— Angular, Node.js, MongoDB/Mongoose, Express, and Firebase. 
  - We created a real-time testing environment in the browser using the Mocha testing framework running in an iframe. 
  - Communication between users is done through Firebase.
  - Track your progress on the profile page, view your previous code, and try to get a high score on our leaderboard!
