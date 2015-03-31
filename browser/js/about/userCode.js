@@ -38,9 +38,18 @@ app.controller('UserCodeCtrl', function($scope, AuthService, UsersFactory, TestF
 						console.log('No exercises completed');
 					} else {
 						userExercises = data[i];
+						userExercises.allCode = [];
+						$scope.userExercise.forEach(function(userCode) {
+							if(exercise.name === userCode.exerciseID.name){
+								userExercises.allCode.push(userCode);	
+							};
+						})
+
 						$scope.userExercises.push(userExercises);
-						console.log('ANYTHING?', $scope.userExercises);
+
+
 					}
+						console.log('USEREXERCISES', $scope.userExercises)
 				})
 			})
 
