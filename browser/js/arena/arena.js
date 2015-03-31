@@ -114,6 +114,7 @@ socket.on('theFailures', function (failures){
   $scope.failures = failures.failures;
   //send failures to Firebase
   userRef.once('value', function (userSnapshot){
+    if (!userSnapshot.val()) {return;}
     userSnapshot.val().forEach(function (user, index){
       if (user._id == failures.userId){
         var updatedUser = userSnapshot.val()[index];
@@ -157,6 +158,7 @@ socket.on('theFailures', function (failures){
 }); // closes socket.on
 
   userRef.on('value', function (userSnapshot){
+    if (!userSnapshot.val()) {return;}
     $scope.userDisplay = [];
     userSnapshot.val().forEach(function (user){
       var userObj = {};
