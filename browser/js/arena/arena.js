@@ -161,6 +161,7 @@ socket.on('theFailures', function (failures){
     userSnapshot.val().forEach(function (user){
       var userObj = {};
       userObj.username = user.username;
+      userObj.image = user.image;
       userObj.failures = user.failures;
       userObj.totalScore = user.totalScore;
       userObj.passed = $scope.numTests - user.failures;

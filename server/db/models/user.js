@@ -31,6 +31,9 @@ var schema = new mongoose.Schema({
     github: {
         id: String
     },
+    image: {
+        type: String
+    },
     exercises: [ {
         exerciseID: {type: mongoose.Schema.Types.ObjectId, ref: "Exercise" },
         code: String,
