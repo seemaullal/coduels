@@ -6,10 +6,12 @@
 </style>
 <section>
 	<div class="container pt">
-		<h3>Pick an exercise to edit</h3>
-		<select ng-change="pickExercise()" ng-model="selectedExercise" class="custom-select" ng-options="exercise.name for exercise in exercises">
-			<option></option>
+		<h3>Add or edit an exercise</h3>
+		<select ng-change="pickExercise()" ng-model="selectedExercise" class="custom-select" ng-options="exercise.name for exercise in exercises"> 
+			<option value=''>Add New Exercise</option>
 		</select>
+		<!-- <button type="button" class="btn btn-primary" ng-click="toggle()">{{buttonText}}</button> -->
+
 		<div class="row">
 			<div class="col-md-6">
 				<h2> Update Test Code </h2>
@@ -45,7 +47,7 @@
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="Name of Exercise" ng-model="selectedExercise.name" required><br>
 						<input type="text" class="form-control" placeholder="Short description of Exercise" ng-model="selectedExercise.shortDescription" required><br>
-						<textarea rows="3" type="text" class="form-control" placeholder="Long description of selectedExercise" ng-model="selectedExercise.longDescription" required></textarea><br>
+						<textarea rows="5" type="text" class="form-control" placeholder="Long description of selectedExercise" ng-model="selectedExercise.longDescription" required></textarea><br>
 						<div class="row">
 							<div class="col-md-4"><input type="text" class="form-control" placeholder="Category 1" ng-model="selectedExercise.category[0]" required></div>
 							<div class="col-md-4"><input type="text" class="form-control" placeholder="Category 2" ng-model="selectedExercise.category[1]"></div>
@@ -54,8 +56,9 @@
 						<select required ng-model="selectedExercise.difficulty" class="custom-select" ng-options="difficulty for difficulty in difficulties">
 			<option></option>
 		</select><br><br><br>
-						<button type="button" class="btn btn-success" ng-click="updateExercise()">Update Exercise</button>
-						<button type="button" class="btn btn-danger" ng-click="deleteExercise()">Delete Exercise</button>
+						<button ng-show="!editExisting" type="button" class="btn btn-success" ng-click="addNewExercise()">Add New Exercise</button>
+						<button ng-show="editExisting" type="button" class="btn btn-success" ng-click="updateExercise()">Update Exercise</button>
+						<button type="button" class="btn btn-danger"  ng-show="editExisting" ng-click="deleteExercise()">Delete Exercise</button>
 						<h3>{{success}}</h3>
 						<h3 ng-show="exerciseForm.submitted">{{errMessage}}</h3>
 					</div>
