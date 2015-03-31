@@ -21,5 +21,11 @@ app.factory('ExerciseFactory', function ($http){
 		});
 	};
 
+	factory.deleteExercise = function (exercise) {
+		return $http.delete('/api/exercises', exercise).then(function (response){
+			return response.data;
+		});
+	};
+
 	return factory;
 });

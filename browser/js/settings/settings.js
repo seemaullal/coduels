@@ -17,11 +17,17 @@ app.controller('settingsCtrl', function($scope, ExerciseFactory, $timeout){
 
 
 	$scope.pickExercise = function() {
-
+		$scope.exerciseForm.submitted = false;
 	};
 
 	$scope.updateExercise = function(){
+		if ($scope.exerciseForm.$invalid) {
+			$scope.errMessage = 'You need to fill in all the fields before updating!'
+			$scope.exerciseForm.submitted = true;
+			return;
+		}
 		ExerciseFactory.updateExercise($scope.selectedExercise).then ( function (response) {
+			$scope.exerciseForm.submitted = false;
 			console.log('response',response);
 			$scope.success = 'Test successfully added';
 			$timeout(function() {

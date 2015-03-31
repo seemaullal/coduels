@@ -78,3 +78,7 @@ img.landing-image {
 	vertical-align: middle;
 	// margin-right: 100px;
 }
+
+form.submitted .ng-invalid {
+	border: 2px solid #f00;
+}
