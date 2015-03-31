@@ -10,6 +10,8 @@ app.config(function($stateProvider){
 
 
 app.controller('createTestCtrl', function($scope, ExerciseFactory, $timeout, $modal){
+	$scope.difficulties = ['Easy','Medium','Hard'];
+
 	$scope.aceLoaded1 = function(_editor){
 		$scope.aceSession1 = _editor.getSession();
 		// console.log($scope.aceSession1);
@@ -20,12 +22,17 @@ app.controller('createTestCtrl', function($scope, ExerciseFactory, $timeout, $mo
 		// console.log($scope.aceSession2);
 	}
 
-	$scope.submitTest = function(exercise){
+	$scope.difficulties = ['Easy','Medium','Hard'];
+
+	$scope.submitExercise = function(exercise){
+		if ($scope.exerciseForm.$invalid) {
+			$scope.errMessage = 'You need to fill in all the fields before updating!'
+			$scope.exerciseForm.submitted = true;
+			return;
+		}
 		exercise.testCode = $scope.aceSession1.getDocument().getValue();
 		exercise.editorPrompt = $scope.aceSession2.getDocument().getValue();
-		console.log(exercise);
 		ExerciseFactory.submitExercise(exercise).then(function (response){
-			console.log(response);
 			var modalInstance = $modal.open({
 			      templateUrl: '/js/create_test/success-modal.html',
 			      controller: function($scope, $modalInstance) {
@@ -41,6 +48,7 @@ app.controller('createTestCtrl', function($scope, ExerciseFactory, $timeout, $mo
 			$scope.exercise = {};
 			$scope.aceSession1.getDocument().setValue('');
 			$scope.aceSession2.getDocument().setValue('');
+			$scope.exerciseForm.submitted = false;
 		})
 	};
 });
