@@ -23,6 +23,14 @@ router.post('/exercises', function(req, res) {
 // updates the exercise specified
 router.put('/exercises', function(req, res) {
     Exercise.update({_id: req.body._id}, req.body, function(err, numUpdated, response) {
+        if (!err) res.json(response);
+        else res.send(err);
+    });
+});
+
+// deletes the exercise specified
+router.delete('/exercises/:id', function(req, res) {
+    Exercise.findOneAndRemove({_id: req.params.id}, function(err,response) {
     	if (!err) res.json(response);
     	else res.send(err);
     });
