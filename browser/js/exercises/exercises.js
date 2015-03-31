@@ -9,7 +9,14 @@ app.config(function($stateProvider) {
 });
 
 
-app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactory, AuthService, $interval){
+app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactory, AuthService, $interval, $rootScope){
+
+	 $rootScope.$on('$stateChangeStart', function( event, toState, toParams, fromState, fromParams ) {
+        if (fromState.name == 'exercises') {
+           $interval.cancel(timeout);
+			$interval.cancel(timeout2);
+        }
+    });
 	$scope.activeRoomData = [ ];
 	TestFactory.getExercises().then(function (exercises){
 		$scope.exercises = exercises;
@@ -17,6 +24,7 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactor
 
 	function updateRoomData() {
 		RoomFactory.updateActiveRoomData().then(function (activeRooms){
+				console.log('something  happening');
 				if (!$scope.activeRooms || !$scope.activeRooms.length) {
 					$scope.activeRoomData = activeRooms;
 				}
@@ -31,8 +39,6 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactor
 	 var timeout = $interval(updateRoomData, 1000);
 
 	$scope.joinRoom = function (roomId) {
-		$interval.cancel(timeout);
-		$interval.cancel(timeout2);
 		AuthService.getLoggedInUser().then(function(user) {
 			$scope.user = user;
 			RoomFactory.addUserToRoom($scope.user, roomId);
@@ -41,8 +47,6 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactor
 	};
 
 	$scope.makeNewRoom = function(exercise) {
-		$interval.cancel(timeout);
-		$interval.cancel(timeout2);
 		 AuthService.getLoggedInUser().then(function(user) {
 		 	$scope.user = user;
 		 	$scope.roomKey = RoomFactory.createRoom(exercise, $scope.user);
@@ -52,8 +56,6 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactor
 	};
 
 	$scope.makePracticeRoom = function(exercise) {
-		$interval.cancel(timeout);
-		$interval.cancel(timeout2);
 		AuthService.getLoggedInUser().then(function(user) {
 		 	$scope.roomKey = RoomFactory.createPracticeRoom(exercise, user);
 		 	user.isAuthorized = $scope.roomKey;
@@ -66,8 +68,6 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactor
 			room.timeUntilClose = Math.max(0, room.gameStartTime - Date.now());
 	  		if (room.gameStartTime <= Date.now() ) {
 	   	 		$scope.activeRoomData.splice(index,1);
-	   	 		$interval.cancel(timeout);
-				$interval.cancel(timeout2);
 	  		}
 
 		})
