@@ -114,6 +114,7 @@ socket.on('theFailures', function (failures){
   $scope.failures = failures.failures;
   //send failures to Firebase
   userRef.once('value', function (userSnapshot){
+    if (!userSnapshot.val()) {return;}
     userSnapshot.val().forEach(function (user, index){
       if (user._id == failures.userId){
         var updatedUser = userSnapshot.val()[index];
@@ -157,10 +158,12 @@ socket.on('theFailures', function (failures){
 }); // closes socket.on
 
   userRef.on('value', function (userSnapshot){
+    if (!userSnapshot.val()) {return;}
     $scope.userDisplay = [];
     userSnapshot.val().forEach(function (user){
       var userObj = {};
       userObj.username = user.username;
+      userObj.image = user.image;
       userObj.failures = user.failures;
       userObj.totalScore = user.totalScore;
       userObj.passed = $scope.numTests - user.failures;
@@ -190,5 +193,10 @@ socket.on('theFailures', function (failures){
      }
      $scope.srcUrl = $sce.trustAsResourceUrl('/api/arena/iframe/' + $scope.game.exerciseId).toString();
  });
+
+  setTimeout(function() {
+    $state.go('exercises');
+    currFirebaseRoom.remove();
+  }, 7200000);
 
 }); // closes controller
