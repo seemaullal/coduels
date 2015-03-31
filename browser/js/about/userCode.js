@@ -10,7 +10,7 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('UserCodeCtrl', function($scope, AuthService, UsersFactory, TestFactory) {
+app.controller('UserCodeCtrl', function($scope, AuthService, UsersFactory, ExerciseFactory) {
 	AuthService.getLoggedInUser().then(function(archivedUser) {
 		UsersFactory.getUser(archivedUser._id).then(function(user) {
 			$scope.user = user;
@@ -27,7 +27,7 @@ app.controller('UserCodeCtrl', function($scope, AuthService, UsersFactory, TestF
 
 			console.log('userExercise', $scope.userExercise);
 
-			TestFactory.getExercises().then(function(data) {
+			ExerciseFactory.getExercises().then(function(data) {
 				$scope.userExercises = [];
 				var exercises = _.pluck(data, "_id");
 

@@ -9,7 +9,7 @@ app.config(function($stateProvider) {
 });
 
 
-app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactory, AuthService, $interval, $rootScope){
+app.controller('exercisesCtrl', function($scope, $state, RoomFactory, ExerciseFactory, AuthService, $interval, $rootScope){
 
 	 $rootScope.$on('$stateChangeStart', function( event, toState, toParams, fromState, fromParams ) {
         if (fromState.name === 'exercises') { //cancel interval functions when leaving state
@@ -18,7 +18,7 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, TestFactor
         }
     });
 	$scope.activeRoomData = [ ];
-	TestFactory.getExercises().then(function (exercises){
+	ExerciseFactory.getExercises().then(function (exercises){
 		$scope.exercises = exercises;
 	});
 

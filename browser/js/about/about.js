@@ -10,13 +10,13 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('AboutController', function ($scope, AuthService, TestFactory, UsersFactory) {
+app.controller('AboutController', function ($scope, AuthService, ExerciseFactory, UsersFactory) {
 
     AuthService.getLoggedInUser().then( function(archivedUser){
         UsersFactory.getUser(archivedUser._id).then( function(user) {
             $scope.user = user;
 
-            TestFactory.getExercises().then(function(data) {
+            ExerciseFactory.getExercises().then(function(data) {
                 $scope.easyTotal = [];
                 $scope.medTotal = [];
                 $scope.hardTotal = [];
@@ -67,7 +67,7 @@ app.controller('AboutController', function ($scope, AuthService, TestFactory, Us
                         })
                     }
                 }); //forEach user uniqueChallenges
-            }); // close TestFactory
+            }); // close ExerciseFactory
         }); //close UsersFactory   
     }); //close AuthService
 }); // close controller

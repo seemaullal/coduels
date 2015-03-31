@@ -1,0 +1,60 @@
+<style>
+.ace_editor {
+	height: 250px;
+	margin: 5px;
+	}
+</style>
+<section>
+	<div class="container pt">
+		<select ng-change="pickExercise()" ng-model="selectedExercise" class="custom-select" ng-options="exercise.name for exercise in exercises">
+			<option></option>
+		</select>
+		<div class="row">
+			<div class="col-md-6">
+				<h2> Create Test </h2>
+				<div class="row">
+					<div ui-ace = "{
+						useWrapMode : true,
+						showGutter: true,
+						theme: 'monokai',
+						mode: 'javascript',
+						onLoad: aceLoaded1,
+						onChange: aceChanged,
+						showPrintMargin: false
+						}" ng-model="selectedExercise.testCode" id="test">
+					</div>
+				</div>
+				<div class="row">
+					<h2> Prompt for User Function </h2>
+					<div ui-ace = "{
+						useWrapMode : true,
+						showGutter: true,
+						theme: 'monokai',
+						mode: 'javascript',
+						onLoad: aceLoaded2,
+						onChange: aceChanged,
+						showPrintMargin: false
+						}" ng-model="selectedExercise.editorPrompt" id="prompt">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<h2> Instructions </h2>
+				<form>
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Name of Exercise" ng-model="selectedExercise.name"><br>
+						<input type="text" class="form-control" placeholder="Short description of Exercise" ng-model="selectedExercise.shortDescription"><br>
+						<textarea rows="3" type="text" class="form-control" placeholder="Long description of selectedExercise" ng-model="selectedExercise.longDescription"></textarea><br>
+						<div class="row">
+							<div class="col-md-4"><input type="text" class="form-control" placeholder="Category 1" ng-model="selectedExercise.category[0]"></div>
+							<div class="col-md-4"><input type="text" class="form-control" placeholder="Category 2" ng-model="selectedExercise.category[1]"></div>
+							<div class="col-md-4"><input type="text" class="form-control" placeholder="Category 3" ng-model="selectedExercise.category[2]"></div>
+						</div><br>
+						<input type="text" class="form-control" placeholder="Difficulty" ng-model="selectedExercise.difficulty"><br>
+						<button type="button" class="btn btn-success" ng-click="updateExercise()">Update Exercise</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
