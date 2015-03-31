@@ -6,6 +6,7 @@
 </style>
 <section>
 	<div class="container pt">
+		<h3>Pick an exercise to edit</h3>
 		<select ng-change="pickExercise()" ng-model="selectedExercise" class="custom-select" ng-options="exercise.name for exercise in exercises">
 			<option></option>
 		</select>
@@ -52,6 +53,7 @@
 						</div><br>
 						<input type="text" class="form-control" placeholder="Difficulty" ng-model="selectedExercise.difficulty"><br>
 						<button type="button" class="btn btn-success" ng-click="updateExercise()">Update Exercise</button>
+						<h3>{{success}}</h3>
 					</div>
 				</form>
 			</div>

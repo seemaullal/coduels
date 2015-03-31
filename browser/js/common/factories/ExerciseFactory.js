@@ -15,5 +15,11 @@ app.factory('ExerciseFactory', function ($http){
 		});
 	};
 
+	factory.updateExercise = function (exercise) {
+		return $http.put('/api/exercises', exercise).then(function (response){
+			return response.data;
+		});
+	};
+
 	return factory;
 });
