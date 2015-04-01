@@ -5,10 +5,10 @@ app.config(function ($stateProvider) {
         controller: 'HomeCtrl',
         templateUrl: 'js/home/home.html',
         resolve: {
-        	test: function(AuthService) {
+        	test: function(AuthService, $state) {
         		AuthService.getLoggedInUser().then(function(user) {
         			if (!user) console.log('nobody logged in');
-        			else if (!user.username) console.log('no username');
+        			else if (!user.username) $state.go('createUsername');
         			else console.log('has username', user);
         		});
         	}
