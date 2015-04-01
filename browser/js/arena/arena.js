@@ -138,12 +138,14 @@ socket.on('theFailures', function (failures){
                         $scope.ok = function() {
                           $modalInstance.close('ok');
                         };
-                      }
+                      } 
               });
               modalInstance.result.then(function() {
                 $state.go("exercises");
                 return;
               });
+            } else {
+                  $scope.isWinner = true;
             }
           }); // closes currFirebaseRoom.once
         } // closes if (failures.failures) statement
@@ -173,9 +175,6 @@ socket.on('theFailures', function (failures){
   winnerRef.on('value', function(winnerSnapshot) {
     if (winnerSnapshot.val()){
       $scope.winner = winnerSnapshot.val().username;
-      if($scope.winner) {
-        $scope.isWinner = true;
-      }
       if(!$scope.$$phase) {
         //if no digest in progress
         $scope.$digest();
