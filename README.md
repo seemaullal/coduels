@@ -1,41 +1,18 @@
-<iframe src="//giphy.com/embed/JtIMv7cMRUFX2?html5=true" width="480" height="270" frameBorder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+# **Co{Duels}** #
 
-##Team Workflow##
+### Duel your fellow Javascript developers in various coding challenges! ###
+ - CoDuels is a fun and interactive way to improve your Javascript skills. 
+ - You can choose challenges based on difficulty and then either practice by yourself or compete against other online users who will try to pass all the tests before you do.
+ - Track your progress on the profile page, view your previous code, and try to get a high score on our leaderboard!
 
-On master branch
+###Technical Information###
+ - We used Javascript to build this application— Angular, Node.js, MongoDB/Mongoose, Express, and Firebase. 
+ - We created a real-time testing environment in the browser using the Mocha testing framework running in an iframe. 
+ - Communication between users is done through Firebase.
+ - Track your progress on the profile page, view your previous code, and try to get a high score on our leaderboard!
 
-- git pull
-- Make a new branch and switch to that branch by running git checkout -b my_feature
-
-On my_feature branch
-
-- Do your changes here
-- git add -A and git commit -m "my changes"
-- git checkout master
-
-On master branch
-
-- git pull
-- git checkout my_feature
-
-On my_feature branch
-
-- git merge master
-- RESOLVE ALL CONFLICTS <<< IMPORTANT!
-- git add -A and `git commit -m "merged master into my_feature"
-- git push origin my_feature
-
-On Github
-
-- Create a pull request
-- Notify someone that you have created a pull request
-- Don't branch or work on another feature until the request has been merged into master.
-
-On your local computer
-
-- git checkout master
-- On master
-
-- git pull
-
-Repeat the steps
+###Contributors###
+ - Ivan Loughman-Pawelko <a  target="_blank" href="https://github.com/iloughman/">Github</a>
+ - Linda Kung <a  target="_blank" href="https://github.com/lindakung/">Github</a>
+ - Michael Bae <a  target="_blank" href="https://github.com/michaelbbae">Github</a>
+ - Seema Ullal <a target="_blank" href="https://github.com/seemaullal/">Github</a>

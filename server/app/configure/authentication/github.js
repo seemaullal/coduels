@@ -31,7 +31,7 @@ module.exports = function (app) {
                             id: profile.id
                         },
                         username: username,
-                        image: profile.avatar_url
+                        image: profile._json.avatar_url
                     }).then(function (user) {
                         done(null, user);
                     }, function (err) {
@@ -47,13 +47,13 @@ module.exports = function (app) {
 
     passport.use(new GithubStrategy(githubCredentials, verifyCallback));
 
-    
+
     app.get('/auth/github', passport.authenticate('github'));
 
     app.get('/auth/github/callback',
         passport.authenticate('github', { failureRedirect: '/login' }),
         function (req, res) {
             res.redirect('/');
-            
+
         });
 };

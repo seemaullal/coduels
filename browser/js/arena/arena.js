@@ -158,6 +158,7 @@ socket.on('theFailures', function (failures){
     userSnapshot.val().forEach(function (user){
       var userObj = {};
       userObj.username = user.username;
+      userObj.image = user.image;
       userObj.failures = user.failures;
       userObj.totalScore = user.totalScore;
       userObj.passed = $scope.numTests - user.failures;
@@ -187,5 +188,10 @@ socket.on('theFailures', function (failures){
      }
      $scope.srcUrl = $sce.trustAsResourceUrl('/api/arena/iframe/' + $scope.game.exerciseId).toString();
  });
+
+  setTimeout(function() {
+    $state.go('exercises');
+    currFirebaseRoom.remove();
+  }, 7200000);
 
 }); // closes controller
