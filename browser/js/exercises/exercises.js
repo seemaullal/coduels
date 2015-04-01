@@ -4,7 +4,14 @@ app.config(function($stateProvider) {
 	$stateProvider.state('exercises', {
 		url: '/exercises',
 		controller: 'exercisesCtrl',
-		templateUrl: '/js/exercises/exercises.html'
+		templateUrl: '/js/exercises/exercises.html',
+		resolve: {
+        	test: function(AuthService, $state) {
+        		AuthService.getLoggedInUser().then(function(user) {
+        			if (user && !user.username) $state.go('createUsername');
+        		});
+        	}
+        }
 	});
 });
 

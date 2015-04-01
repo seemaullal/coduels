@@ -10,14 +10,12 @@ app.factory('UsersFactory', function($http) {
 
 	factory.getUser = function(userId) {
 		return $http.get('/api/user/' + userId).then(function(response) {
-			console.log('user info', response.data);
 			return response.data;
 		});
 	};
 
 	factory.updateUser= function(user) {
 		return $http.put('/api/users', user ).then(function(response) {
-			console.log('user info', response.data);
 			return response.data;
 		});
 	};
