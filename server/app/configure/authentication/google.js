@@ -34,15 +34,16 @@ module.exports = function (app) {
                           google: {
                               id: profile.id
                           },
-                          username: username
+                          username: username,
+                          image: profile._json.picture
                       }).then(function (user) {
                           done(null, user);
                       }, function (err) {
                           console.error(err);
                           done(err);
-                      });  
+                      });
                 });
-               
+
             }
 
         });
