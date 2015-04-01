@@ -128,28 +128,34 @@ socket.on('theFailures', function (failures){
             if(!roomSnapshot.val().winner) {
               winnerRef.set(updatedUser);
               isWinner = true;
+              if (!$scope.isPractice) {
 
-              var modalInstance2 = $modal.open({
-                templateUrl: '/js/arena/winner-modal.html',
-                resolve: {
-                  data: function() {
-                    return $scope.user;
+                var modalInstance2 = $modal.open({
+                  templateUrl: '/js/arena/winner-modal.html',
+                  resolve: {
+                    data: function(AuthService) {
+                      return AuthService.getLoggedInUser().then(function(user) {
+                        console.log("USER:LKJW:LFK:LFKJ", user);
+                        return user;
+                      })
+                    }
+                  },
+                  controller: function($scope, $modalInstance, data) {
+                    $scope.user = data;
+                    console.log('what is data', $scope.user);
+                    $scope.ok = function() {
+                      $modalInstance.close('ok');
+                    };
                   }
-                },
-                controller: function($scope, $modalInstance, data) {
-                  $scope.user = data;
-                  $scope.ok = function() {
-                    $modalInstance.close('ok');
-                  };
-                }
-              });
-              modalInstance2.result.then(function() {
-                $state.go("about");
-                return;
-              })
-          } else {
-            console.log('challenger continues');
-          }// closes if (!roomSnapshot)
+                });
+                modalInstance2.result.then(function() {
+                  $state.go("about");
+                  return;
+                })
+            } else if (!isWinner) {
+                console.log('challenger continues');
+              }
+            }// closes if (!roomSnapshot)
 
             CompletionFactory.sendCompletion(user._id, $scope.game.exerciseId, updatedUser.code, $scope.game.difficulty, userSnapshot.val().length, isWinner);
             if ($scope.isPractice) {
