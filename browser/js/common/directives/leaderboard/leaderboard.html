@@ -8,15 +8,15 @@
 						<th><h4><i class="fa fa-rocket" style="color: #A47BC5;"></i> Total Score</h4></th>
 					</tr>
 				</thead>
-				
+
 				<tbody>
 					<tr ng-repeat="user in topFive | orderBy: '-totalScore'">
-						<td>{{ user.username  }}</td>
+						<td><img src="{{user.image}}" style="width: 20px; height: auto"> {{ user.username  }}</td>
 						<td>{{ user.totalScore }}</td>
 					</tr>
 
 				</tbody>
 			</table>
 
-		</div>	
+		</div>
 </div>

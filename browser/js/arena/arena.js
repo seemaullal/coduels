@@ -72,8 +72,6 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
   });
 
   var winnerRef = currFirebaseRoom.child('winner');
-  // $scope.winner = $firebaseObject(winnerRef).$value;
-  // console.log('scope winner', $scope.winner);
 
   var setColorProperty = function (allTests, failedTests){
     allTests.forEach(function (test){
@@ -89,14 +87,11 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
   $scope.allTestTitles = null;
   socket.on('failedTests', function(testTitles) {
     if (testTitles[0] === undefined){ return; }
-    console.log("testTitles: ", testTitles);
-    console.count("Number");
       if (!$scope.allTestTitles){
         $scope.allTestTitles = [];
         testTitles.forEach(function (testTitle){
             $scope.allTestTitles.push({title: testTitle, color: false});
           });
-        console.log("allTestTitles", $scope.allTestTitles);
       }
       $scope.failedTestTitles = testTitles;
       $scope.allTestTitles = setColorProperty($scope.allTestTitles, $scope.failedTestTitles);
@@ -163,6 +158,7 @@ socket.on('theFailures', function (failures){
     userSnapshot.val().forEach(function (user){
       var userObj = {};
       userObj.username = user.username;
+      userObj.image = user.image;
       userObj.failures = user.failures;
       userObj.totalScore = user.totalScore;
       userObj.passed = $scope.numTests - user.failures;
@@ -192,5 +188,10 @@ socket.on('theFailures', function (failures){
      }
      $scope.srcUrl = $sce.trustAsResourceUrl('/api/arena/iframe/' + $scope.game.exerciseId).toString();
  });
+
+  setTimeout(function() {
+    $state.go('exercises');
+    currFirebaseRoom.remove();
+  }, 7200000);
 
 }); // closes controller

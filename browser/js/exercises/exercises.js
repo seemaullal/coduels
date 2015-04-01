@@ -4,7 +4,14 @@ app.config(function($stateProvider) {
 	$stateProvider.state('exercises', {
 		url: '/exercises',
 		controller: 'exercisesCtrl',
-		templateUrl: '/js/exercises/exercises.html'
+		templateUrl: '/js/exercises/exercises.html',
+		resolve: {
+        	test: function(AuthService, $state) {
+        		AuthService.getLoggedInUser().then(function(user) {
+        			if (user && !user.username) $state.go('createUsername');
+        		});
+        	}
+        }
 	});
 });
 
@@ -24,7 +31,6 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, ExerciseFa
 
 	function updateRoomData() {
 		RoomFactory.updateActiveRoomData().then(function (activeRooms){
-				console.log('something  happening');
 				// if (!$scope.activeRoomData || !$scope.activeRoomData.length) {
 				// 	$scope.activeRoomData = activeRooms;
 				// }
