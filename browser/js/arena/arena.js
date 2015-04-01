@@ -173,6 +173,9 @@ socket.on('theFailures', function (failures){
   winnerRef.on('value', function(winnerSnapshot) {
     if (winnerSnapshot.val()){
       $scope.winner = winnerSnapshot.val().username;
+      if($scope.winner) {
+        $scope.isWinner = true;
+      }
       if(!$scope.$$phase) {
         //if no digest in progress
         $scope.$digest();
