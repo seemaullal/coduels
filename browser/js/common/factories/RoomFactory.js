@@ -1,7 +1,7 @@
-'use strict'
+'use strict';
 app.factory('RoomFactory', function($firebaseObject, $q) {
 
-    var factory = {}
+    var factory = {};
 
     var roomsRef = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms');
 
@@ -54,7 +54,7 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
     factory.deleteActiveRoom = function(roomKey) {
         var ref = roomsRef.child(roomKey);
         ref.remove();
-    }
+    };
 
     factory.updateActiveRoomData = function () {
         return $q(function(resolve, reject) {
@@ -66,7 +66,7 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
                     if (roomData.gameStartTime > Date.now() )
                     // don't put closed rooms (timed out) on scope for now
                         activeRoomData.push(roomData);
-                };
+                }
                 resolve(activeRoomData);
             });
         });
@@ -87,14 +87,14 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
         var userlist = [];
         ref.once('value', function (snap){
             userlist = snap.val().users;
-            if (userlist.length == 1){
+            if (userlist.length === 1){
                 ref.remove();
                 return;
             }
             userlist.forEach (function (user, index) {
-                if (userId == user._id){
+                if (userId === user._id){
                     userlist.splice(index,1);
-                };
+                }
             });
             ref.child('users').set(userlist);
         });
