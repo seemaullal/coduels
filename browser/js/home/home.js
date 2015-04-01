@@ -4,6 +4,15 @@ app.config(function ($stateProvider) {
         url: '/',
         controller: 'HomeCtrl',
         templateUrl: 'js/home/home.html',
+        resolve: {
+        	test: function(AuthService) {
+        		AuthService.getLoggedInUser().then(function(user) {
+        			if (!user) console.log('nobody logged in');
+        			else if (!user.username) console.log('no username');
+        			else console.log('has username', user);
+        		});
+        	}
+        }
     });
 });
 
