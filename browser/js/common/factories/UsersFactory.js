@@ -15,5 +15,12 @@ app.factory('UsersFactory', function($http) {
 		});
 	};
 
+	factory.updateUser= function(user) {
+		return $http.put('/api/users', user ).then(function(response) {
+			console.log('user info', response.data);
+			return response.data;
+		});
+	};
+
 	return factory;
 });

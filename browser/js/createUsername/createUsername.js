@@ -6,10 +6,14 @@ app.config(function($stateProvider) {
   });
 });
 
-app.controller('UsernameCtrl', function($scope) {
+app.controller('UsernameCtrl', function($scope, AuthService, UsersFactory, $state) {
   $scope.updateUsername = function() {
-    console.log($scope.username);
+    AuthService.getLoggedInUser().then(function(user) {
+      user.username = $scope.username;
+      UsersFactory.updateUser(user);
+      $state.go('home');
+    });
   };
-  
+
 });
 
