@@ -26,20 +26,21 @@ module.exports = function (app) {
             } else {
                 var username = profile._json.email.substr(0, profile._json.email.indexOf('@'));
                 UserModel.findOne({'username': username}, function(err , foundUser) {
-                    if (foundUser) console.log('same username' ,foundUser);
-                    else {
+                    if (foundUser) {
+                        console.log('same username' ,foundUser);
+                        username = null;
+                    }
                       UserModel.create({
                           google: {
                               id: profile.id
                           },
-                          username: profile._json.email.substr(0, profile._json.email.indexOf('@')),
+                          username: username
                       }).then(function (user) {
                           done(null, user);
                       }, function (err) {
                           console.error(err);
                           done(err);
                       });  
-                    }
                 });
                
             }
