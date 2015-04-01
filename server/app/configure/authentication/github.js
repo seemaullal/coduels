@@ -21,17 +21,23 @@ module.exports = function (app) {
             if (user) {
                 done(null, user);
             } else {
-                UserModel.create({
-                    github: {
-                        id: profile.id
-                    },
-                    username: profile.username,
-                    image: profile.avatar_url
-                }).then(function (user) {
-                    done(null, user);
-                }, function (err) {
-                    console.error(err);
-                    done(err);
+                var username = profile.username;
+                UserModel.findOne({'username': username}, function(err , foundUser) {
+                    if (foundUser) {
+                        username = null;
+                    }
+                    UserModel.create({
+                        github: {
+                            id: profile.id
+                        },
+                        username: username,
+                        image: profile.avatar_url
+                    }).then(function (user) {
+                        done(null, user);
+                    }, function (err) {
+                        console.error(err);
+                        done(err);
+                    });
                 });
             }
 
