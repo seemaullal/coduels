@@ -124,10 +124,10 @@ socket.on('theFailures', function (failures){
           });
           $scope.keyCodeEvents = [];
           currFirebaseRoom.once('value', function(roomSnapshot) {
-            var isWinner = false;
+            $scope.isWinner = false;
             if(!roomSnapshot.val().winner) {
               winnerRef.set(updatedUser);
-              isWinner = true;
+              $scope.isWinner = true;
               if (!$scope.isPractice) {
 
                 var winnerModal = $modal.open({
@@ -154,8 +154,8 @@ socket.on('theFailures', function (failures){
             }
           }// closes if (!roomSnapshot)
 
-            CompletionFactory.sendCompletion(user._id, $scope.game.exerciseId, updatedUser.code, $scope.game.difficulty, userSnapshot.val().length, isWinner);
-            if ($scope.isPractice) {
+            CompletionFactory.sendCompletion(user._id, $scope.game.exerciseId, updatedUser.code, $scope.game.difficulty, userSnapshot.val().length, $scope.isWinner);
+            if ($scope.isPractice && !$scope.isWinner) {
               var modalInstance = $modal.open({
                     templateUrl: '/js/arena/practice-modal.html',
                     controller: function($scope, $modalInstance) {
@@ -198,8 +198,7 @@ socket.on('theFailures', function (failures){
     if (winnerSnapshot.val()){
       $scope.winner = winnerSnapshot.val().username;
 
-      if($scope.winner !== $scope.user) {
-        console.log('scopuseoriajsldfj;laskdjf;lasjdf;lajsdf;lkjasdf', $scope.user);
+      if($scope.winner !== $scope.user && !$scope.isPractice) {
                 var notWinnerModal = $modal.open({
                   templateUrl: '/js/arena/not-winner-modal.html',
                   resolve: {
