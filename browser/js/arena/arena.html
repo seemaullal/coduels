@@ -42,7 +42,11 @@
                 <progressbar class="passedTests" max="100" value="((user.passed) * 100) / numTests" animate="false"><span style="color:black; white-space:nowrap;"> {{ user.passed }} / {{ numTests }}</span></progressbar><br>
             </div>
         </div>
-        <h1 ng-show="!isPractice">Winner: {{ winner }}</h1>
+        <div ng-show="!isPractice">
+        <h1>Winner: {{ winner }}</h1>
+        <!-- <div ng-show="isWinner">
+        <h2>{{ winner }}, continue to your <a ui-sref="about">Profile</a></h2>
+        </div> -->
     </div>
 
 
