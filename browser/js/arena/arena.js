@@ -128,7 +128,57 @@ socket.on('theFailures', function (failures){
             if(!roomSnapshot.val().winner) {
               winnerRef.set(updatedUser);
               isWinner = true;
-            } // closes if (!roomSnapshot)
+              if (!$scope.isPractice) {
+
+                var winnerModal = $modal.open({
+                  templateUrl: '/js/arena/winner-modal.html',
+                  resolve: {
+                    data: function(AuthService) {
+                      return AuthService.getLoggedInUser().then(function(user) {
+                        return user;
+                      })
+                    }
+                  },
+                  controller: function($scope, $modalInstance, data) {
+                    $scope.user = data;
+                    console.log('what is data', $scope.user);
+                    $scope.ok = function() {
+                      $modalInstance.close('ok');
+                    };
+                  }
+                });
+                winnerModal.result.then(function() {
+                  $state.go("about");
+                  return;
+                })
+            } else {
+                var notWinnerModal = $modal.open({
+                  templateUrl: '/js/arena/not-winner-modal.html',
+                  resolve: {
+                    data: function(AuthService) {
+                      return AuthService.getLoggedInUser().then(function(user) {
+                        return user;
+                      })
+                    }
+                  },
+                  controller: function($scope, $modalInstance, data) {
+                    $scope.user = data;
+                    $scope.ok = function() {
+                      $modalInstance.close('ok');
+                    };
+                    $scope.cancel = function() {
+                      $modalInstance.cancel('cancel');
+                    }
+                  }
+                });
+                notWinnerModal.result.then(function() {
+                  if($scope.cancel) {
+                    $state.go("about");
+                  }
+                  return;
+                })
+              }
+            }// closes if (!roomSnapshot)
 
             CompletionFactory.sendCompletion(user._id, $scope.game.exerciseId, updatedUser.code, $scope.game.difficulty, userSnapshot.val().length, isWinner);
             if ($scope.isPractice) {
@@ -138,13 +188,13 @@ socket.on('theFailures', function (failures){
                         $scope.ok = function() {
                           $modalInstance.close('ok');
                         };
-                      }
+                      } 
               });
               modalInstance.result.then(function() {
                 $state.go("exercises");
                 return;
               });
-            }
+            } 
           }); // closes currFirebaseRoom.once
         } // closes if (failures.failures) statement
       } // closes if (user._id) statement
@@ -188,10 +238,5 @@ socket.on('theFailures', function (failures){
      }
      $scope.srcUrl = $sce.trustAsResourceUrl('/api/arena/iframe/' + $scope.game.exerciseId).toString();
  });
-
-  setTimeout(function() {
-    $state.go('exercises');
-    currFirebaseRoom.remove();
-  }, 7200000);
 
 }); // closes controller
