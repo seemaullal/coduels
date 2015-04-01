@@ -46,7 +46,7 @@ app.run(function($rootScope, AuthService, $state) {
     });
 
     setInterval(function() {
-        var roomRef = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/')
+        var roomRef = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/');
         roomRef.once('value', function(roomsSnapshot) {
             for (var key in roomsSnapshot.val()) {
                 if (Date.now() - roomsSnapshot.val()[key].gameStartTime > 7200000) {
@@ -54,7 +54,7 @@ app.run(function($rootScope, AuthService, $state) {
                 }
 
             }
-        })
-    }, 7200000)
+        });
+    }, 7200000);
 
 });
