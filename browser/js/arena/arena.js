@@ -162,7 +162,7 @@ socket.on('theFailures', function (failures){
       userObj.failures = user.failures;
       userObj.totalScore = user.totalScore;
       userObj.passed = $scope.numTests - user.failures;
-      $scope.userDisplay.push(userObj); 
+      $scope.userDisplay.push(userObj);   
     });
     if(!$scope.$$phase) {
       //if no digest in progress
