@@ -1,9 +1,9 @@
-'use strict'
+'use strict';
 app.factory('RoomFactory', function($firebaseObject, $q) {
 
-    var factory = {}
+    var factory = {};
 
-    var rooms = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms');
+    var roomsRef = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms');
 
     factory.activeRooms = [];
 
@@ -25,7 +25,7 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
             winner: null,
             isPractice: false
         };
-        var roomKey = rooms.push(roomData).key();
+        var roomKey = roomsRef.push(roomData).key();
         // if (isChallenge) {
         // factory.activeRooms.push(roomKey);
         // }
@@ -47,34 +47,33 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
             winner: null,
             isPractice: true
         };
-        var roomKey = rooms.push(roomData).key();
+        var roomKey = roomsRef.push(roomData).key();
         return roomKey;
     };
 
     factory.deleteActiveRoom = function(roomKey) {
-        var ref = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + roomKey);
+        var ref = roomsRef.child(roomKey);
         ref.remove();
-    }
+    };
 
     factory.updateActiveRoomData = function () {
         return $q(function(resolve, reject) {
             var activeRoomData = [];
-            var ref = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/');
-            ref.once('value', function (firebaseSnapshot){
+            roomsRef.once('value', function (firebaseSnapshot){
                 for (var key in firebaseSnapshot.val()){
                     var roomData = firebaseSnapshot.val()[key];
                     roomData.roomId = key;
                     if (roomData.gameStartTime > Date.now() )
                     // don't put closed rooms (timed out) on scope for now
                         activeRoomData.push(roomData);
-                };
+                }
                 resolve(activeRoomData);
             });
         });
     };
 
     factory.addUserToRoom = function (userObj, roomId) {
-        var ref = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/'+roomId);
+        var ref = roomsRef.child(roomId);
         var list = [];
         ref.once('value', function (snap){
             list = snap.val().users;
@@ -84,18 +83,18 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
     };
 
     factory.removeUserFromRoom = function (userId, roomId) {
-        var ref = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/'+roomId);
+        var ref = roomsRef.child(roomId);
         var userlist = [];
         ref.once('value', function (snap){
             userlist = snap.val().users;
-            if (userlist.length == 1){
+            if (userlist.length === 1){
                 ref.remove();
                 return;
             }
             userlist.forEach (function (user, index) {
-                if (userId == user._id){
+                if (userId === user._id){
                     userlist.splice(index,1);
-                };
+                }
             });
             ref.child('users').set(userlist);
         });

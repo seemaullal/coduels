@@ -239,9 +239,4 @@ socket.on('theFailures', function (failures){
      $scope.srcUrl = $sce.trustAsResourceUrl('/api/arena/iframe/' + $scope.game.exerciseId).toString();
  });
 
-  setTimeout(function() {
-    $state.go('exercises');
-    currFirebaseRoom.remove();
-  }, 7200000);
-
 }); // closes controller
