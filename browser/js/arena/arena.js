@@ -192,6 +192,6 @@ socket.on('theFailures', function (failures){
   setTimeout(function() {
     $state.go('exercises');
     currFirebaseRoom.remove();
-  }, 7200000);
+  }, 5000);
 
 }); // closes controller
