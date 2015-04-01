@@ -151,33 +151,7 @@ socket.on('theFailures', function (failures){
                   $state.go("about");
                   return;
                 })
-            } else {
-                var notWinnerModal = $modal.open({
-                  templateUrl: '/js/arena/not-winner-modal.html',
-                  resolve: {
-                    data: function(AuthService) {
-                      return AuthService.getLoggedInUser().then(function(user) {
-                        return user;
-                      })
-                    }
-                  },
-                  controller: function($scope, $modalInstance, data) {
-                    $scope.user = data;
-                    $scope.ok = function() {
-                      $modalInstance.close('ok');
-                    };
-                    $scope.cancel = function() {
-                      $modalInstance.cancel('cancel');
-                    }
-                  }
-                });
-                notWinnerModal.result.then(function() {
-                  if($scope.cancel) {
-                    $state.go("about");
-                  }
-                  return;
-                })
-              }
+            } 
             }// closes if (!roomSnapshot)
 
             CompletionFactory.sendCompletion(user._id, $scope.game.exerciseId, updatedUser.code, $scope.game.difficulty, userSnapshot.val().length, isWinner);
@@ -194,7 +168,7 @@ socket.on('theFailures', function (failures){
                 $state.go("exercises");
                 return;
               });
-            } 
+            }
           }); // closes currFirebaseRoom.once
         } // closes if (failures.failures) statement
       } // closes if (user._id) statement
@@ -223,6 +197,36 @@ socket.on('theFailures', function (failures){
   winnerRef.on('value', function(winnerSnapshot) {
     if (winnerSnapshot.val()){
       $scope.winner = winnerSnapshot.val().username;
+
+      if($scope.winner !== $scope.user) {
+        console.log('scopuseoriajsldfj;laskdjf;lasjdf;lajsdf;lkjasdf', $scope.user);
+                var notWinnerModal = $modal.open({
+                  templateUrl: '/js/arena/not-winner-modal.html',
+                  resolve: {
+                    data: function(AuthService) {
+                      return AuthService.getLoggedInUser().then(function(user) {
+                        return user;
+                      })
+                    }
+                  },
+                  controller: function($scope, $modalInstance, data) {
+                    $scope.user = data;
+                    $scope.ok = function() {
+                      $modalInstance.close('ok');
+                    };
+                    $scope.cancel = function() {
+                      $modalInstance.cancel('cancel');
+                    }
+                  }
+                });
+                notWinnerModal.result.then(function() {
+                  if($modalInstance.cancel) {
+                    $state.go("about");
+                  }
+                  return;
+                })
+              }
+
       if(!$scope.$$phase) {
         //if no digest in progress
         $scope.$digest();
