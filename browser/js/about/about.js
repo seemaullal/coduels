@@ -5,7 +5,14 @@ app.config(function ($stateProvider) {
     $stateProvider.state('about', {
         url: '/about',
         controller: 'AboutController',
-        templateUrl: 'js/about/about.html'
+        templateUrl: 'js/about/about.html',
+        resolve: {
+            test: function(AuthService, $state) {
+                AuthService.getLoggedInUser().then(function(user) {
+                    if (user && !user.username) $state.go('createUsername');
+                });
+            }
+        }
     });
 
 });

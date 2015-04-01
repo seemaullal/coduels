@@ -24,6 +24,13 @@ router.post('/users/:userId/exercises/', function (req, res, next) {
 	});
 });
 
+router.put('/users', function(req, res) {
+    User.update({_id: req.body._id}, req.body, function(err, numUpdated, response) {
+        if (!err) res.json(response);
+        else res.send(err);
+    });
+});
+
 router.get('/user/:userId', function (req, res, next) {
 	var userId = req.params.userId;
 	User.findById(userId).populate('exercises.exerciseID').exec(function (err, user) {

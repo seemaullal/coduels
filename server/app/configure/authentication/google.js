@@ -24,16 +24,25 @@ module.exports = function (app) {
             if (user) {
                 done(null, user);
             } else {
-                UserModel.create({
-                    google: {
-                        id: profile.id
+                var username = profile._json.email.substr(0, profile._json.email.indexOf('@'));
+                UserModel.findOne({'username': username}, function(err , foundUser) {
+                    if (foundUser) {
+                        console.log('same username' ,foundUser);
+                        username = null;
                     }
-                }).then(function (user) {
-                    done(null, user);
-                }, function (err) {
-                    console.error(err);
-                    done(err);
+                      UserModel.create({
+                          google: {
+                              id: profile.id
+                          },
+                          username: username
+                      }).then(function (user) {
+                          done(null, user);
+                      }, function (err) {
+                          console.error(err);
+                          done(err);
+                      });  
                 });
+               
             }
 
         });
