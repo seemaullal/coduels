@@ -24,7 +24,6 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, ExerciseFa
 
 	function updateRoomData() {
 		RoomFactory.updateActiveRoomData().then(function (activeRooms){
-				console.log('something  happening');
 				// if (!$scope.activeRoomData || !$scope.activeRoomData.length) {
 				// 	$scope.activeRoomData = activeRooms;
 				// }
