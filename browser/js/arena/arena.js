@@ -151,8 +151,8 @@ socket.on('theFailures', function (failures){
                   $state.go("about");
                   return;
                 })
-            } 
-            }// closes if (!roomSnapshot)
+            }
+          }// closes if (!roomSnapshot)
 
             CompletionFactory.sendCompletion(user._id, $scope.game.exerciseId, updatedUser.code, $scope.game.difficulty, userSnapshot.val().length, isWinner);
             if ($scope.isPractice) {
@@ -168,7 +168,7 @@ socket.on('theFailures', function (failures){
                 $state.go("exercises");
                 return;
               });
-            }
+            }//closes if statement maybe on line 160
           }); // closes currFirebaseRoom.once
         } // closes if (failures.failures) statement
       } // closes if (user._id) statement
