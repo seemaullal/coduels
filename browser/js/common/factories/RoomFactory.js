@@ -7,7 +7,7 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
 
     factory.activeRooms = [];
 
-    factory.createRoom = function(exercise, user,isChallenge) {
+    factory.createRoom = function(exercise, user) {
         var gameStartTime = new Date();
         gameStartTime = gameStartTime.setSeconds(gameStartTime.getSeconds() + 20);
 
@@ -26,14 +26,13 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
             isPractice: false
         };
         var roomKey = rooms.push(roomData).key();
-        if (isChallenge) {
-        factory.activeRooms.push(roomKey);
-        }
+        // if (isChallenge) {
+        // factory.activeRooms.push(roomKey);
+        // }
         return roomKey;
     };
 
-    factory.createPracticeRoom = function(exercise, user,isChallenge) {
-        var gameStartTime = new Date();
+    factory.createPracticeRoom = function(exercise, user) {
         var roomData = {
             users: [user],
             exerciseId: exercise._id,
@@ -44,7 +43,7 @@ app.factory('RoomFactory', function($firebaseObject, $q) {
             testCode: exercise.testCode,
             category: exercise.category,
             difficulty: exercise.difficulty,
-            gameStartTime: gameStartTime,
+            gameStartTime: Date.now(),
             winner: null,
             isPractice: true
         };
