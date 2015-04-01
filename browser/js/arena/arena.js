@@ -128,7 +128,28 @@ socket.on('theFailures', function (failures){
             if(!roomSnapshot.val().winner) {
               winnerRef.set(updatedUser);
               isWinner = true;
-            } // closes if (!roomSnapshot)
+
+              var modalInstance2 = $modal.open({
+                templateUrl: '/js/arena/winner-modal.html',
+                resolve: {
+                  data: function() {
+                    return $scope.user;
+                  }
+                },
+                controller: function($scope, $modalInstance, data) {
+                  $scope.user = data;
+                  $scope.ok = function() {
+                    $modalInstance.close('ok');
+                  };
+                }
+              });
+              modalInstance2.result.then(function() {
+                $state.go("about");
+                return;
+              })
+          } else {
+            console.log('challenger continues');
+          }// closes if (!roomSnapshot)
 
             CompletionFactory.sendCompletion(user._id, $scope.game.exerciseId, updatedUser.code, $scope.game.difficulty, userSnapshot.val().length, isWinner);
             if ($scope.isPractice) {
@@ -144,9 +165,7 @@ socket.on('theFailures', function (failures){
                 $state.go("exercises");
                 return;
               });
-            } else {
-                  $scope.isWinner = true;
-            }
+            } 
           }); // closes currFirebaseRoom.once
         } // closes if (failures.failures) statement
       } // closes if (user._id) statement
