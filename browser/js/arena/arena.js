@@ -130,12 +130,11 @@ socket.on('theFailures', function (failures){
               isWinner = true;
               if (!$scope.isPractice) {
 
-                var modalInstance2 = $modal.open({
+                var winnerModal = $modal.open({
                   templateUrl: '/js/arena/winner-modal.html',
                   resolve: {
                     data: function(AuthService) {
                       return AuthService.getLoggedInUser().then(function(user) {
-                        console.log("USER:LKJW:LFK:LFKJ", user);
                         return user;
                       })
                     }
@@ -148,12 +147,36 @@ socket.on('theFailures', function (failures){
                     };
                   }
                 });
-                modalInstance2.result.then(function() {
+                winnerModal.result.then(function() {
                   $state.go("about");
                   return;
                 })
-            } else if (!isWinner) {
-                console.log('challenger continues');
+            } else {
+                var notWinnerModal = $modal.open({
+                  templateUrl: '/js/arena/not-winner-modal.html',
+                  resolve: {
+                    data: function(AuthService) {
+                      return AuthService.getLoggedInUser().then(function(user) {
+                        return user;
+                      })
+                    }
+                  },
+                  controller: function($scope, $modalInstance, data) {
+                    $scope.user = data;
+                    $scope.ok = function() {
+                      $modalInstance.close('ok');
+                    };
+                    $scope.cancel = function() {
+                      $modalInstance.cancel('cancel');
+                    }
+                  }
+                });
+                notWinnerModal.result.then(function() {
+                  if($scope.cancel) {
+                    $state.go("about");
+                  }
+                  return;
+                })
               }
             }// closes if (!roomSnapshot)
 
