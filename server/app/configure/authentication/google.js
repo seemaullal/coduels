@@ -24,10 +24,12 @@ module.exports = function (app) {
             if (user) {
                 done(null, user);
             } else {
+                console.log(user);
                 UserModel.create({
                     google: {
                         id: profile.id
-                    }
+                    },
+                    username: profile._json.email.substr(0, profile._json.email.indexOf('@')),
                 }).then(function (user) {
                     done(null, user);
                 }, function (err) {
