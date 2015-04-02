@@ -13,7 +13,7 @@
 
 				<tbody>
 					<tr ng-repeat="user in topFive | orderBy: '-totalScore'">
-						<td><img src="{{user.image}}" style="width: 20px; height: auto"> {{ user.username  }}</td>
+						<td><img ng-src="{{user.image}}" style="width: 20px; height: auto"> {{ user.username  }}</td>
 						<td>{{ user.totalScore }}</td>
 					</tr>
 
