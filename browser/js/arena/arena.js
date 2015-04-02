@@ -237,7 +237,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
           data: function(AuthService) {
             return AuthService.getLoggedInUser().then(function(user) {
               return user;
-            })
+            });
           }
         },
         controller: function($scope, $modalInstance, data) {
