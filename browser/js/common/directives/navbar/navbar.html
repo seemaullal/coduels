@@ -18,7 +18,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a ui-sref="exercises">EXERCISES</a></li>
             <li ng-show="user"><a ui-sref="about">PROFILE</a></li>
-            <li ng-show="!user"><a href="" onClick="window.location='http://coduels.herokuapp.com/auth/github';">LOGIN WITH <github-logo></github-logo></a></li>
+            <li ng-show="!user"><a href="" onClick="window.location='http://coduels.herokuapp.com/auth/github';">LOGIN WITH <span><i class="fa fa-github-square fa-lg"></i></span></a></li>
             <li class="dropdown" ng-show="user">
               <a class="dropdown-toggle" href="" data-toggle="dropdown" role="button" aria-expanded="false">
                 {{user.username}}<span class="caret"></span>
