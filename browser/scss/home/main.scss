@@ -7,16 +7,20 @@ body {
 }
 
 #home {
-	background: url('scss/coduelsimage.jpg') no-repeat center;
+	background: url('scss/newscreenshot.png') no-repeat center;
 	background-size: cover;
-	height: 313px;
+	height: 45vh;
+	perspective: 1px;
 	background-color: #1e1e1e;
-	padding-top: 80px;
+	padding-top: 70px;
 	padding-bottom: 70px;
 
   }
 
 .header {
+	position: relative;
+  	bottom: 0;
+  	margin-top: 170px;
 	margin-left: 150px;
 	color: #7b7992;
 	font-weight: bold;
@@ -30,8 +34,8 @@ span.co {
 
 
 .description {
-	margin-left: 152px;
 	color: #fff;
+
 }
 
 .mt {
@@ -46,8 +50,8 @@ span.co {
 }
 
 .info {
-
-	font-family: 'Source Sans Pro', sans-serif;
+	font-family: 'Source Sans Pro', sans-serif; 
+	font-weight: 300;
 }
 
 
