@@ -22,7 +22,7 @@
             <li id="login" ng-show="!user">LOGIN WITH</li><li ng-show="!user"><a id="google" href="" onClick="window.location='http://127.0.0.1:1337/auth/google';"><i class="fa fa-google-plus-square fa-lg"></i></a></li></li><li ng-show="!user"><a href="" onClick="window.location='http://127.0.0.1:1337/auth/github';"><i class="fa fa-github-square fa-lg"></i></a></li>
             <li class="dropdown" ng-show="user">
               <a class="dropdown-toggle" href="" data-toggle="dropdown" role="button" aria-expanded="false">
-                {{user.username}}<span class="caret"></span>
+                <i ng-show="user.google.id" class="fa fa-google-plus-square fa-lg"></i> <i ng-show="user.github.id" class="fa fa-github-square fa-lg"></i> {{user.username}}<span class="caret"></span>
               </a>
               <ul class="dropdown-menu" role="menue">
                 <li><a href="" ui-sref="settings">Settings</a></li> <!-- should be ng-show admin only -->
