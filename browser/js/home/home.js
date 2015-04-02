@@ -14,9 +14,9 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('HomeCtrl', function($scope, AuthService, UsersFactory) {
+app.controller('HomeCtrl', function($rootScope, $scope, AuthService, AUTH_EVENTS, UsersFactory) {
 
-	UsersFactory.getAllUsers().then(function(users) {
+    UsersFactory.getAllUsers().then(function(users) {
 		$scope.users = users;
 		users.sort(function(user1, user2) {
 			return user2.totalScore - user1.totalScore;
@@ -28,6 +28,22 @@ app.controller('HomeCtrl', function($scope, AuthService, UsersFactory) {
 		var five = users.slice(0, 5);
 			$scope.topFive.push(five);
 			$scope.topFive = five;
-	});
+
+
+    });
+        var setUser = function () {
+            AuthService.getLoggedInUser().then(function (user) {
+                $scope.user = user;
+            });
+        };
+
+        var removeUser = function () {
+            $scope.user = null;
+        };
+
+        setUser();
+
+        $rootScope.$on(AUTH_EVENTS.loginSuccess, setUser);
+        $rootScope.$on(AUTH_EVENTS.logoutSuccess, removeUser);
 
 });
