@@ -16,7 +16,7 @@ app.config(function($stateProvider) {
 });
 
 
-app.controller('exercisesCtrl', function($scope, $state, RoomFactory, ExerciseFactory, AuthService, $interval, $rootScope){
+app.controller('exercisesCtrl', function($scope, $state, RoomFactory, UsersFactory, ExerciseFactory, AuthService, $interval, $rootScope){
 
 	 $rootScope.$on('$stateChangeStart', function( event, toState, toParams, fromState, fromParams ) {
         if (fromState.name === 'exercises') { //cancel interval functions when leaving state
@@ -61,7 +61,7 @@ app.controller('exercisesCtrl', function($scope, $state, RoomFactory, ExerciseFa
 		 	$scope.roomKey = RoomFactory.createRoom(exercise, $scope.user);
 		 	user.isAuthorized = $scope.roomKey;
 		 	$scope.$digest();
-		 });
+		});
 	};
 
 	$scope.makePracticeRoom = function(exercise) {
