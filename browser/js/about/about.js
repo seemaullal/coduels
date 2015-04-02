@@ -43,7 +43,6 @@ app.controller('AboutController', function ($scope, AuthService, ExerciseFactory
 
                 $scope.userChallenges = [];
                 var exercisesInfo = _.pluck(data, "_id");
-
                 $scope.user.uniqueChallenges.forEach(function(
                     challenge) {
                     console.log('challenge', challenge);
