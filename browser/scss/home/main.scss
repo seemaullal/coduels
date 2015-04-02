@@ -11,8 +11,6 @@ body {
 	background-size: cover;
 	height: 45vh;
 	perspective: 1px;
-  	overflow-x: hidden;
-  	overflow-y: auto;
 	background-color: #1e1e1e;
 	padding-top: 70px;
 	padding-bottom: 70px;
@@ -20,7 +18,7 @@ body {
   }
 
 .header {
-	position: relative;
+	position: fixed;
   	bottom: 0;
   	margin-top: 180px;
 	margin-left: 150px;
