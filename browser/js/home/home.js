@@ -9,7 +9,18 @@ app.config(function ($stateProvider) {
         		AuthService.getLoggedInUser().then(function(user) {
         			if (user && !user.username) $state.go('createUsername');
         		});
-        	}
+        	},
+            onEnter: function() {
+                var roomsRef = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/');
+                roomsRef.once('value', function(roomsSnapshot) {
+                    for (var key in roomsSnapshot.val()) {
+                        if (Date.now() - roomsSnapshot.val()[key].gameStartTime > 7200000) {
+                            roomsRef.child(key).remove();
+                        }
+
+                    }
+                });
+            }
         }
     });
 });
@@ -21,7 +32,7 @@ app.controller('HomeCtrl', function($rootScope, $scope, AuthService, AUTH_EVENTS
 		users.sort(function(user1, user2) {
 			return user2.totalScore - user1.totalScore;
 		});
-		
+
 		$scope.topFive = [];
 
 
