@@ -211,11 +211,11 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
             }
           }
         });
-        notWinnerModal.result.then(function() {
-          if ($modalInstance.dismiss('cancel')) {
-            $state.go("about");
-          }
-        })
+        // notWinnerModal.result.then(function() {
+        //   if (no5hitn.dismiss('cancel')) {
+        //     $state.go("about");
+        //   }
+        // })
       }
 
       if (!$scope.$$phase) {
