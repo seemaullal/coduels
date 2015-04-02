@@ -124,6 +124,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
     };
 
     socket.on('theFailures', function(failures) {
+      if (!failures){return};
         if (!$scope.failures) { //get # of tests (initially)
           $scope.numTests = failures.failures;
         }
@@ -134,35 +135,37 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
             if (!userSnapshot.val()) {
               return;
             }
-            userSnapshot.val().forEach(function(user, index) {         //Factory where updateFailures(userRef,userId, numberOfFailures)
+            userSnapshot.val().forEach(function(user, index) {
+             //Factory where updateFailures(userRef,userId, numberOfFailures)
                 if (user._id === failures.userId) {
                   var updatedUser = userSnapshot.val()[index];  // userSnapshot.val()[index] is the firebase user that corresponds to the failure obj received
                   updatedUser.failures = failures.failures;
                   updatedUser.code = failures.userCode;
                   userRef.child(index).set(updatedUser);
                 }
-                if (failures.failures === 0) { //make function for passing all tests?
-                    if ($scope.user._id === failures.userId) {
-                        $scope.allTestTitles.forEach(function(test) {
-                            test.color = true;
-                          });
-                        $scope.keyCodeEvents = []; //don't let them type anything else (disables key press events)
-                        currFirebaseRoom.once('value', function (roomSnapshot){
-                          $scope.isWinner = false;
-                          if (!roomSnapshot.val().winner && !$scope.isPractice){
-                              $scope.isWinner = true;
-                              winnerRef.set($scope.user);
-                              userWins($scope.user)
-                          }
-                          else { //they finished the challenges but they are either in practice or are just finishing (but not winning)
-                            console.log('practice ends about to be called');
-                            practiceEnds();
-                          }
-                      CompletionFactory.sendCompletion(user._id, $scope.game.exerciseId, updatedUser.code, $scope.game.difficulty, userSnapshot.val().length, $scope.isWinner);  
-                      });
-                    };
-                };
             });
+            if (failures.failures === 0) { //make function for passing all tests?
+                if ($scope.user._id === failures.userId) {
+                    $scope.allTestTitles.forEach(function(test) {
+                        test.color = true;
+                      });
+                    $scope.keyCodeEvents = []; //don't let them type anything else (disables key press events)
+                    currFirebaseRoom.once('value', function (roomSnapshot){
+                      if (!roomSnapshot.val()) {return;};
+                      $scope.isWinner = false;
+                      if (!roomSnapshot.val().winner && !$scope.isPractice){
+                          $scope.isWinner = true;
+                          winnerRef.set($scope.user);
+                          userWins($scope.user)
+                      }
+                      else { //they finished the challenges but they are either in practice or are just finishing (but not winning)
+                        console.log('practice ends about to be called');
+                        practiceEnds();
+                      }
+                  CompletionFactory.sendCompletion($scope.user._id, $scope.game.exerciseId, failures.code, $scope.game.difficulty, userSnapshot.val().length, $scope.isWinner);  
+                  });
+                };
+            };
         });
     }); // closes socket.on
 
@@ -211,11 +214,6 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
             }
           }
         });
-        // notWinnerModal.result.then(function() {
-        //   if (no5hitn.dismiss('cancel')) {
-        //     $state.go("about");
-        //   }
-        // })
       }
 
       if (!$scope.$$phase) {
@@ -227,28 +225,28 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
 
   function userWins(updatedUser) {
     $scope.isWinner = true;
-      var winnerModal = $modal.open({
-        templateUrl: '/js/arena/winner-modal.html',
-        resolve: {
-          data: function(AuthService) {
-            return AuthService.getLoggedInUser().then(function(user) {
-              return user;
-            })
-          }
-        },
-        controller: function($scope, $modalInstance, data) {
-          $scope.user = data;
-          console.log('what is data', $scope.user);
-          $scope.ok = function() {
-            $modalInstance.close('ok');
-          };
+    var winnerModal = $modal.open({
+      templateUrl: '/js/arena/winner-modal.html',
+      resolve: {
+        data: function(AuthService) {
+          return AuthService.getLoggedInUser().then(function(user) {
+            return user;
+          })
         }
-      });
-      winnerModal.result.then(function() {
-        $state.go("about");
-        return;
-      });
-}
+      },
+      controller: function($scope, $modalInstance, data) {
+        $scope.user = data;
+        console.log('what is data', $scope.user);
+        $scope.ok = function() {
+          $modalInstance.close('ok');
+        };
+      }
+    });
+    winnerModal.result.then(function() {
+      $state.go("about");
+      return;
+    });
+  }
 
   function practiceEnds() {
     var modalInstance = $modal.open({
