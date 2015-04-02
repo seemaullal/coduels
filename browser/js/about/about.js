@@ -5,18 +5,25 @@ app.config(function ($stateProvider) {
     $stateProvider.state('about', {
         url: '/about',
         controller: 'AboutController',
-        templateUrl: 'js/about/about.html'
+        templateUrl: 'js/about/about.html',
+        resolve: {
+            test: function(AuthService, $state) {
+                AuthService.getLoggedInUser().then(function(user) {
+                    if (user && !user.username) $state.go('createUsername');
+                });
+            }
+        }
     });
 
 });
 
-app.controller('AboutController', function ($scope, AuthService, TestFactory, UsersFactory) {
+app.controller('AboutController', function ($scope, AuthService, ExerciseFactory, UsersFactory) {
 
     AuthService.getLoggedInUser().then( function(archivedUser){
         UsersFactory.getUser(archivedUser._id).then( function(user) {
             $scope.user = user;
 
-            TestFactory.getExercises().then(function(data) {
+            ExerciseFactory.getExercises().then(function(data) {
                 $scope.easyTotal = [];
                 $scope.medTotal = [];
                 $scope.hardTotal = [];
@@ -36,7 +43,6 @@ app.controller('AboutController', function ($scope, AuthService, TestFactory, Us
 
                 $scope.userChallenges = [];
                 var exercisesInfo = _.pluck(data, "_id");
-
                 $scope.user.uniqueChallenges.forEach(function(
                     challenge) {
                     console.log('challenge', challenge);
@@ -67,7 +73,7 @@ app.controller('AboutController', function ($scope, AuthService, TestFactory, Us
                         })
                     }
                 }); //forEach user uniqueChallenges
-            }); // close TestFactory
+            }); // close ExerciseFactory
         }); //close UsersFactory   
     }); //close AuthService
 }); // close controller

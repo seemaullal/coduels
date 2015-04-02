@@ -1,0 +1,11 @@
+<section>
+	<div class="container pt">
+	<h3>Your username is taken! Please choose a new one.</h3>
+	<br>
+	<form name="newUsernameForm" ng-class="{submitted:newUsernameForm.submitted}" novalidate>
+	<input type="text" class="form-control" placeholder="Choose a username" ng-model="username" uniqueusername required><br>
+	<button type="button" class="btn btn-success" ng-click="updateUsername()">Update Username</button>
+	<h4 ng-show="newUsernameForm.submitted">{{error}}</h4>
+	</form>
+	</div>
+</section>

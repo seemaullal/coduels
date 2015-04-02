@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module('FullstackGeneratedApp', ['ui.router', 'fsaPreBuilt', 'ui.ace', 'firebase','ui.bootstrap','ui.bootstrap.accordion']);
+var app = angular.module('FullstackGeneratedApp', ['ui.router', 'fsaPreBuilt', 'ui.ace', 'firebase','ui.bootstrap','ui.bootstrap.accordion','ui.bootstrap.progressbar']);
 
 app.config(function($urlRouterProvider, $locationProvider) {
     // This turns off hashbang urls (/#about) and changes it to something normal (/about)
@@ -44,5 +44,17 @@ app.run(function($rootScope, AuthService, $state) {
         });
 
     });
+
+    var roomsRef = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/');
+    setInterval(function() {
+        roomsRef.once('value', function(roomsSnapshot) {
+            for (var key in roomsSnapshot.val()) {
+                if (Date.now() - roomsSnapshot.val()[key].gameStartTime > 7200000) {
+                    roomsRef.child(key).remove();
+                }
+
+            }
+        });
+    }, 7200000);
 
 });

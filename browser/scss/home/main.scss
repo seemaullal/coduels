@@ -7,23 +7,30 @@ body {
 }
 
 #home {
-	padding-top: 70px;
-	padding-bottom: 70px;
+	background: url('scss/coduelsimage.jpg') no-repeat center;
+	background-size: cover;
+	height: 313px;
 	background-color: #1e1e1e;
+	padding-top: 80px;
+	padding-bottom: 70px;
+
   }
 
 .header {
-	margin-top: 100px;
+	margin-left: 150px;
 	color: #7b7992;
 	font-weight: bold;
-
 }
+
+
+
 span.co {
 	color: #FF0000;
 }
 
 
 .description {
+	margin-left: 152px;
 	color: #fff;
 }
 
@@ -39,7 +46,7 @@ span.co {
 }
 
 .info {
-	height: 100%;
+
 	font-family: 'Source Sans Pro', sans-serif;
 }
 
@@ -78,3 +85,19 @@ img.landing-image {
 	vertical-align: middle;
 	// margin-right: 100px;
 }
+
+form.submitted .ng-invalid {
+	border: 2px solid #f00;
+}
+
+table.table {
+	background-color: #fff;
+	width: 450px;
+}
+
+.table-bordered {
+	font-size: 16px;
+}
+
+
+

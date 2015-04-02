@@ -4,6 +4,13 @@ app.config(function ($stateProvider) {
         url: '/',
         controller: 'HomeCtrl',
         templateUrl: 'js/home/home.html',
+        resolve: {
+        	test: function(AuthService, $state) {
+        		AuthService.getLoggedInUser().then(function(user) {
+        			if (user && !user.username) $state.go('createUsername');
+        		});
+        	}
+        }
     });
 });
 
@@ -11,11 +18,9 @@ app.controller('HomeCtrl', function($scope, AuthService, UsersFactory) {
 
 	UsersFactory.getAllUsers().then(function(users) {
 		$scope.users = users;
-		console.log('all users', $scope.users);
-
 		users.sort(function(user1, user2) {
-			return user2.totalScore - user1.totalScore
-		})
+			return user2.totalScore - user1.totalScore;
+		});
 		
 		$scope.topFive = [];
 
@@ -25,4 +30,4 @@ app.controller('HomeCtrl', function($scope, AuthService, UsersFactory) {
 			$scope.topFive = five;
 	});
 
-})
+});
