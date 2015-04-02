@@ -11,7 +11,7 @@
 	</div>
 	<div class="col-lg-9">
 		<accordion ng-repeat="exercise in userExercises">
-			<accordion-group heading="{{exercise.name}} | Difficulty: {{ exercise.difficulty }}" is-open="false" >
+			<accordion-group heading="{{exercise.name}} | Difficulty: {{ exercise.difficulty }}" is-open="exercise.name ===exerciseName" >
 
 			<div ng-repeat="userCode in exercise.allCode track by $index | orderBy: 'time'" >
 			<p>{{userCode.name}}<br>{{ userCode.time | date:'short'}}</p>
@@ -20,12 +20,12 @@
 			theme: 'monokai',
 			mode: 'javascript',
 			showPrintMargin: false}" ng-model="userCode.code">
-			
+
 			</div><br>
 </div>
-				
+
 			</accordion-group>
-		
+
 		</accordion>
 		</div>
 

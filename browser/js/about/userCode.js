@@ -3,14 +3,18 @@ app.config(function ($stateProvider) {
 
     // Register our *about* state.
     $stateProvider.state('userCode', {
-        url: '/about',
+        url: '/about/:challenge', 
         controller: 'UserCodeCtrl',
+        // params: [ 'chllenge'],
         templateUrl: 'js/about/userCode.html'
+        // params: ['challenge']
+        // data: {'challenge': challenge}
     });
 
 });
 
-app.controller('UserCodeCtrl', function($scope, AuthService, UsersFactory, TestFactory) {
+app.controller('UserCodeCtrl', function($scope, AuthService, UsersFactory, ExerciseFactory, $stateParams) {
+	$scope.exerciseName = $stateParams.challenge;
 	AuthService.getLoggedInUser().then(function(archivedUser) {
 		UsersFactory.getUser(archivedUser._id).then(function(user) {
 			$scope.user = user;
@@ -19,15 +23,15 @@ app.controller('UserCodeCtrl', function($scope, AuthService, UsersFactory, TestF
 
 			$scope.user.exercises.forEach(function(exercise) {
 				$scope.userExercise.push(exercise);
-			})
+			});
 
 			$scope.userExercise.sort(function(obj1, obj2) {
-				return new Date(obj2.time) - new Date(obj1.time)
-			})
+				return new Date(obj2.time) - new Date(obj1.time);
+			});
 
 			console.log('userExercise', $scope.userExercise);
 
-			TestFactory.getExercises().then(function(data) {
+			ExerciseFactory.getExercises().then(function(data) {
 				$scope.userExercises = [];
 				var exercises = _.pluck(data, "_id");
 
