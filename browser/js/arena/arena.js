@@ -200,7 +200,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
             data: function(AuthService) {
               return AuthService.getLoggedInUser().then(function(user) {
                 return user;
-              })
+              });
             }
           },
           controller: function($scope, $modalInstance, data) {
@@ -211,14 +211,14 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
             $scope.cancel = function() {
               $modalInstance.dismiss('cancel');
               $state.go("about");
-            }
+            };
           }
         });
         notWinnerModal.result.then(function() {
           if ($modalInstance.dismiss('cancel')) {
             $state.go("about");
           }
-        })
+        });
       }
 
       if (!$scope.$$phase) {
@@ -237,7 +237,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
           data: function(AuthService) {
             return AuthService.getLoggedInUser().then(function(user) {
               return user;
-            })
+            });
           }
         },
         controller: function($scope, $modalInstance, data) {
@@ -253,10 +253,6 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
         return;
       });
 }
-
-<<<<<<< HEAD
-}); // closes controller
-=======
   function practiceEnds() {
     var modalInstance = $modal.open({
       templateUrl: '/js/arena/practice-modal.html',
@@ -272,4 +268,3 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
     });
   }
 }); // closes controller}
->>>>>>> master
