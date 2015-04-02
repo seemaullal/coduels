@@ -209,15 +209,15 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
               $modalInstance.close('ok');
             };
             $scope.cancel = function() {
-              $modalInstance.cancel('cancel');
+              $modalInstance.dismiss('cancel');
+              $state.go("about");
             }
           }
         });
         notWinnerModal.result.then(function() {
-          if ($modalInstance.cancel) {
+          if ($modalInstance.dismiss('cancel')) {
             $state.go("about");
           }
-          return;
         })
       }
 
@@ -229,10 +229,8 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
   });
 
   function userWins(updatedUser) {
-    console.log('win function being called');
     winnerRef.set(updatedUser);
     $scope.isWinner = true;
-    console.log("I JUST WON I JUST WON I JUST WON")
       var winnerModal = $modal.open({
         templateUrl: '/js/arena/winner-modal.html',
         resolve: {
@@ -260,8 +258,6 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
 }); // closes controller
 =======
   function practiceEnds() {
-    console.log('practice end function being called');
-     console.log('WRONG MODAL IS OPENING')
     var modalInstance = $modal.open({
       templateUrl: '/js/arena/practice-modal.html',
       controller: function($scope, $modalInstance) {
