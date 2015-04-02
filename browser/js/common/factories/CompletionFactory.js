@@ -1,5 +1,5 @@
 'use strict';
-app.factory('CompletionFactory', function ($http){
+app.factory('CompletionFactory', function (AuthService, $http){
 	var factory = {};
 
 	factory.calculateScore = function (difficulty, numUsers, isWinner) {
@@ -30,10 +30,10 @@ app.factory('CompletionFactory', function ($http){
 			challenge: isChallenge,
 			time: date
 		};
-		console.log('numUsers', numUsers);
-		console.log('completionObj',completionObj);
 		return $http.post('/api/users/'+ userID + '/exercises', completionObj).then(function(response){
-			return response.data;
+			AuthService.updateSession(response.data).then(function(updatedUser){
+				return updatedUser.data;	
+			})
 		});
 	};
 
