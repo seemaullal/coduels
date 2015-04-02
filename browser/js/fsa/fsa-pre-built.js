@@ -86,6 +86,11 @@
 
         };
 
+        this.updateSession = function (user) {
+            Session.update(user);
+            return $q.when(Session.user);
+        };
+
         this.login = function (credentials) {
             return $http.post('/login', credentials)
                 .then(onSuccessfulLogin)
@@ -129,6 +134,10 @@
             this.id = sessionId;
             this.user = user;
         };
+
+        this.update = function (user) {
+            this.user = user;
+        }
 
         this.destroy = function () {
             this.id = null;
