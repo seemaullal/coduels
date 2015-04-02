@@ -20,7 +20,7 @@
             <li><a ui-sref="exercises">EXERCISES</a></li>
             <li><a ui-sref="allplayers" ng-show="user">LEADERBOARD</a></li>
             <li ng-show="user"><a ui-sref="about">PROFILE</a></li>
-            <li id="login" ng-show="!user">LOGIN WITH</li><li ng-show="!user"><a id="google" href="" onClick="window.location='http://127.0.0.1:1337/auth/google';"><i class="fa fa-google-plus-square fa-lg"></i></a></li></li><li ng-show="!user"><a href="" onClick="window.location='http://127.0.0.1:1337/auth/github';"><i class="fa fa-github-square fa-lg"></i></a></li>
+           <li id="login" ng-show="!user">LOGIN WITH</li><li ng-show="!user"><a id="google" href="" onClick="window.location='/auth/google';"><i class="fa fa-google-plus-square fa-lg"></i></a></li></li><li ng-show="!user"><a href="" onClick="window.location='http://www.coduels.com/auth/github';"><i class="fa fa-github-square fa-lg"></i></a></li>
             <li class="dropdown" ng-show="user">
               <a class="dropdown-toggle" href="" data-toggle="dropdown" role="button" aria-expanded="false">
                 {{user.username}}<span class="caret"></span>
