@@ -4,13 +4,7 @@ app.config(function ($stateProvider) {
         url: '/home/allplayers',
         controller: 'AllScoresCtrl',
         templateUrl: 'js/home/all-players.html',
-        resolve: {
-        	test: function(AuthService, $state) {
-        		AuthService.getLoggedInUser().then(function(user) {
-        			if (user && !user.username) $state.go('createUsername');
-        		});
-        	}
-        }
+        
     });
 });
 
