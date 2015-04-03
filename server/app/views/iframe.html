@@ -46,7 +46,7 @@
                     failedTestsArr.push(test.fullTitle())
                 };
             });
-            socket.emit('testsFailed', failedTestsArr);
+            socket.emit('testsFailed', {failedTests: failedTestsArr, roomKey: roomKey});
         });
     });
 

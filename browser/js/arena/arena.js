@@ -100,7 +100,11 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
     };
 
     $scope.allTestTitles = null;
-    socket.on('failedTests', function(testTitles) {
+    socket.on('failedTests', function(testTitleObj) {
+      var testTitles = testTitleObj.failedTests;
+      if (testTitleObj.roomKey !== $stateParams.roomKey ) {
+          return;
+      }
       if (testTitles[0] === undefined) {
         return;
       }
