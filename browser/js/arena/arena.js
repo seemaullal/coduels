@@ -40,7 +40,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
         $scope.isPractice = true;
         $scope.waitingDone = true;
       }
-      $scope.srcUrl = $sce.trustAsResourceUrl('/api/arena/iframe/' + $scope.game.exerciseId).toString();
+      $scope.srcUrl = $sce.trustAsResourceUrl('/api/arena/iframe/' + $scope.game.exerciseId + "?roomKey=" + $stateParams.roomKey).toString();
     });
 
     var winnerRef = currFirebaseRoom.child('winner'); //null initially
@@ -100,7 +100,11 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
     };
 
     $scope.allTestTitles = null;
-    socket.on('failedTests', function(testTitles) {
+    socket.on('failedTests', function(testTitleObj) {
+      var testTitles = testTitleObj.failedTests;
+      if (testTitleObj.roomKey !== $stateParams.roomKey ) {
+          return;
+      }
       if (testTitles[0] === undefined) {
         return;
       }
@@ -124,7 +128,11 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
     };
 
     socket.on('theFailures', function(failures) {
+      console.log('failures', failures)
       if (!failures){return};
+      if  (failures.roomKey !== $stateParams.roomKey) {     
+        return;
+      }
         if (!$scope.failures) { //get # of tests (initially)
           $scope.numTests = failures.failures;
         }
