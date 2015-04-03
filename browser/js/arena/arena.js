@@ -170,7 +170,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
                         console.log('practice ends about to be called');
                         practiceEnds();
                       }
-                  CompletionFactory.sendCompletion($scope.user._id, $scope.game.exerciseId, failures.code, $scope.game.difficulty, userSnapshot.val().length, $scope.isWinner);  
+                  CompletionFactory.sendCompletion($scope.user._id, $scope.game.exerciseId, failures.userCode, $scope.game.difficulty, userSnapshot.val().length, $scope.isWinner);  
                   });
                 };
             };
