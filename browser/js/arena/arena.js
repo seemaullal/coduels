@@ -44,6 +44,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
 
   var winnerRef = currFirebaseRoom.child('winner'); //null initially
   var userRef = currFirebaseRoom.child('users'); //Firebase reference to user list
+  var socket = io();
 
   userRef.on('value', function(userSnapshot) {
       if (!userSnapshot.val()) return;
@@ -54,43 +55,31 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
       $scope.fbUsers.forEach(function(user) {
           user.passed = $scope.numTests - user.failures;
           if (user._id === $scope.user._id) {
-            $scope.allTestTitles = null;
-              if (!$scope.allTestTitles) {
-                $scope.allTestTitles = [];
-                  user.failedTestsArr.forEach(function(testTitle) {
-                    $scope.allTestTitles.push({
-                      title: testTitle,
-                      color: false
-                    });
-                  });
-              }
-            $scope.failedTestTitles = user.failedTestsArr;
-            $scope.allTestTitles = setColorProperty($scope.allTestTitles, $scope.failedTestTitles);
-            $scope.$digest();
-          }
             if (user.failures === 0) {
-              //you have no failures i.e. either won or finished the exercise as practice-ish
-              // $scope.allTestTitles.forEach(function(test) {
-              //             test.color = true;
-              //
-              // });
-              $scope.keyCodeEvents = [];
-              currFirebaseRoom.once('value', function(roomSnapshot) {
-                if (!roomSnapshot.val()) {
-                  return;
-                }
-                $scope.isWinner = false;
-                if (!roomSnapshot.val().winner && !$scope.isPractice) {
-                  $scope.isWinner = true;
-                  winnerRef.set($scope.user);
-                  userWins($scope.user);
-                }
-                else { //they finished the challenges but they are either in practice or are just finishing (but not winning)
-                  practiceEnds();
-                }
-                CompletionFactory.sendCompletion($scope.user._id, $scope.game.exerciseId, $scope.userCode, $scope.game.difficulty, userSnapshot.val().length, $scope.isWinner);
-              });
+            //you have no failures i.e. either won or finished the exercise as practice-ish
+            // $scope.allTestTitles.forEach(function(test) {
+            //             test.color = true;
+            //
+            // });
+            $scope.keyCodeEvents = [];
+            currFirebaseRoom.once('value', function(roomSnapshot) {
+              if (!roomSnapshot.val()) {
+                return;
+              }
+              $scope.isWinner = false;
+              if (!roomSnapshot.val().winner && !$scope.isPractice) {
+                $scope.isWinner = true;
+                winnerRef.set($scope.user);
+                userWins($scope.user);
+              }
+              else { //they finished the challenges but they are either in practice or are just finishing (but not winning)
+                practiceEnds();
+              }
+              CompletionFactory.sendCompletion($scope.user._id, $scope.game.exerciseId, $scope.userCode, $scope.game.difficulty, userSnapshot.val().length, $scope.isWinner);
+            });
             }
+          };
+
       });
   });
 
@@ -140,6 +129,28 @@ var setColorProperty = function(allTests, failedTests) {
   return allTests;
 };
 
+// $scope.allTestTitles = null;
+// socket.on('failedTests', function(testTitleObj) {
+//   var testTitles = testTitleObj.failedTests;
+//   if (testTitleObj.roomKey !== $stateParams.roomKey ) {
+//       return;
+//   }
+//   if (testTitles[0] === undefined) {
+//     return;
+//   }
+//   if (!$scope.allTestTitles) {
+//     $scope.allTestTitles = [];
+//     testTitles.forEach(function(testTitle) {
+//       $scope.allTestTitles.push({
+//         title: testTitle,
+//         color: false
+//       });
+//     });
+//   }
+//   $scope.failedTestTitles = testTitles;
+//   $scope.allTestTitles = setColorProperty($scope.allTestTitles, $scope.failedTestTitles);
+//   $scope.$digest();
+
 
 // defines and sets the onLoad callback function on the scope
 $scope.userInputSession = function(_editor) {
@@ -158,7 +169,7 @@ winnerRef.on('value', function(winnerSnapshot) { //watches the winner reference 
           data: function(AuthService) {
             return AuthService.getLoggedInUser().then(function(user) {
               return user;
-            });
+            })
           }
         },
         controller: function($scope, $modalInstance, data) {
