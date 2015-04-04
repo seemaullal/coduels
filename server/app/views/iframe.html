@@ -31,7 +31,7 @@
     var scope = parent.angular.element('ace-editor').scope();
     var g = document.createElement('script');
     var s = document.getElementsByTagName('script')[0];
-    g.text = scope.userCode.code;
+    g.text = scope.userCode;
     if (g.text) {
         s.parentNode.insertBefore(g, s);
     }
