@@ -53,6 +53,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
       }
       $scope.fbUsers = userSnapshot.val();
       $scope.fbUsers.forEach(function(user) {
+          user.passed = $scope.numTests - user.failures;
           if (user._id === $scope.user._id && user.failures === 0) {
             //you have no failures i.e. either won or finished the exercise as practice-ish
             // $scope.allTestTitles.forEach(function(test) {
@@ -63,7 +64,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
             currFirebaseRoom.once('value', function(roomSnapshot) {
               if (!roomSnapshot.val()) {
                 return;
-              };
+              }
               $scope.isWinner = false;
               if (!roomSnapshot.val().winner && !$scope.isPractice) {
                 $scope.isWinner = true;
@@ -71,7 +72,6 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
                 userWins($scope.user);
               }
               else { //they finished the challenges but they are either in practice or are just finishing (but not winning)
-                console.log('practice ends about to be called');
                 practiceEnds();
               }
               CompletionFactory.sendCompletion($scope.user._id, $scope.game.exerciseId, $scope.userCode, $scope.game.difficulty, userSnapshot.val().length, $scope.isWinner);
@@ -83,10 +83,9 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
   });
 
 
-var startTimeFromFb = currFirebaseRoom.child('gameStartTime'); startTimeFromFb.once('value', function(snapshot) {
+var startTimeFromFb = currFirebaseRoom.child('gameStartTime'); ]startTimeFromFb.once('value', function(snapshot) {
   var startTime = new Date(snapshot.val());
   //Display # of failures when arena view changes, before user makes any significant key press.
-
   function countDown() {
     setTime(Math.max(0, startTime - Date.now()));
     if (startTime <= Date.now()) {
@@ -102,12 +101,6 @@ var startTimeFromFb = currFirebaseRoom.child('gameStartTime'); startTimeFromFb.o
           they are the only one there, consider it practice*/
           $scope.isPractice = true;
         }
-
-        socket.emit('userCode', {
-          code: $scope.aceEditor.getDocument().getValue(),
-          userId: $scope.user._id
-        });
-        document.getElementById('mocha-runner').src = document.getElementById('mocha-runner').src;
       });
     }
   }
@@ -122,16 +115,16 @@ var startTimeFromFb = currFirebaseRoom.child('gameStartTime'); startTimeFromFb.o
 
 });
 
-// var setColorProperty = function(allTests, failedTests) {
-//   allTests.forEach(function(test) {
-//     if (failedTests.indexOf(test.title) > -1) {
-//       test.color = false;
-//     } else {
-//       test.color = true;
-//     }
-//   });
-//   return allTests;
-// };
+var setColorProperty = function(allTests, failedTests) {
+  allTests.forEach(function(test) {
+    if (failedTests.indexOf(test.title) > -1) {
+      test.color = false;
+    } else {
+      test.color = true;
+    }
+  });
+  return allTests;
+};
 
 // $scope.allTestTitles = null;
 // socket.on('failedTests', function(testTitleObj) {
@@ -159,6 +152,7 @@ var startTimeFromFb = currFirebaseRoom.child('gameStartTime'); startTimeFromFb.o
 // defines and sets the onLoad callback function on the scope
 $scope.userInputSession = function(_editor) {
   $scope.aceEditor = _editor.getSession();
+  jQuery.event.trigger( {type: "keydown", keyCode: 32 } );
 };
 
 winnerRef.on('value', function(winnerSnapshot) { //watches the winner reference (sees if someone has won)
@@ -186,11 +180,6 @@ winnerRef.on('value', function(winnerSnapshot) { //watches the winner reference 
           }
         }
       });
-    }
-
-    if (!$scope.$$phase) {
-      //if no digest in progress
-      $scope.$digest();
     }
   }
 });

@@ -14,7 +14,6 @@ app.directive('aceEditor', function (AuthService) {
 
         	scope.onKeyPress = function($event) {
         		if(scope.keyCodeEvents.indexOf($event.keyCode) > -1 || scope.start) {
-                    // scope.userCode = {code: scope.aceEditor.getDocument().getValue(), userId: userId};
                     scope.userCode = scope.aceEditor.getDocument().getValue();
                     document.getElementById('mocha-runner').src = document.getElementById('mocha-runner').src;
         		}
