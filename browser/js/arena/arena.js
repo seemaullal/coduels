@@ -46,7 +46,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
     var winnerRef = currFirebaseRoom.child('winner'); //null initially
     var userRef = currFirebaseRoom.child('users'); //Firebase reference to user list
     $scope.fbUsers = $firebaseArray(userRef);
-    console.log($scope.fbUsers[0]);
+    var userArray = $firebaseArray(userRef);
     var socket = io();
 
     var startTimeFromFb = currFirebaseRoom.child('gameStartTime');
@@ -130,47 +130,48 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
     };
 
 
+    socket.on('theFailures', function(failures) {
 
         $scope.failures = failures.failures;
 
-        //send failures to Firebase
-        // userRef.once('value', function(userSnapshot) {
-        //     if (!userSnapshot.val()) {
-        //       return;
-        //     }
-        //     userSnapshot.val().forEach(function(user, index) {
-        //     //Factory where updateFailures(userRef,userId, numberOfFailures)
-        //         if (user._id === failures.userId) {
-        //           var updatedUser = userSnapshot.val()[index];  // userSnapshot.val()[index] is the firebase user that corresponds to the failure obj received
-        //           updatedUser.failures = failures.failures;
-        //           updatedUser.code = failures.userCode;
-        //           userRef.child(index).set(updatedUser);
-        //         }
-        //     });
-        //     if (failures.failures === 0) { //make function for passing all tests?
-        //         if ($scope.user._id === failures.userId) {
-        //             $scope.allTestTitles.forEach(function(test) {
-        //                 test.color = true;
-        //               });
-        //             $scope.keyCodeEvents = []; //don't let them type anything else (disables key press events)
-        //             currFirebaseRoom.once('value', function (roomSnapshot){
-        //               if (!roomSnapshot.val()) {return;};
-        //               $scope.isWinner = false;
-        //               if (!roomSnapshot.val().winner && !$scope.isPractice){
-        //                   $scope.isWinner = true;
-        //                   winnerRef.set($scope.user);
-        //                   userWins($scope.user)
-        //               }
-        //               else { //they finished the challenges but they are either in practice or are just finishing (but not winning)
-        //                 console.log('practice ends about to be called');
-        //                 practiceEnds();
-        //               }
-        //           CompletionFactory.sendCompletion($scope.user._id, $scope.game.exerciseId, failures.code, $scope.game.difficulty, userSnapshot.val().length, $scope.isWinner);
-        //           });
-        //         };
-        //     };
-        // });
-
+        // send failures to Firebase
+        userRef.once('value', function(userSnapshot) {
+            if (!userSnapshot.val()) {
+              return;
+            }
+            userSnapshot.val().forEach(function(user, index) {
+            //Factory where updateFailures(userRef,userId, numberOfFailures)
+                if (user._id === failures.userId) {
+                  var updatedUser = userSnapshot.val()[index];  // userSnapshot.val()[index] is the firebase user that corresponds to the failure obj received
+                  updatedUser.failures = failures.failures;
+                  updatedUser.code = failures.userCode;
+                  userRef.child(index).set(updatedUser);
+                }
+            });
+            if (failures.failures === 0) { //make function for passing all tests?
+                if ($scope.user._id === failures.userId) {
+                    $scope.allTestTitles.forEach(function(test) {
+                        test.color = true;
+                      });
+                    $scope.keyCodeEvents = []; //don't let them type anything else (disables key press events)
+                    currFirebaseRoom.once('value', function (roomSnapshot){
+                      if (!roomSnapshot.val()) {return;};
+                      $scope.isWinner = false;
+                      if (!roomSnapshot.val().winner && !$scope.isPractice){
+                          $scope.isWinner = true;
+                          winnerRef.set($scope.user);
+                          userWins($scope.user)
+                      }
+                      else { //they finished the challenges but they are either in practice or are just finishing (but not winning)
+                        console.log('practice ends about to be called');
+                        practiceEnds();
+                      }
+                  CompletionFactory.sendCompletion($scope.user._id, $scope.game.exerciseId, failures.code, $scope.game.difficulty, userSnapshot.val().length, $scope.isWinner);
+                  });
+                };
+            };
+        });
+        })
   userRef.on('value', function(userSnapshot) { //updates user info on scope
     if (!userSnapshot.val()) {
       return;
