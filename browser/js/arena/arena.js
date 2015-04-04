@@ -32,7 +32,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
     $scope.waitingDone = false;
     $scope.isPractice = false;
     var currFirebaseRoom = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + $stateParams.roomKey);
-  
+
     currFirebaseRoom.once('value', function(snapshot) { //initially get a reference to the game (put on scope)
       console.log('line39', snapshot);
       $scope.game = snapshot.val();
@@ -130,7 +130,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
     socket.on('theFailures', function(failures) {
       console.log('failures', failures)
       if (!failures){return};
-      if  (failures.roomKey !== $stateParams.roomKey) {     
+      if  (failures.roomKey !== $stateParams.roomKey) {
         return;
       }
         if (!$scope.failures) { //get # of tests (initially)
@@ -170,7 +170,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
                         console.log('practice ends about to be called');
                         practiceEnds();
                       }
-                  CompletionFactory.sendCompletion($scope.user._id, $scope.game.exerciseId, failures.code, $scope.game.difficulty, userSnapshot.val().length, $scope.isWinner);  
+                  CompletionFactory.sendCompletion($scope.user._id, $scope.game.exerciseId, failures.code, $scope.game.difficulty, userSnapshot.val().length, $scope.isWinner);
                   });
                 };
             };
@@ -199,7 +199,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
 
   winnerRef.on('value', function(winnerSnapshot) { //watches the winner reference (sees if someone has won)
     if (winnerSnapshot.val()) {
-      $scope.winner = winnerSnapshot.val().username; //updating the winner name 
+      $scope.winner = winnerSnapshot.val().username; //updating the winner name
 
       if ($scope.winner !== $scope.user.username && !$scope.isPractice) { //modal if you are not the winner
         var notWinnerModal = $modal.open({

@@ -10,14 +10,11 @@ app.directive('aceEditor', function (AuthService) {
             AuthService.getLoggedInUser().then(function (user) {
                 userId = user._id;
             });
-
-        	var socket = io();
-
         	scope.keyCodeEvents = [13,32,186,8,46,9];
 
         	scope.onKeyPress = function($event) {
         		if(scope.keyCodeEvents.indexOf($event.keyCode) > -1 || scope.start) {
-        			socket.emit('userCode', {code: scope.aceEditor.getDocument().getValue(), userId: userId});
+                    scope.userCode = {code: scope.aceEditor.getDocument().getValue(), userId: userId};
                     document.getElementById('mocha-runner').src = document.getElementById('mocha-runner').src;
         		}
         	};
