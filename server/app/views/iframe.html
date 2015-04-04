@@ -6,9 +6,6 @@
     <link rel="stylesheet" href="/mocha/mocha.css">
     <script src="/mocha/mocha.js"></script>
     <script src="/chai/chai.js"></script>
-    <script src="/angular/angular.min.js"></script>
-    <script src="/socket.io-client/socket.io.js"></script>
-
 
     <!-- sets the Behavior Driven Development interface to show on mocha.run() -->
     <script>
@@ -23,42 +20,46 @@
     var expect = chai.expect;
     </script>
 
-
     <!-- Firebase dependency -->
     <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
 
     <!-- Source file -->
     <script type="text/javascript">
     var roomKey =  window.location.href.substring(window.location.href.indexOf('roomKey=')+'roomKey='.length,window.location.href.length);
-    var socket = io();
+    var currFirebaseRoom = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + roomKey);
+    var userRef = currFirebaseRoom.child('users');
     var scope = parent.angular.element('ace-editor').scope();
     var g = document.createElement('script');
     var s = document.getElementsByTagName('script')[0];
-        g.text = scope.userCode.code;
-        console.log('g.text:', g.text);
-        if (g.text) {
-            s.parentNode.insertBefore(g, s);
-            console.log('s', s);
-            console.log('s parent',  s.parentNode);
-        }
-    document.addEventListener("DOMContentLoaded", function(event) {
-        mocha.run(function(failures) {
-            console.count('are you running?')
-            console.log('these are the failures', failures);
-        });
-    });
+    g.text = scope.userCode.code;
+    if (g.text) {
+        s.parentNode.insertBefore(g, s);
+    }
 
-            //   mocha.run(function(failures){
-            //     socket.emit('failures', {failures: failures, userId: userCode.userId, userCode: userCode.code, roomKey: roomKey});
-            // }).on('suite end', function(suite) {
-            //     var failedTestsArr = [];
-            //     suite.tests.forEach(function(test) {
-            //         if (test.state === 'failed') {
-            //             failedTestsArr.push(test.fullTitle())
-            //         };
-            //     });
-            //     socket.emit('testsFailed', {failedTests: failedTestsArr, roomKey: roomKey});
-            // });
+    document.addEventListener("DOMContentLoaded", function(event) {
+        var userFailures;
+        mocha.run(function(failures) {
+            userFailures = failures;
+        }).on('suite end', function(suite) {
+            var failedTestsArr = [];
+            suite.tests.forEach(function(test) {
+                if (test.state === 'failed') {
+                    failedTestsArr.push(test.fullTitle());
+                }
+            }); // suite tests forEach
+            userRef.once('value', function(userSnapshot) {
+                userSnapshot.val().forEach(function(user, index) {
+                    if (user._id === scope.user._id) {
+                      var updatedUser = userSnapshot.val()[index];
+                      updatedUser.failures = userFailures;
+                      updatedUser.failedTestsArr = failedTestsArr;
+                      userRef.child(index).set(updatedUser);
+                    }
+                }); // userSnapshot forEach
+            }); // userRef.once
+        }); // mocha.run.on
+    }); // document.addEventListener
+
     </script>
 
     <!-- Test file -->
