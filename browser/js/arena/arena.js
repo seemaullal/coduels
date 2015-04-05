@@ -196,6 +196,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
                 $scope.user = data;
                 $scope.ok = function() {
                     $modalInstance.close('ok');
+
                 };
             }
         });
