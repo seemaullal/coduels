@@ -62,7 +62,6 @@ module.exports = function (app) {
 
     // Each strategy enabled gets registered.
     ENABLED_AUTH_STRATEGIES.forEach(function (strategyName) {
-        console.log("Check ", strategyName)
         require(path.join(__dirname, strategyName))(app);
     });
 
