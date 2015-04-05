@@ -14,8 +14,15 @@ app.controller('ViewCodeCtrl', function($scope, AuthService, UsersFactory, $stat
 		UsersFactory.getUser(archivedUser._id).then(function(user) {
 			$scope.user = user;
 		
+
 		UsersFactory.getUser($stateParams.user).then(function(data) {
 			$scope.viewUser = data;
+		
+		var userUnique = _.pluck($scope.user.uniqueChallenges, 'name');
+		console.log('user unique', userUnique);
+
+		var viewUserUnique = _.pluck($scope.viewUser.uniqueChallenges, 'name')
+		console.log('view user unique', viewUserUnique);
 
 		// var whatIsThis =_.filter(.uniq($scope.user.uniqueChallenges), function(item) {
   // 			return _.every($scope.viewUser.uniqueChallenges, function(other) {
