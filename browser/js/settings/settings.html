@@ -6,12 +6,15 @@
 </style>
 <section>
 	<div class="container pt">
+		<span ng-show="user.admin">
 		<h3>Add or edit an exercise</h3>
 		<select ng-change="pickExercise()" ng-model="selectedExercise" class="custom-select" ng-options="exercise.name for exercise in exercises"> 
 			<option value=''>Add New Exercise</option>
 		</select>
-		<!-- <button type="button" class="btn btn-primary" ng-click="toggle()">{{buttonText}}</button> -->
-
+		</span>
+		<span ng-show="!user.admin">
+		<h2>Add an exercise</h2>
+		</span>
 		<div class="row">
 			<div class="col-md-6">
 				<h2> Update Test Code </h2>

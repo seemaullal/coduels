@@ -2,6 +2,14 @@
 
 app.config(function($stateProvider){
 	$stateProvider.state('settings', {
+		resolve: {
+			getLoggedIn : function(AuthService, $state) {
+				return AuthService.getLoggedInUser().then( function (user) {
+					if (!user) $state.go('home');
+					else return user;
+				});
+			}
+		},
 		url: '/settings',
 		controller: 'settingsCtrl',
 		templateUrl: '/js/settings/settings.html'
@@ -9,7 +17,9 @@ app.config(function($stateProvider){
 });
 
 
-app.controller('settingsCtrl', function($scope, ExerciseFactory, $timeout, $modal){
+app.controller('settingsCtrl', function($scope, ExerciseFactory, $timeout, $modal, getLoggedIn){
+	$scope.user = getLoggedIn;
+	console.log('user', $scope.user);
 	ExerciseFactory.getExercises().then( function (exercises) {
 		$scope.exercises = exercises;
 	});

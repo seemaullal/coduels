@@ -13,7 +13,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" ui-sref="home"><i class="fa fa-terminal"></i><span class="co">CO</span>{DUELS}</a>
+          <a class="navbar-brand" ui-sref="home"><i class="fa fa-terminal"></i><span ui-sref="about" class="co">CO</span>{DUELS}</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -26,7 +26,7 @@
                 <i ng-show="user.google.id" class="fa fa-google-plus-square fa-lg"></i> <i ng-show="user.github.id" class="fa fa-github-square fa-lg"></i> {{user.username}}<span class="caret"></span>
               </a>
               <ul class="dropdown-menu" role="menue">
-                <li><a href="" ui-sref="settings">Settings</a></li> <!-- should be ng-show admin only -->
+                <li><a href="" ui-sref="settings">Settings</a></li>
                 <li><a href="" ui-sref="about">About</a></li>
                 <li><a href="" ng-click="logout()">Logout</a></li>
               </ul>
