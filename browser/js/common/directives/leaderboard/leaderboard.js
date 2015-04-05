@@ -4,7 +4,6 @@ app.directive('leaderboard', function() {
 		restrict: 'E',
 		templateUrl: 'js/common/directives/leaderboard/leaderboard.html',
 		link: function(scope) {
-			console.log('users', scope.users)
 		}
 	}
 })

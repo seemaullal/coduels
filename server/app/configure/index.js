@@ -1,6 +1,5 @@
 'use strict';
 module.exports = function (app) {
-	console.log("WAAAAAT");
     app.setValue = app.set.bind(app);
 
     app.getValue = function (path) {

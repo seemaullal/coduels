@@ -45,11 +45,9 @@ app.controller('AboutController', function ($scope, AuthService, ExerciseFactory
                 var exercisesInfo = _.pluck(data, "_id");
                 $scope.user.uniqueChallenges.forEach(function(
                     challenge) {
-                    console.log('challenge', challenge);
                     var userChallenges = {};
                     var index = exercisesInfo.indexOf(challenge._id);
                     if(index === -1) {
-                        console.log('No challenges completed');
                     } else {
                         $scope.none = false;
                         userChallenges = data[index];
