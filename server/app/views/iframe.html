@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="/mocha/mocha.css">
     <script src="/mocha/mocha.js"></script>
     <script src="/chai/chai.js"></script>
-    <script src="/socket.io-client/socket.io.js"></script>
 
     <!-- sets the Behavior Driven Development interface to show on mocha.run() -->
     <script>
@@ -26,29 +25,40 @@
 
     <!-- Source file -->
     <script type="text/javascript">
-     var roomKey =  window.location.href.substring(window.location.href.indexOf('roomKey=')+'roomKey='.length,window.location.href.length);
-    var socket = io();
+    var roomKey =  window.location.href.substring(window.location.href.indexOf('roomKey=')+'roomKey='.length,window.location.href.length);
+    var currFirebaseRoom = new Firebase('http://dazzling-torch-169.firebaseio.com/rooms/' + roomKey);
+    var userRef = currFirebaseRoom.child('users');
+    var scope = parent.angular.element('ace-editor').scope();
     var g = document.createElement('script');
     var s = document.getElementsByTagName('script')[0];
-
-    socket.on('theCode', function (userCode){
-
-        console.log('this is the value from the socket:', userCode)
-        g.text = userCode.code;
+    g.text = scope.userCode;
+    if (g.text) {
         s.parentNode.insertBefore(g, s);
+    }
 
-        mocha.run(function(failures){
-            socket.emit('failures', {failures: failures, userId: userCode.userId, userCode: userCode.code, roomKey: roomKey});
+    document.addEventListener("DOMContentLoaded", function(event) {
+        var userFailures;
+        mocha.run(function(failures) {
+            userFailures = failures;
         }).on('suite end', function(suite) {
             var failedTestsArr = [];
             suite.tests.forEach(function(test) {
                 if (test.state === 'failed') {
-                    failedTestsArr.push(test.fullTitle())
-                };
-            });
-            socket.emit('testsFailed', {failedTests: failedTestsArr, roomKey: roomKey});
-        });
-    });
+                    failedTestsArr.push(test.fullTitle());
+                }
+            }); // suite tests forEach
+            userRef.once('value', function(userSnapshot) {
+                userSnapshot.val().forEach(function(user, index) {
+                    if (user._id === scope.user._id) {
+                      var updatedUser = userSnapshot.val()[index];
+                      updatedUser.failures = userFailures;
+                      updatedUser.failedTestsArr = failedTestsArr;
+                      userRef.child(index).set(updatedUser);
+                    }
+                }); // userSnapshot forEach
+            }); // userRef.once
+        }); // mocha.run.on
+    }); // document.addEventListener
 
     </script>
 

@@ -32,18 +32,17 @@
             </div>
 
             <div class="col-sm-6">
-                <div ng-show="isPractice" ng-repeat="user in userDisplay">
+                <div ng-show="isPractice" ng-repeat="user in fbUsers">
                     <h2> &nbsp; </h2>
-                    <h5 ng-show="numTests" ng-repeat="user in userDisplay"> Passing: {{ user.passed }} / {{ numTests }} </h5>
+                    <h5 ng-show="numTests" ng-repeat="user in fbUsers"> Passing: {{ numTests - user.failures }} / {{ numTests }} </h5>
 
                     <!-- <arena-progress></arena-progress> -->
-                    <progressbar class="passedTests" max="100" value="((user.passed) * 100) / numTests" animate="false"><span style="color:black; white-space:nowrap;"> {{ user.passed }} / {{ numTests }}</span></progressbar><br>
+                    <progressbar ng-show="user.passed >= 0" class="passedTests" max="100" value="((user.passed) * 100) / numTests" animate="false"><span style="color:black; white-space:nowrap;"> {{ user.passed }} / {{ numTests }}</span></progressbar><br>
                 </div>
                 <div ng-show="!isPractice">
-                    <h2> Current Players </h2>
-                    <div ng-repeat="user in userDisplay">
+                    <div ng-repeat="user in fbUsers">
                         <h5> Username: {{ user.username }} </h5>
-                        <h5> Passing: {{ user.passed }} / {{ numTests }} </h5>
+                        <h5> Passing: {{ numTests - user.failures }} / {{ numTests }} </h5>
                         <progressbar class="passedTests" max="100" value="((user.passed) * 100) / numTests" animate="false"><span style="color:black; white-space:nowrap;"> {{ user.passed }} / {{ numTests }}</span></progressbar><br>
                     </div>
                 </div>
