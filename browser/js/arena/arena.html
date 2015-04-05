@@ -44,7 +44,7 @@
                     <div ng-repeat="user in fbUsers">
                         <h5> Username: {{ user.username }} </h5>
                         <h5> Passing: {{ numTests - user.failures }} / {{ numTests }} </h5>
-                        <progressbar ng-show="user.passed >= 0" class="passedTests" max="100" value="((user.passed) * 100) / numTests" animate="false"><span style="color:black; white-space:nowrap;"> {{ user.passed }} / {{ numTests }}</span></progressbar><br>
+                        <progressbar class="passedTests" max="100" value="((user.passed) * 100) / numTests" animate="false"><span style="color:black; white-space:nowrap;"> {{ user.passed }} / {{ numTests }}</span></progressbar><br>
                     </div>
                 </div>
             </div>

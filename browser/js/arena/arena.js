@@ -46,38 +46,49 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
     var userRef = currFirebaseRoom.child('users'); //Firebase reference to user list
     // var socket = io();
 
+    $scope.allTestTitles = null;
     userRef.on('value', function(userSnapshot) {
         if (!userSnapshot.val()) return;
         if (!$scope.numTests && userSnapshot.val()[0].failures) {
             $scope.numTests = userSnapshot.val()[0].failures;
         }
-        $scope.allTestTiles = null;
-        $scope.fbUsers = userSnapshot.val();
+        $scope.fbUsers = _.values(userSnapshot.val())
+        var userSnapshot = userSnapshot.val();
+        // $scope.fbUsers = [ ];
+        // for (var key in userSnapshot) {
+        //   if (userSnapshot.hasOwnProperty(key)) {
+        //     $scope.fbUsers.push(userSnapshot[key]);
+        //   }
+        // }
+        console.log('scope fbUsers', $scope.fbUsers.length);
         $scope.fbUsers.forEach(function(user) {
-            console.log('the user', user._id)
-            console.log('the user on scope', $scope.user._id)
             user.passed = $scope.numTests - user.failures;
             if (user._id === $scope.user._id) {
-                if (!$scope.allTestTitles) {
-                    $scope.allTestTitles = [];
-                    console.log('user.failedTestsarr', user.failedTestsArr)
-                    user.failedTestsArr.forEach(function(testTitle) {
-                        $scope.allTestTitles.push({
-                            title: testTitle,
-                            color: false
-                        });
-                    });
+                console.log('the user', user);
+                if (user.failedTestsArr) {
+                    if (!$scope.allTestTitles) {
+                        $scope.allTestTitles = [];
+                            console.log('should be empty array', $scope.allTestTitles);
+                            console.log('user.failedTestsarr', user);
+                            user.failedTestsArr.forEach(function(testTitle) {
+                                $scope.allTestTitles.push({
+                                    title: testTitle,
+                                    color: false
+                                });
+                                console.log("all test titles", $scope.allTestTitles);
+                            });
+                    }
+                    $scope.failedTestTitles = user.failedTestsArr;
+                    $scope.allTestTitles = setColorProperty($scope.allTestTitles, $scope.failedTestTitles);
+                    $scope.$digest();
                 }
-                $scope.failedTestTitles = user.failedTestsArr;
-                $scope.allTestTitles = setColorProperty($scope.allTestTitles, $scope.failedTestTitles);
-                $scope.$digest();
-            }
+
             if (user.failures === 0) {
                 //you have no failures i.e. either won or finished the exercise as practice-ish
-                // $scope.allTestTitles.forEach(function(test) {
-                //             test.color = true;
-                //
-                // });
+                $scope.allTestTitles.forEach(function(test) {
+                            test.color = true;
+
+                });
                 $scope.keyCodeEvents = [];
                 currFirebaseRoom.once('value', function(roomSnapshot) {
                     if (!roomSnapshot.val()) {
@@ -94,6 +105,7 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
                     CompletionFactory.sendCompletion($scope.user._id, $scope.game.exerciseId, $scope.userCode, $scope.game.difficulty, userSnapshot.val().length, $scope.isWinner);
                 });
             }
+          }
         });
 
     });
@@ -112,7 +124,7 @@ startTimeFromFb.once('value', function(snapshot) {
                 user.isAuthorized = null;
 
                 $scope.waitingDone = true;
-                if ($scope.userDisplay.length === 1) {
+                if ($scope.fbUsers.length === 1) {
                     /*even if a user joined a challenge, if
                     they are the only one there, consider it practice*/
                     $scope.isPractice = true;
