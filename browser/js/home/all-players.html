@@ -12,7 +12,7 @@
 
 				<tbody>
 					<tr ng-repeat="user in users | orderBy: '-totalScore'">
-						<td><img src="{{user.image}}" style="width: 20px; height: auto"> {{ user.username  }}</td>
+						<td><img src="{{user.image}}" style="width: 20px; height: auto"><a ui-sref="viewCode({user: user._id})"> {{ user.username  }}</a></td>
 						<td>{{ user.totalScore }}</td>
 					</tr>
 
