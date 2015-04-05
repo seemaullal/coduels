@@ -19,7 +19,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a ui-sref="exercises">EXERCISES</a></li>
             <li><a ui-sref="allplayers" ng-show="user">LEADERBOARD</a></li>
-            <li ng-show="user"><a ui-sref="about">PROFILE</a></li>
+            <li ng-show="user"><a ui-sref="profile">PROFILE</a></li>
             <li id="login" ng-show="!user">LOGIN WITH</li><li ng-show="!user"><a id="google" href="" onClick="window.location='http://127.0.0.1:1337/auth/google';"><i class="fa fa-google-plus-square fa-lg"></i></a></li></li><li ng-show="!user"><a href="" onClick="window.location='http://127.0.0.1:1337/auth/github';"><i class="fa fa-github-square fa-lg"></i></a></li>
             <li class="dropdown" ng-show="user">
               <a class="dropdown-toggle" href="" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -27,6 +27,7 @@
               </a>
               <ul class="dropdown-menu" role="menue">
                 <li><a href="" ui-sref="settings">Settings</a></li> <!-- should be ng-show admin only -->
+                <li><a href="" ui-sref="about">About</a></li>
                 <li><a href="" ng-click="logout()">Logout</a></li>
               </ul>
             </li>

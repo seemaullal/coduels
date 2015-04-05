@@ -1,34 +1,11 @@
-<section id="about">
+<section>
 	<div class="container pt">
-	<div class="jumbotron">
-		<h1>Hello, <span class="co">{{ user.username }}</span>!</h1>
-		<h2>Your Total Score: {{ user.totalScore }}</h2>
+		<h2>Who is Co{Duels}?</h2>
+		<h4>Co{Duels} was created by Michael Bae, Ivan Loughman-Pawelko, Linda Kung, and Seema Ullal as their final project at Fullstack Academy. Things we <span class="co"><i class="fa fa-heart"></i></span>: Laughing, snacks, coffee, arena.js, puppies, modals, and cookies.</h4>
+		<div class="text-center">
+			<<img src="scss/whoiscoduels.jpg" alt="coduels">
 		</div>
-		<div class="row mt">
-			<div class="col-lg-6">
-				<h2>Exercises completed</h2>
-					<div ng-repeat="challenge in userChallenges track by $index">
-					<ul>
-						<li><h3>{{ challenge.name }}</h3>
-				<p>{{ challenge.shortDescription }}<br>
-				<a ui-sref="userCode({'challenge': challenge.name})">View Your Code</a></p></li>
-				</ul>
-				</div>
-			</div>
-
-
-			<div class="col-lg-6">
-				<h4>Overall progress</h4>
-				Easy Challenges
-				<progressbar max="100" value="(userEasy.length * 100) / easyTotal.length"><span style="color:black; white-space:nowrap;"> {{ userEasy.length + 0 }} / {{ easyTotal.length }} </span></progressbar><br>
-
-				Medium Challenges
-				<progressbar max="100" value="(userMed.length * 100) / medTotal.length"><span style="color:black; white-space:nowrap;"> {{ userMed.length + 0 }} / {{ medTotal.length }} </span></progressbar><br>
-
-				Hard Challenges
-				<progressbar max="100" value="(userHard.length * 100) / hardTotal.length"><span style="color:black; white-space:nowrap;"> {{ userHard.length + 0 }} / {{ hardTotal.length }} </span></progressbar>
-
-			</div><!-- /col-lg-6 -->
-		</div><!-- /row -->
-	</div><!-- /container -->
+		<br>
+		<h4>We made Co{Duels} because we wanted a fun, social, and easy to use way to practice programming. It was important for us to make something that was a learning tool and also made writing and testing your code simple. We are really excited about what we have built and hope you will find it useful as well.</h4>
+	</div>
 </section>
