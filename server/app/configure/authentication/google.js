@@ -27,7 +27,6 @@ module.exports = function (app) {
                 var username = profile._json.email.substr(0, profile._json.email.indexOf('@'));
                 UserModel.findOne({'username': username}, function(err , foundUser) {
                     if (foundUser) {
-                        console.log('same username' ,foundUser);
                         username = null;
                     }
                       UserModel.create({
