@@ -39,7 +39,9 @@ app.controller('ViewCodeCtrl', function($scope, AuthService, UsersFactory, $stat
 					})
 
 					$scope.sharedCode.forEach(function(obj) {
-						console.log('shared user code', obj.viewUserCodeArr)
+						exercise.lastUserCode = [];
+						var lastItem = _.last(obj.viewUserCodeArr);
+						exercise.lastUserCode.push(lastItem);
 					})
 					console.log('shared user code', $scope.sharedCode);
 					

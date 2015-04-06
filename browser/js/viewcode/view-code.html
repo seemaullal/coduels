@@ -14,13 +14,13 @@
 
 			<accordion-group heading="{{shared.name}} | Difficulty: {{ shared.difficulty }}" is-open="true" >
 
-			<div ng-repeat="userCode in shared.viewUserCodeArr track by $index | orderBy: 'time'" >
+			<div ng-repeat="code in shared.lastUserCode track by $index | orderBy: 'time'" >
 			
 			<div ui-ace="{useWrapMode : true,
 			showGutter: true,
 			theme: 'monokai',
 			mode: 'javascript',
-			showPrintMargin: false}" ng-model="userCode">
+			showPrintMargin: false}" ng-model="code">
 
 			</div><br>
 </div>
