@@ -10,11 +10,11 @@
 	<h2> View {{ viewUser.username }}'s winning code </h2> <h4><a ui-sref="allplayers">Go back to the leaderboard</a></h4>
 	</div>
 	<div class="col-lg-9">
+	<h2 ng-show="sharedCode.length===0">Sorry, you and {{viewUser.username}} have not completed any of the same challenges.</h2>
 		<accordion ng-repeat="shared in sharedCode">
 
 			<accordion-group heading="{{shared.name}} | Difficulty: {{ shared.difficulty }}" is-open="true" >
-
-			<div ng-repeat="code in shared.lastUserCode track by $index | orderBy: 'time'" >
+			<div ng-repeat="code in shared.lastUserCode track by $index" >
 			
 			<div ui-ace="{useWrapMode : true,
 			showGutter: true,
