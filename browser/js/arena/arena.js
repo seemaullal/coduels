@@ -181,7 +181,10 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
         }
     });
 
+    var modalShown = false;
     function userWins(updatedUser) {
+        if (modalShown) return;
+        modalShown = true;
         $scope.isWinner = true;
         var winnerModal = $modal.open({
             templateUrl: '/js/arena/winner-modal.html',
@@ -196,22 +199,25 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
                 $scope.user = data;
                 $scope.ok = function() {
                     $modalInstance.close('ok');
-
+                    return;
                 };
             }
         });
         winnerModal.result.then(function() {
-            $state.go("about");
+            $state.go("profile");
             return;
         });
     }
 
     function practiceEnds() {
+        if (modalShown) return;
+        modalShown = true;
         var modalInstance = $modal.open({
             templateUrl: '/js/arena/practice-modal.html',
             controller: function($scope, $modalInstance) {
                 $scope.ok = function() {
                     $modalInstance.close('ok');
+                    return;
                 };
             }
         });
@@ -220,5 +226,6 @@ app.controller('ArenaController', function($scope, $stateParams, $sce, RoomFacto
             return;
         });
     }
+
 
 }); // closes controller
