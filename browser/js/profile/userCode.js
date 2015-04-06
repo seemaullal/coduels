@@ -46,6 +46,7 @@ app.controller('UserCodeCtrl', function($scope, AuthService, UsersFactory, Exerc
 						});
 
 						$scope.userExercises.push(userExercises);
+						console.log('userExercises', $scope.userExercises);
 					}
 				});
 			});
