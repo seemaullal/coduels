@@ -10,18 +10,17 @@
 	<h2> View {{ viewUser.username }}'s winning code </h2> <h4><a ui-sref="allplayers">Go back to the leaderboard</a></h4>
 	</div>
 	<div class="col-lg-9">
-		<accordion ng-repeat="userCode in sharedCode">
+		<accordion ng-repeat="shared in sharedCode">
 
-		{{ userCode.viewUserCode }}
-			<accordion-group heading="{{exercise.name}} | Difficulty: {{ exercise.difficulty }}" is-open="exercise.selected" >
+			<accordion-group heading="{{shared.name}} | Difficulty: {{ shared.difficulty }}" is-open="true" >
 
-			<div ng-repeat="userCode in exercise.allCode track by $index | orderBy: 'time'" >
-			<p>{{userCode.name}}<br>{{ userCode.time | date:'short'}}</p>
+			<div ng-repeat="userCode in shared.viewUserCodeArr track by $index | orderBy: 'time'" >
+			
 			<div ui-ace="{useWrapMode : true,
 			showGutter: true,
 			theme: 'monokai',
 			mode: 'javascript',
-			showPrintMargin: false}" ng-model="userCode.code">
+			showPrintMargin: false}" ng-model="userCode">
 
 			</div><br>
 </div>

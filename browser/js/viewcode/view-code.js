@@ -21,7 +21,6 @@ app.controller('ViewCodeCtrl', function($scope, AuthService, UsersFactory, $stat
 				});
 
 				$scope.sharedCode = shared;
-				$scope.codeArray = [];
 				$scope.sharedCode.forEach(function(exercise) {
 					exercise.viewUserObjs = [];
 					exercise.viewUserCodeArr = [];
@@ -36,11 +35,11 @@ app.controller('ViewCodeCtrl', function($scope, AuthService, UsersFactory, $stat
 							exercise.viewUserCodeArr = _.compact(exercise.viewUserCodeArr);
 
 
-							// exercise.viewUserCode.forEach(function(userCode) {
-							// 	console.log('userCode', userCode);
-							// })
-
 						}
+					})
+
+					$scope.sharedCode.forEach(function(obj) {
+						console.log('shared user code', obj.viewUserCodeArr)
 					})
 					console.log('shared user code', $scope.sharedCode);
 					
