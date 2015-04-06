@@ -19,8 +19,26 @@ app.controller('ViewCodeCtrl', function($scope, AuthService, UsersFactory, $stat
 				var shared = $scope.viewUser.uniqueChallenges.filter( function (challenge) {
 					return _.findIndex($scope.user.uniqueChallenges, {id: challenge._id}) > -1;
 				});
-				console.log(shared);
+
+				$scope.sharedCode = shared;
+				$scope.sharedCode.forEach(function(exercise) {
+					exercise.viewUserCode = [];
+
+					$scope.viewUser.exercises.forEach(function(viewUserExercise) {
+						if(exercise.name === viewUserExercise.exerciseID.name) {
+							exercise.viewUserCode.push(viewUserExercise.code);
+							
+							exercise.viewUserCode = _.compact(exercise.viewUserCode);//
+						}
+					})
+					console.log('shared user code', $scope.sharedCode);
+					
+				})
+				
 			});
 		});
 	});
 });
+
+
+		// });

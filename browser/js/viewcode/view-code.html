@@ -10,7 +10,9 @@
 	<h2> View {{ viewUser.username }}'s winning code </h2> <h4><a ui-sref="allplayers">Go back to the leaderboard</a></h4>
 	</div>
 	<div class="col-lg-9">
-		<accordion ng-repeat="exercise in userExercises">
+		<accordion ng-repeat="theCode in sharedUserCode">
+
+		{{ theCode.viewUserCode.code }}
 			<accordion-group heading="{{exercise.name}} | Difficulty: {{ exercise.difficulty }}" is-open="exercise.selected" >
 
 			<div ng-repeat="userCode in exercise.allCode track by $index | orderBy: 'time'" >
