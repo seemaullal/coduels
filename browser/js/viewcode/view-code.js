@@ -21,22 +21,28 @@ app.controller('ViewCodeCtrl', function($scope, AuthService, UsersFactory, $stat
 				});
 
 				$scope.sharedCode = shared;
+				$scope.codeArray = [];
 				$scope.sharedCode.forEach(function(exercise) {
-					exercise.viewUserCode = [];
+					exercise.viewUserObjs = [];
+					exercise.viewUserCodeArr = [];
 
 					$scope.viewUser.exercises.forEach(function(viewUserExercise) {
 						if(exercise.name === viewUserExercise.exerciseID.name) {
-							console.log('view user code', viewUserExercise.code);
-							exercise.viewUserCode.push(viewUserExercise.code);
-
 							
-							exercise.viewUserCode = _.compact(exercise.viewUserCode);
+							exercise.viewUserObjs.push(viewUserExercise);
 
-							
-							// exercise.viewUserCode[exercise.viewUserCode.length - 1];//
+							exercise.viewUserCodeArr.push(viewUserExercise.code);
+
+							exercise.viewUserCodeArr = _.compact(exercise.viewUserCodeArr);
+
+
+							// exercise.viewUserCode.forEach(function(userCode) {
+							// 	console.log('userCode', userCode);
+							// })
+
 						}
 					})
-					console.log('shared user code', $scope.sharedCode.testCode);
+					console.log('shared user code', $scope.sharedCode);
 					
 				})
 				
