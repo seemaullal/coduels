@@ -16,11 +16,10 @@ app.controller('ViewCodeCtrl', function($scope, AuthService, UsersFactory, $stat
 			UsersFactory.getUser($stateParams.user).then(function(data) {
 				$scope.viewUser = data;
 				//shared is an array of exercise object that both the current logged in user and the "view user" have both done
-				var shared = $scope.viewUser.uniqueChallenges.filter( function (challenge) {
+				$scope.sharedCode = $scope.viewUser.uniqueChallenges.filter( function (challenge) {
 					return _.findIndex($scope.user.uniqueChallenges, {id: challenge._id}) > -1;
 				});
 
-				$scope.sharedCode = shared;
 				$scope.sharedCode.forEach(function(exercise) {
 					exercise.viewUserObjs = [];
 					exercise.viewUserCodeArr = [];
@@ -29,10 +28,12 @@ app.controller('ViewCodeCtrl', function($scope, AuthService, UsersFactory, $stat
 						if(exercise.name === viewUserExercise.exerciseID.name) {
 							
 							exercise.viewUserObjs.push(viewUserExercise);
+						if(viewUserExercise.code && viewUserExercise.code !== "") {
 
 							exercise.viewUserCodeArr.push(viewUserExercise.code);
+						}
 
-							exercise.viewUserCodeArr = _.compact(exercise.viewUserCodeArr);
+							// exercise.viewUserCodeArr = _.compact(exercise.viewUserCodeArr);
 
 
 						}
