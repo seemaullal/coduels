@@ -9,7 +9,7 @@
  - [Contributors] (#contributors)
  - [License] (#license)
 
-##About
+## About
  - CoDuels is a fun and interactive way to improve your Javascript skills. 
  - You can choose challenges based on difficulty and then either practice by yourself or compete against other online users who will try to pass all the tests before you do.
  - Track your progress on the profile page, view your previous code, and try to get a high score on our leaderboard!
