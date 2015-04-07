@@ -14,8 +14,6 @@
  
 ![Landing page] (http://i.imgur.com/AQcA3mfm.jpg)
 ![Exercises] (http://i.imgur.com/KtZkLowm.png)
-![Arena] (http://i.imgur.com/aNyzltJ.gif)
-
 
 ## Installation
 1. Clone the repository.
@@ -28,6 +26,8 @@
  - Communication and progress were implemented with Firebase.
  - You can choose challenges based on difficulty and then either practice by yourself or compete against other online users who will try to pass all the tests before you do.
  - Users can also track their progress on the profile page, view your previous code, and try to get a high score on our leaderboard!
+ 
+![Arena] (http://i.imgur.com/aNyzltJ.gif)
 
 ## Contributors
  - Ivan Loughman-Pawelko <a  target="_blank" href="https://github.com/iloughman/">Github</a> | <a target="_blank" href="https://linkedin.com/in/ivanloughman/">LinkedIn</a>
