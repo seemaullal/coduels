@@ -14,6 +14,7 @@
  
 ![Landing page] (http://i.imgur.com/AQcA3mfm.jpg)
 ![Exercises] (http://i.imgur.com/KtZkLowm.png)
+![Arena] (http://files.slack.com/files-pri/T024FPYBQ-F04AH611K/coduels_modals.gif)
 
 
 ## Installation
