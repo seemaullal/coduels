@@ -19,14 +19,14 @@
 2. Run `npm install' `(this should also `bower install` and `gulp build` automatically)
 3. Start application with `npm start` (should start on port 1337)
 
-###Technical Information###
- - We used Javascript to build this application— Angular, Node.js, MongoDB/Mongoose, Express, and Firebase. 
- - We created a real-time testing environment in the browser using the Mocha testing framework running in an iframe. 
- - Communication between users is done through Firebase.
- - Track your progress on the profile page, view your previous code, and try to get a high score on our leaderboard!
+## Features
+ - We created a real-time testing environment for the challenges in the browser using the Mocha testing framework running in an iframe. 
+ - Communication and progress were implemented with Firebase.
+ - You can choose challenges based on difficulty and then either practice by yourself or compete against other online users who will try to pass all the tests before you do.
+ - Users can also track their progress on the profile page, view your previous code, and try to get a high score on our leaderboard!
 
-###Contributors###
- - Ivan Loughman-Pawelko <a  target="_blank" href="https://github.com/iloughman/">Github</a>
- - Linda Kung <a  target="_blank" href="https://github.com/lindakung/">Github</a>
- - Michael Bae <a  target="_blank" href="https://github.com/michaelbbae">Github</a>
- - Seema Ullal <a target="_blank" href="https://github.com/seemaullal/">Github</a>
+## Contributors
+ - Ivan Loughman-Pawelko <a  target="_blank" href="https://github.com/iloughman/">Github</a> | <a target="_blank" href="https://linkedin.com/in/ivanloughman/">LinkedIn</a>
+ - Linda Kung <a  target="_blank" href="https://github.com/lindakung/">Github</a> | <a target="_blank" href="https://linkedin.com/in/lindakung/">LinkedIn</a>
+ - Michael Bae <a  target="_blank" href="https://github.com/michaelbbae">Github</a>  | <a target="_blank" href="https://linkedin.com/in/michaelbae/">LinkedIn</a>
+ - Seema Ullal <a target="_blank" href="https://github.com/seemaullal/">Github</a>  | <a target="_blank" href="https://linkedin.com/in/seemaullal/">LinkedIn</a>
