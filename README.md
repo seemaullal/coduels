@@ -13,7 +13,7 @@
  - You can choose challenges based on difficulty and then either practice by yourself or compete against other online users who will try to pass all the tests before you do.
  - Track your progress on the profile page, view your previous code, and try to get a high score on our leaderboard!
 
-## <span id="usage">Usage and Installation</span>
+## <span name="usage">Usage and Installation</span>
 1. Clone the repository.
 2. Make sure you have `npm` installed,  `nodemon' `installed`, bower` installed and `gulp` installed.
 2. Run `npm install' `(this should also `bower install` and `gulp build` automatically)
