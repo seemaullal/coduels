@@ -13,6 +13,10 @@
  - CoDuels is a fun and interactive way to improve your Javascript skills. 
  - You can choose challenges based on difficulty and then either practice by yourself or compete against other online users who will try to pass all the tests before you do.
  - Track your progress on the profile page, view your previous code, and try to get a high score on our leaderboard!
+ 
+## Usage
+1.  Make sure you have `npm` installed, `bower` installed and `gulp` installed.
+2.  Run `npm install' `(this should also `bower install` and `gulp build` automatically)
 
 ###Technical Information###
  - We used Javascript to build this application— Angular, Node.js, MongoDB/Mongoose, Express, and Firebase. 
