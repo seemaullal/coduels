@@ -10,12 +10,14 @@
 
 ##  About
  - CoDuels is a fun and interactive way to improve your Javascript skills. 
- - You can choose challenges based on difficulty and then either practice by yourself or compete against other online users who will try to pass all the tests before you do.
  - Track your progress on the profile page, view your previous code, and try to get a high score on our leaderboard!
+ 
+! [Landing page] (https://app.box.com/representation/file_version_26940085114/image_2048/1.png?shared_name=1l7fsmjgnpkm0p5ibrfc4hmt2fuya8v5)
+! [Exercises] (https://app.box.com/representation/file_version_26940074010/image_2048/1.png?shared_name=1l7fsmjgnpkm0p5ibrfc4hmt2fuya8v5）
 
 ## Installation
 1. Clone the repository.
-2. Make sure you have `npm` installed,  `nodemon' `installed`, bower` installed and `gulp` installed.
+2. Make sure you have `npm` installed,  `nodemon `installed`, bower` installed and `gulp` installed.
 2. Run `npm install' `(this should also `bower install` and `gulp build` automatically)
 3. Start application with `npm start` (should start on port 1337)
 
