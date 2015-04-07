@@ -12,8 +12,8 @@
  - CoDuels is a fun and interactive way to improve your Javascript skills. 
  - Track your progress on the profile page, view your previous code, and try to get a high score on our leaderboard!
  
-[Landing page] (http://i.imgur.com/4o3rCHD.png)
-[Exercises] (http://i.imgur.com/frdHf5a.png)
+![Landing page] (http://i.imgur.com/4o3rCHD.png)
+![Exercises] (http://i.imgur.com/frdHf5a.png)
 
 ## Installation
 1. Clone the repository.
