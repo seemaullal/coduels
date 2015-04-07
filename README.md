@@ -3,7 +3,7 @@
 
 ## **Table of Contents** 
  - [About] (#about)
- - <a id="usage">[Usage and Installation]</a> 
+ - <a id="usage">Usage and Installation</a> 
  - [Features] (#features)
  - [Contributors] (#contributors)
  - [License] (#license)
