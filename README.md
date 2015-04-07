@@ -14,7 +14,7 @@
  
 ![Landing page] (http://i.imgur.com/AQcA3mfm.jpg)
 ![Exercises] (http://i.imgur.com/KtZkLowm.png)
-![Arena] (http://i.imgur.com/3uBNmxN.gif)
+![Arena] (http://i.imgur.com/aNyzltJ.gif)
 
 
 ## Installation
