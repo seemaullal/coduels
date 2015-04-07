@@ -15,8 +15,9 @@
  - Track your progress on the profile page, view your previous code, and try to get a high score on our leaderboard!
  
 ## Usage
-1.  Make sure you have `npm` installed, `bower` installed and `gulp` installed.
-2.  Run `npm install' `(this should also `bower install` and `gulp build` automatically)
+1. Make sure you have `npm` installed,  `nodemon' `installed`, bower` installed and `gulp` installed.
+2. Run `npm install' `(this should also `bower install` and `gulp build` automatically)
+3.  Start application with `npm start` (should start on port 1337)
 
 ###Technical Information###
  - We used Javascript to build this application— Angular, Node.js, MongoDB/Mongoose, Express, and Firebase. 
