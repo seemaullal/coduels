@@ -53,5 +53,12 @@
     "socket.io": "^1.3.4",
     "supertest": "^0.15.0"
   },
-  "author": "Seema Ullal <seemaullal@gmail.com> (http://www.github.com/seemaullal)"
+  "authors": 
+  [ "Seema Ullal <seemaullal@gmail.com> (http://www.github.com/seemaullal)",
+    "Michael Bae <michaelbbae@gmail.com> (http://www.github.com/michaelbbae)",
+    "Ivan Loughman-Pawelko <iloughman@gmail.com> (http://www.github.com/iloughman)",
+    "Linda Kung <lindakung417@gmail.com> (http://www.github.com/lindakung)"
+  ]
+    
+ 
 }
