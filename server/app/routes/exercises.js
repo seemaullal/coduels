@@ -41,8 +41,9 @@ router.put('/', function(req, res, next) {
 
 // deletes the exercise specified
 router.delete('/:id', function(req, res, next) {
-    Exercise.findOneAndRemove({_id: req.params.id})
-    .then(function (response) {
+    Exercise.remove({_id: req.params.id})
+    .exec()
+    .then(function(response) {
         res.json(response);
     })
     .then(null, function(err) {
