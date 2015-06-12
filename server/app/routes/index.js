@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var Exercise = mongoose.model('Exercise');
 module.exports = router;
 
-router.use(require('./exercises.js'));
+router.use('/exercises',require('./exercises.js'));
 router.use(require('./users.js'));
 
 // iframe route that serves up test specs from the database
