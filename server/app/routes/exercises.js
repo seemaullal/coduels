@@ -12,9 +12,7 @@ router.get('/', function(req, res, next) {
     .then(function(exercises) {
         res.json(exercises);
     })
-    .then(null, function(err) {
-        next(err);
-    });
+    .then(null, next);
 });
 
 // post exercises created on browser
@@ -23,9 +21,7 @@ router.post('/', function(req, res, next) {
     .then(function(content) {
        res.json(content);
     })
-    .then(null, function(err) {
-        next(err);
-    });
+    .then(null, next);
 });
 
 // updates the exercise specified
@@ -34,9 +30,7 @@ router.put('/', function(req, res, next) {
     .then(function(err, numUpdated, response) {
         res.json(response);
     })
-    .then(null, function(err) {
-        next(err);
-    });
+    .then(null, next);
 });
 
 // deletes the exercise specified
@@ -46,9 +40,7 @@ router.delete('/:id', function(req, res, next) {
     .then(function(response) {
         res.json(response);
     })
-    .then(null, function(err) {
-        next(err);
-    });
+    .then(null, next);
 });
 
 
