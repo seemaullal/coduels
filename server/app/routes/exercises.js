@@ -5,35 +5,42 @@ var Exercise = mongoose.model('Exercise');
 module.exports = router;
 
 // gets exercises and sends it to the browser
-router.get('/exercises', function(req, res) {
-    Exercise.find({}, function(err, exercises) {
-        if (!err) res.json(exercises);
-        else res.send(err);
-    });
+router.get('/', function(req, res, next) {
+    Exercise
+    .find({})
+    .exec()
+    .then(function(exercises) {
+        res.json(exercises);
+    })
+    .then(null, next);
 });
 
 // post exercises created on browser
-router.post('/exercises', function(req, res) {
-    Exercise.create(req.body, function(err, content) {
-        if (err) res.send(err);
-        else res.json(content);
-    });
+router.post('/', function(req, res, next) {
+    Exercise.create(req.body)
+    .then(function(content) {
+       res.json(content);
+    })
+    .then(null, next);
 });
 
 // updates the exercise specified
-router.put('/exercises', function(req, res) {
-    Exercise.update({_id: req.body._id}, req.body, function(err, numUpdated, response) {
-        if (!err) res.json(response);
-        else res.send(err);
-    });
+router.put('/', function(req, res, next) {
+    Exercise.update({_id: req.body._id}, req.body)
+    .then(function(err, numUpdated, response) {
+        res.json(response);
+    })
+    .then(null, next);
 });
 
 // deletes the exercise specified
-router.delete('/exercises/:id', function(req, res) {
-    Exercise.findOneAndRemove({_id: req.params.id}, function(err,response) {
-    	if (!err) res.json(response);
-    	else res.send(err);
-    });
+router.delete('/:id', function(req, res, next) {
+    Exercise.remove({_id: req.params.id})
+    .exec()
+    .then(function(response) {
+        res.json(response);
+    })
+    .then(null, next);
 });
 
 
