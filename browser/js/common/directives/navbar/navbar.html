@@ -1,41 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <body>
-
-    <!-- Static navbar -->
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>    <script src="/chai/chai.js"></script>
-
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" ui-sref="home"><i class="fa fa-terminal"></i><span ui-sref="about" class="co">CO</span>{DUELS}</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a ui-sref="exercises">EXERCISES</a></li>
-            <li><a ui-sref="allplayers" ng-show="user">LEADERBOARD</a></li>
-            <li ng-show="user"><a ui-sref="profile">PROFILE</a></li>
-            <li id="login" ng-show="!user">LOGIN WITH</li><li ng-show="!user"><a id="google" href="" onClick="window.location='http://127.0.0.1:1337/auth/google';"><i class="fa fa-google-plus-square fa-lg"></i></a></li></li><li ng-show="!user"><a href="" onClick="window.location='http://127.0.0.1:1337/auth/github';"><i class="fa fa-github-square fa-lg"></i></a></li>
-            <li class="dropdown" ng-show="user">
-              <a class="dropdown-toggle" href="" data-toggle="dropdown" role="button" aria-expanded="false">
-                <i ng-show="user.google.id" class="fa fa-google-plus-square fa-lg"></i> <i ng-show="user.github.id" class="fa fa-github-square fa-lg"></i> {{user.username}}<span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu" role="menue">
-                <li><a href="" ui-sref="settings">Settings</a></li>
-                <li><a href="" ui-sref="about">About</a></li>
-                <li><a href="" ng-click="logout()">Logout</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div><!--/.nav-collapse -->
+<body>
+  <!-- Static navbar -->
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <script src="/chai/chai.js"></script>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" ui-sref="home"><i class="fa fa-terminal"></i><span ui-sref="about" class="co">CO</span>{DUELS}</a>
       </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a ui-sref="exercises">EXERCISES</a></li>
+          <li><a ui-sref="allplayers" ng-show="user">LEADERBOARD</a></li>
+          <li ng-show="user"><a ui-sref="profile">PROFILE</a></li>
+          <li id="login" ng-show="!user">LOGIN WITH</li>
+          <li ng-show="!user"><a id="google" href="" onClick="window.location='/auth/google';"><i class="fa fa-google-plus-square fa-lg"></i></a></li>
+          </li>
+          <li ng-show="!user"><a href="" onClick="window.location='http://coduels.com/auth/github';"><i class="fa fa-github-square fa-lg"></i></a></li>
+          <li class="dropdown" ng-show="user">
+            <a class="dropdown-toggle" href="" data-toggle="dropdown" role="button" aria-expanded="false">
+              <i ng-show="user.google.id" class="fa fa-google-plus-square fa-lg"></i> <i ng-show="user.github.id" class="fa fa-github-square fa-lg"></i> {{user.username}}<span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menue">
+              <li><a href="" ui-sref="settings">Settings</a></li>
+              <li><a href="" ui-sref="about">About</a></li>
+              <li><a href="" ng-click="logout()">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <!--/.nav-collapse -->
     </div>
+  </div>
+  <!-- +++++ Welcome Section +++++ -->
+</body>
 
-    <!-- +++++ Welcome Section +++++ -->
-  </body>
 </html>
