@@ -28,8 +28,8 @@ On my_feature branch
 On Github
 
 - Create a pull request
-- Notify someone that you have created a pull request
-- Don't branch or work on another feature until the request has been merged into master.
+- Assign it to someone to review
+- Merge it once the reviewer accepts it
 
 On your local computer
 
